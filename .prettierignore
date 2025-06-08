@@ -1,0 +1,5 @@
+dist
+dist-xdc
+pnpm-lock.yaml
+package-lock.json
+src/lib/pixelit.js

@@ -1,0 +1,50 @@
+import UserItem from "~/components/UserItem";
+
+import { formatDateShort } from "~/lib/util";
+
+const containerStyle = {
+  display: "flex",
+  flexDirection: "column" as "column",
+  flexWrap: "nowrap" as "nowrap",
+  gap: "0.5em",
+  borderBottom: "1px solid hsl(240, 16%, 23%)",
+  padding: "1em",
+  fontSize: "16px",
+};
+const topStyle = {
+  display: "flex",
+  justifyContent: "space-between",
+  gap: "0.2em",
+};
+const contentStyle = {
+  display: "flex",
+  flexDirection: "column" as "column",
+  gap: "0.3em",
+  overflowWrap: "break-word" as "break-word",
+  wordBreak: "break-word" as "break-word",
+  whiteSpace: "pre-wrap",
+};
+const dateStyle = {
+  color: "rgb(138, 132, 98)",
+  textWrap: "nowrap" as "nowrap",
+  fontSize: "15px",
+};
+
+interface Props {
+  post: Post;
+}
+
+export default function PostItem({ post }: Props) {
+  return (
+    <div style={containerStyle}>
+      <div style={topStyle}>
+        <UserItem userId={post.authorId} name={post.authorName} />
+        <span style={dateStyle}>{formatDateShort(post.date)}</span>
+      </div>
+      <div style={contentStyle}>
+        <span>{post.text}</span>
+        {post.image && <img src={post.image} style={{ display: "block" }} />}
+      </div>
+    </div>
+  );
+}
