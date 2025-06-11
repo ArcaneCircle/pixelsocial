@@ -68,7 +68,7 @@ export function getRandomUUID(): string {
   }
 }
 
-export async function loadImage(url: string): Promise<HTMLElement> {
+export async function loadImage(url: string): Promise<HTMLImageElement> {
   const img = new Image();
   img.src = url;
   return new Promise((resolve, _reject) => {

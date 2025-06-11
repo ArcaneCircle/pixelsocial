@@ -135,19 +135,27 @@ export default function Draft({ onPost }: Props) {
 
 async function pixelate(url: string): Promise<string> {
   const img = await loadImage(url);
-  const canvas = document.createElement("canvas");
   const maxWidth = 500;
   const maxHeight = 500;
+  const canvas = document.createElement("canvas");
 
-  new Pixelit({
+  const config = {
     to: canvas,
     from: img,
     scale: 12, // int from 0-50
     maxHeight,
     maxWidth,
-  })
-    .draw()
-    .pixelate();
+  };
 
-  return canvas.toDataURL("image/png");
+  if (img.width > maxWidth || img.height > maxHeight) {
+    // just resize
+    new Pixelit(config).draw();
+    config.from = await loadImage(canvas.toDataURL("image/png"));
+  }
+
+  new Pixelit(config).draw().pixelate();
+
+  url = canvas.toDataURL("image/png");
+  canvas.remove();
+  return url;
 }
