@@ -29,6 +29,9 @@ button * {
 .grad {
   color: #fff;
 }
+.grad::placeholder {
+    text-shadow: none;
+}
 
 .card {
   /* Use Flexbox to center the content */
@@ -155,9 +158,8 @@ button * {
 .grad14 {
   background-image: linear-gradient(
     to right,
-    rgb(127, 127, 213),
-    rgb(134, 168, 231),
-    rgb(145, 234, 228)
+    rgb(0, 210, 255),
+    rgb(58, 123, 213)
   );
   text-shadow: 1px 1px 2px black;
 }
@@ -771,8 +773,9 @@ button * {
 .grad100 {
   background-image: linear-gradient(
     to right,
-    rgb(0, 210, 255),
-    rgb(58, 123, 213)
+    rgb(127, 127, 213),
+    rgb(134, 168, 231),
+    rgb(145, 234, 228)
   );
   text-shadow: 1px 1px 2px black;
 }
