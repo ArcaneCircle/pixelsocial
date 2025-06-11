@@ -43,7 +43,7 @@ const cardStyle = {
   fontSize: "1.4em",
 };
 const btnStyle = {
-  backgroundColor: "#ccae3a",
+  backgroundColor: "rgb(213, 176, 34)",
   color: "black",
   flex: "1 1 auto",
   marginTop: "0.5em",
