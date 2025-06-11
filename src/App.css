@@ -26,8 +26,8 @@ button * {
   cursor: pointer;
 }
 
-textarea.grad::placeholder {
-  color: #ffffffaa;
+.grad {
+    color: #fff;
 }
 
 .card {

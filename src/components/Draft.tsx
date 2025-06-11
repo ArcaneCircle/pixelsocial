@@ -40,7 +40,6 @@ const cardStyle = {
   marginLeft: "-12px",
   marginTop: "-12px",
   textAlign: "center" as "center",
-  color: "#fff",
   fontSize: "1.4em",
 };
 const btnStyle = {
