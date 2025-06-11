@@ -11,7 +11,6 @@ const nameStyle = {
   textOverflow: "ellipsis",
   textWrap: "nowrap" as "nowrap",
   whiteSpace: "nowrap",
-  fontWeight: "bold",
 };
 
 interface Props {
