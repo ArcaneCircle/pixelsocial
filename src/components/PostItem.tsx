@@ -10,11 +10,6 @@ const containerStyle = {
   borderBottom: "1px solid hsl(240, 16%, 23%)",
   padding: "0.5em 0.8em",
 };
-const topStyle = {
-  display: "flex",
-  justifyContent: "space-between",
-  gap: "0.2em",
-};
 const contentStyle = {
   display: "flex",
   flexDirection: "column" as "column",
@@ -22,11 +17,6 @@ const contentStyle = {
   overflowWrap: "break-word" as "break-word",
   wordBreak: "break-word" as "break-word",
   whiteSpace: "pre-wrap",
-};
-const dateStyle = {
-  color: "rgb(138, 132, 98)",
-  textWrap: "nowrap" as "nowrap",
-  fontSize: "0.8em",
 };
 const imgStyle = {
   display: "block",
@@ -43,10 +33,11 @@ interface Props {
 export default function PostItem({ post }: Props) {
   return (
     <div style={containerStyle}>
-      <div style={topStyle}>
-        <UserItem userId={post.authorId} name={post.authorName} />
-        <span style={dateStyle}>{formatDateShort(post.date)}</span>
-      </div>
+      <UserItem
+        userId={post.authorId}
+        name={post.authorName}
+        subtitle={formatDateShort(post.date)}
+      />
       <div style={contentStyle}>
         <span>{post.text}</span>
         {post.image && <img src={post.image} style={imgStyle} />}
