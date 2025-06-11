@@ -42,6 +42,14 @@ const iconBtnStyle = {
   padding: "2px",
 };
 
+const imgStyle = {
+  display: "block",
+  maxHeight: "40vh",
+  width: "fit-content",
+  maxWidth: "100%",
+  alignSelf: "center",
+};
+
 interface Props {
   onPost: (text: string, image: string) => void;
 }
@@ -81,7 +89,7 @@ export default function Draft({ onPost }: Props) {
         style={textareaStyle}
         placeholder={hint}
       ></textarea>
-      {imgUrl && <img src={imgUrl} style={{ display: "block" }} />}
+      {imgUrl && <img src={imgUrl} style={imgStyle} />}
       <FilePicker
         accept="image/*"
         onFileSelected={onFileSelected}

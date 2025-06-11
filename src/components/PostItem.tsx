@@ -28,6 +28,13 @@ const dateStyle = {
   textWrap: "nowrap" as "nowrap",
   fontSize: "0.8em",
 };
+const imgStyle = {
+  display: "block",
+  maxHeight: "40vh",
+  width: "fit-content",
+  maxWidth: "100%",
+  alignSelf: "center",
+};
 
 interface Props {
   post: Post;
@@ -42,7 +49,7 @@ export default function PostItem({ post }: Props) {
       </div>
       <div style={contentStyle}>
         <span>{post.text}</span>
-        {post.image && <img src={post.image} style={{ display: "block" }} />}
+        {post.image && <img src={post.image} style={imgStyle} />}
       </div>
     </div>
   );
