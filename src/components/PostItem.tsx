@@ -8,8 +8,7 @@ const containerStyle = {
   flexWrap: "nowrap" as "nowrap",
   gap: "0.5em",
   borderBottom: "1px solid hsl(240, 16%, 23%)",
-  padding: "1em",
-  fontSize: "16px",
+  padding: "0.5em 0.8em",
 };
 const topStyle = {
   display: "flex",
@@ -27,7 +26,7 @@ const contentStyle = {
 const dateStyle = {
   color: "rgb(138, 132, 98)",
   textWrap: "nowrap" as "nowrap",
-  fontSize: "15px",
+  fontSize: "0.8em",
 };
 
 interface Props {

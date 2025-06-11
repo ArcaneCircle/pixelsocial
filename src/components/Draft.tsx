@@ -13,7 +13,6 @@ const containerStyle = {
   flexDirection: "column" as "column",
   flexWrap: "nowrap" as "nowrap",
   gap: "12px",
-  fontSize: "15px",
   padding: "12px",
   backgroundColor: "hsl(240,16%,19%)",
 };
@@ -33,7 +32,7 @@ const btnStyle = {
   backgroundColor: "#ccae3a",
   color: "black",
   flex: "1 1 auto",
-  fontSize: "15px",
+  marginTop: "0.5em",
 };
 
 const iconBtnStyle = {
@@ -89,7 +88,7 @@ export default function Draft({ onPost }: Props) {
         style={iconBtnStyle}
       >
         <PixelarticonsImageMultiple
-          style={{ verticalAlign: "middle", width: "20px", height: "auto" }}
+          style={{ verticalAlign: "middle", width: "1.2em", height: "auto" }}
         />
       </FilePicker>
       <Button style={btnStyle} onClick={onClick}>

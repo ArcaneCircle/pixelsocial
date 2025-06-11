@@ -3,8 +3,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: "Jersey 10", system-ui;
-  font-size: 13px;
-  line-height: 18px;
+  font-size: 1.2em;
   background-color: hsl(240, 16%, 11%);
   color: white;
 
@@ -20,6 +19,7 @@ body {
 button,
 textarea {
   font-family: inherit;
+  font-size: inherit;
 }
 
 button * {

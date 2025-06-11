@@ -12,8 +12,7 @@ const containerStyle = {
   flexDirection: "column" as "column",
   flexWrap: "nowrap" as "nowrap",
   gap: "0.5em",
-  padding: "1em",
-  fontSize: "15px",
+  padding: "0.8em",
 };
 const btnStyle = {
   background: "none",

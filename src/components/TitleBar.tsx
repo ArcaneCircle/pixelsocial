@@ -8,14 +8,14 @@ export default function TitleBar({ children }: Props) {
     flexDirection: "row" as "row",
     alignItems: "center",
     justifyContent: "space-between",
-    padding: "0.6em 1em",
+    padding: "0.4em 0.8em",
     borderBottom: "1px solid hsl(240, 16%, 23%)",
     position: "sticky" as "sticky",
     top: 0,
     backgroundColor: "hsl(240, 16%, 11%)",
   };
   const imgStyle = {
-    width: "24px",
+    width: "1.4em",
     height: "auto",
   };
 
@@ -23,7 +23,7 @@ export default function TitleBar({ children }: Props) {
     <div style={barStyle}>
       <div style={{ display: "flex", alignItems: "center", gap: "0.5em" }}>
         <img src="./icon.png" style={imgStyle} />
-        <span style={{ fontSize: "24px" }}>Pixel It!</span>
+        <span style={{ fontSize: "1.4em" }}>Pixel It!</span>
       </div>
       {children}
     </div>
