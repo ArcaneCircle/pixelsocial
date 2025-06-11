@@ -39,7 +39,9 @@ export default function PostItem({ post }: Props) {
         subtitle={formatDateShort(post.date)}
       />
       <div style={contentStyle}>
-        <span>{post.text}</span>
+        <div className={post.style ? `card grad${post.style}` : undefined}>
+          {post.text}
+        </div>
         {post.image && <img src={post.image} style={imgStyle} />}
       </div>
     </div>

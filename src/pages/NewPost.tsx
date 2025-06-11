@@ -42,9 +42,9 @@ export default function NewPost({ manager, setPage }: Props) {
   }, [manager]);
 
   const draftM = useMemo(() => {
-    const onPost = (text: string, image: string) => {
+    const onPost = (text: string, image: string, style: number) => {
       if (!text && !image) return;
-      manager.sendPost(text, image);
+      manager.sendPost(text, image, style);
       setPage("home");
     };
     return <Draft onPost={onPost} />;

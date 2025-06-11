@@ -18,4 +18,5 @@ declare interface Post {
   date: number;
   text: string;
   image: string;
+  style: number;
 }

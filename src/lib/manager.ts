@@ -46,7 +46,7 @@ export class Manager {
     });
   }
 
-  sendPost(text: string, image: string) {
+  sendPost(text: string, image: string, style: number) {
     const post = {
       id: getRandomUUID(),
       date: Date.now(),
@@ -54,6 +54,7 @@ export class Manager {
       authorId: this.selfId,
       text,
       image,
+      style,
     };
     const info = `${this.selfName} created a post`;
     window.webxdc.sendUpdate({ payload: { post }, info }, "");

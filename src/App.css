@@ -25,3 +25,754 @@ textarea {
 button * {
   cursor: pointer;
 }
+
+textarea.grad::placeholder {
+  color: #ffffffaa;
+}
+
+.card {
+  /* Use Flexbox to center the content */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  /* Apply min height of 4 lines */
+  line-height: 1.2em;
+  min-height: calc(1.2em * 2);
+
+  border: none;
+  outline: none;
+  padding: 0.4em;
+  color: #fff;
+  font-size: 1.4em;
+}
+
+/* Gradients */
+
+.grad1 {
+  background-image: linear-gradient(
+    to right,
+    rgb(142, 45, 226),
+    rgb(74, 0, 224)
+  );
+}
+.grad2 {
+  background-image: linear-gradient(
+    109.6deg,
+    rgb(0, 204, 130) 11.2%,
+    rgb(58, 181, 46) 91.7%
+  );
+}
+.grad3 {
+  background-image: linear-gradient(
+    to right,
+    rgb(138, 35, 135),
+    rgb(233, 64, 87),
+    rgb(242, 113, 33)
+  );
+}
+.grad4 {
+  background-image: linear-gradient(
+    to right,
+    rgb(15, 32, 39),
+    rgb(32, 58, 67),
+    rgb(44, 83, 100)
+  );
+}
+.grad5 {
+  background-image: linear-gradient(
+    to right,
+    rgb(247, 151, 30),
+    rgb(255, 210, 0)
+  );
+  text-shadow: 1px 1px 2px black;
+}
+.grad6 {
+  background-image: linear-gradient(to right, rgb(240, 0, 0), rgb(220, 40, 30));
+}
+.grad7 {
+  background-image: linear-gradient(
+    110.7deg,
+    rgb(255, 81, 47) 1.7%,
+    rgb(255, 167, 47) 8.2%,
+    rgb(218, 253, 1) 16.2%,
+    rgb(98, 234, 20) 23.4%,
+    rgb(69, 193, 42) 32.8%,
+    rgb(7, 249, 149) 43.7%,
+    rgb(6, 200, 217) 55.3%,
+    rgb(18, 51, 233) 65.5%,
+    rgb(122, 59, 202) 74.5%,
+    rgb(231, 7, 249) 82.3%,
+    rgb(202, 59, 163) 91.4%
+  );
+  text-shadow: 1px 1px 2px black;
+}
+.grad8 {
+  background-image: linear-gradient(
+    to right,
+    rgb(255, 216, 155),
+    rgb(25, 84, 123)
+  );
+  text-shadow: 1px 1px 2px black;
+}
+.grad9 {
+  background-image: linear-gradient(to right, rgb(255, 0, 132), rgb(51, 0, 27));
+}
+.grad10 {
+  background-image: linear-gradient(
+    rgb(30, 150, 0),
+    rgb(255, 242, 0),
+    rgb(255, 0, 0)
+  );
+  text-shadow: 1px 1px 2px black;
+}
+.grad11 {
+  background-image: linear-gradient(
+    to right,
+    rgb(127, 0, 255),
+    rgb(225, 0, 255)
+  );
+}
+.grad12 {
+  background-image: linear-gradient(
+    68.7deg,
+    rgb(29, 173, 235) 13.2%,
+    rgb(137, 149, 250) 29.8%,
+    rgb(229, 109, 212) 48.9%,
+    rgb(255, 68, 128) 68.2%,
+    rgb(255, 94, 0) 86.4%
+  );
+}
+.grad13 {
+  background-image: linear-gradient(
+    to right,
+    rgb(249, 83, 198),
+    rgb(185, 29, 115)
+  );
+}
+.grad14 {
+  background-image: linear-gradient(
+    to right,
+    rgb(127, 127, 213),
+    rgb(134, 168, 231),
+    rgb(145, 234, 228)
+  );
+  text-shadow: 1px 1px 2px black;
+}
+.grad15 {
+  background-image: linear-gradient(
+    to right,
+    rgb(195, 20, 50),
+    rgb(36, 11, 54)
+  );
+}
+.grad16 {
+  background-image: linear-gradient(
+    to right,
+    rgb(254, 140, 0),
+    rgb(248, 54, 0)
+  );
+}
+.grad17 {
+  background-image: linear-gradient(
+    to right,
+    rgb(101, 153, 153),
+    rgb(244, 121, 31)
+  );
+}
+.grad18 {
+  background-image: linear-gradient(
+    to right,
+    rgb(254, 172, 94),
+    rgb(199, 121, 208),
+    rgb(75, 192, 200)
+  );
+  text-shadow: 1px 1px 2px black;
+}
+.grad19 {
+  background-image: linear-gradient(
+    to right,
+    rgb(131, 96, 195),
+    rgb(46, 191, 145)
+  );
+}
+.grad20 {
+  background-image: linear-gradient(
+    to right,
+    rgb(84, 74, 125),
+    rgb(255, 212, 82)
+  );
+}
+.grad21 {
+  background-image: linear-gradient(
+    to right,
+    rgb(0, 159, 255),
+    rgb(236, 47, 75)
+  );
+}
+.grad22 {
+  background-image: linear-gradient(
+    to right,
+    rgb(101, 78, 163),
+    rgb(234, 175, 200)
+  );
+  text-shadow: 1px 1px 2px black;
+}
+.grad23 {
+  background-image: linear-gradient(
+    to right,
+    rgb(255, 65, 108),
+    rgb(255, 75, 43)
+  );
+}
+.grad24 {
+  background-image: linear-gradient(
+    to right,
+    rgb(131, 58, 180),
+    rgb(253, 29, 29),
+    rgb(252, 176, 69)
+  );
+}
+.grad25 {
+  background-image: linear-gradient(
+    to right,
+    rgb(33, 95, 0),
+    rgb(228, 228, 217)
+  );
+  text-shadow: 1px 1px 2px black;
+}
+.grad26 {
+  background-image: linear-gradient(
+    to right,
+    rgb(12, 235, 235),
+    rgb(32, 227, 178),
+    rgb(41, 255, 198)
+  );
+  text-shadow: 1px 1px 2px black;
+}
+.grad27 {
+  background-image: linear-gradient(
+    to right,
+    rgb(237, 33, 58),
+    rgb(147, 41, 30)
+  );
+}
+.grad28 {
+  background-image: linear-gradient(
+    to right,
+    rgb(253, 200, 48),
+    rgb(243, 115, 53)
+  );
+}
+.grad29 {
+  background-image: linear-gradient(
+    to right,
+    rgb(0, 180, 219),
+    rgb(0, 131, 176)
+  );
+}
+.grad30 {
+  background-image: linear-gradient(
+    to right,
+    rgb(252, 53, 76),
+    rgb(10, 191, 188)
+  );
+}
+.grad31 {
+  background-image: linear-gradient(
+    to right,
+    rgb(17, 153, 142),
+    rgb(56, 239, 125)
+  );
+}
+.grad32 {
+  background-image: linear-gradient(
+    to right,
+    rgb(0, 90, 167),
+    rgb(255, 253, 228)
+  );
+  text-shadow: 1px 1px 2px black;
+}
+.grad33 {
+  background-image: linear-gradient(
+    to right,
+    rgb(218, 68, 83),
+    rgb(137, 33, 107)
+  );
+}
+.grad34 {
+  background-image: linear-gradient(to right, rgb(0, 0, 0), rgb(231, 76, 60));
+}
+.grad35 {
+  background-image: linear-gradient(
+    to right,
+    rgb(173, 83, 137),
+    rgb(60, 16, 83)
+  );
+}
+.grad36 {
+  background-image: linear-gradient(to right, rgb(72, 85, 99), rgb(41, 50, 60));
+}
+.grad37 {
+  background-image: linear-gradient(
+    to right,
+    rgb(131, 164, 212),
+    rgb(182, 251, 255)
+  );
+  text-shadow: 1px 1px 2px black;
+}
+.grad38 {
+  background-image: linear-gradient(
+    to right,
+    rgb(78, 84, 200),
+    rgb(143, 148, 251)
+  );
+}
+.grad39 {
+  background-image: linear-gradient(
+    to right,
+    rgb(53, 92, 125),
+    rgb(108, 91, 123),
+    rgb(192, 108, 132)
+  );
+}
+.grad40 {
+  background-image: linear-gradient(
+    to right,
+    rgb(188, 78, 156),
+    rgb(248, 7, 89)
+  );
+}
+.grad41 {
+  background-image: linear-gradient(
+    to right,
+    rgb(64, 224, 208),
+    rgb(255, 140, 0),
+    rgb(255, 0, 128)
+  );
+}
+.grad42 {
+  background-image: linear-gradient(
+    to right,
+    rgb(62, 81, 81),
+    rgb(222, 203, 164)
+  );
+}
+.grad43 {
+  background-image: linear-gradient(
+    to right,
+    rgb(0, 79, 249),
+    rgb(255, 249, 76)
+  );
+  text-shadow: 1px 1px 2px black;
+}
+.grad44 {
+  background-image: linear-gradient(
+    to right,
+    rgb(16, 141, 199),
+    rgb(239, 142, 56)
+  );
+}
+.grad45 {
+  background-image: linear-gradient(
+    to right,
+    rgb(240, 194, 123),
+    rgb(75, 18, 72)
+  );
+}
+.grad46 {
+  background-image: linear-gradient(
+    to right,
+    rgb(252, 70, 107),
+    rgb(63, 94, 251)
+  );
+}
+.grad47 {
+  background-image: linear-gradient(
+    to right,
+    rgb(148, 142, 153),
+    rgb(46, 20, 55)
+  );
+}
+.grad48 {
+  background-image: linear-gradient(to right, rgb(35, 7, 77), rgb(204, 83, 51));
+}
+.grad49 {
+  background-image: linear-gradient(
+    to right,
+    rgb(255, 251, 213),
+    rgb(178, 10, 44)
+  );
+  text-shadow: 1px 1px 2px black;
+}
+.grad50 {
+  background-image: linear-gradient(
+    to right,
+    rgb(15, 12, 41),
+    rgb(48, 43, 99),
+    rgb(36, 36, 62)
+  );
+}
+.grad51 {
+  background-image: linear-gradient(
+    to right,
+    rgb(0, 176, 155),
+    rgb(150, 201, 61)
+  );
+}
+.grad52 {
+  background-image: linear-gradient(
+    to right,
+    rgb(255, 183, 94),
+    rgb(237, 143, 3)
+  );
+}
+.grad53 {
+  background-image: linear-gradient(to right, rgb(60, 59, 63), rgb(96, 92, 60));
+}
+.grad54 {
+  background-image: linear-gradient(
+    to right,
+    rgb(202, 197, 49),
+    rgb(243, 249, 167)
+  );
+  text-shadow: 1px 1px 2px black;
+}
+.grad55 {
+  background-image: linear-gradient(
+    to right,
+    rgb(128, 0, 128),
+    rgb(255, 192, 203)
+  );
+}
+.grad56 {
+  background-image: linear-gradient(
+    to right,
+    rgb(123, 67, 151),
+    rgb(220, 36, 48)
+  );
+}
+.grad57 {
+  background-image: linear-gradient(
+    to right,
+    rgb(96, 108, 136),
+    rgb(63, 76, 107)
+  );
+}
+.grad58 {
+  background-image: linear-gradient(
+    to right,
+    rgb(116, 235, 213),
+    rgb(172, 182, 229)
+  );
+  text-shadow: 1px 1px 2px black;
+}
+.grad59 {
+  background-image: linear-gradient(
+    to right,
+    rgb(109, 96, 39),
+    rgb(211, 203, 184)
+  );
+}
+.grad60 {
+  background-image: linear-gradient(
+    to right,
+    rgb(3, 0, 30),
+    rgb(115, 3, 192),
+    rgb(236, 56, 188),
+    rgb(253, 239, 249)
+  );
+}
+.grad61 {
+  background-image: linear-gradient(
+    to right,
+    rgb(102, 125, 182),
+    rgb(0, 130, 200),
+    rgb(0, 130, 200),
+    rgb(102, 125, 182)
+  );
+}
+.grad62 {
+  background-image: linear-gradient(
+    to right,
+    rgb(80, 201, 195),
+    rgb(150, 222, 218)
+  );
+  text-shadow: 1px 1px 2px black;
+}
+.grad63 {
+  background-image: linear-gradient(
+    to right,
+    rgb(225, 238, 195),
+    rgb(240, 80, 83)
+  );
+  text-shadow: 1px 1px 2px black;
+}
+.grad64 {
+  background-image: linear-gradient(
+    to right,
+    rgb(26, 42, 108),
+    rgb(178, 31, 31),
+    rgb(253, 187, 45)
+  );
+}
+.grad65 {
+  background-image: linear-gradient(
+    to right,
+    rgb(34, 193, 195),
+    rgb(253, 187, 45)
+  );
+  text-shadow: 1px 1px 2px black;
+}
+.grad66 {
+  background-image: linear-gradient(
+    to right,
+    rgb(255, 153, 102),
+    rgb(255, 94, 98)
+  );
+}
+.grad67 {
+  background-image: linear-gradient(
+    to right,
+    rgb(238, 156, 167),
+    rgb(255, 221, 225)
+  );
+  color: black;
+}
+.grad68 {
+  background-image: linear-gradient(
+    to right,
+    rgb(97, 97, 97),
+    rgb(155, 197, 195)
+  );
+}
+.grad69 {
+  background-image: linear-gradient(
+    to right,
+    rgb(57, 106, 252),
+    rgb(41, 72, 255)
+  );
+}
+.grad70 {
+  background-image: linear-gradient(
+    to right,
+    rgb(85, 205, 252),
+    rgb(179, 157, 233),
+    rgb(247, 168, 184),
+    rgb(246, 216, 221),
+    rgb(255, 255, 255) 45%,
+    rgb(255, 255, 255),
+    rgb(255, 255, 255) 55%,
+    rgb(246, 216, 221),
+    rgb(247, 168, 184),
+    rgb(179, 157, 233),
+    rgb(85, 205, 252)
+  );
+  color: black;
+}
+.grad71 {
+  background-image: linear-gradient(
+    to right,
+    rgb(248, 87, 166),
+    rgb(255, 88, 88)
+  );
+}
+.grad72 {
+  background-image: linear-gradient(
+    to right,
+    rgb(75, 108, 183),
+    rgb(24, 40, 72)
+  );
+}
+.grad73 {
+  background-image: linear-gradient(
+    to right,
+    rgb(209, 145, 60),
+    rgb(255, 209, 148)
+  );
+  text-shadow: 1px 1px 2px black;
+}
+.grad74 {
+  background-image: linear-gradient(
+    to right,
+    rgb(173, 209, 0),
+    rgb(123, 146, 10)
+  );
+}
+.grad75 {
+  background-image: linear-gradient(to right, rgb(0, 0, 0), rgb(15, 155, 15));
+}
+.grad76 {
+  background-image: linear-gradient(
+    to right,
+    rgb(18, 194, 233),
+    rgb(196, 113, 237),
+    rgb(246, 79, 89)
+  );
+}
+.grad77 {
+  background-image: linear-gradient(
+    to right,
+    rgb(112, 225, 245),
+    rgb(255, 209, 148)
+  );
+  text-shadow: 1px 1px 2px black;
+}
+.grad78 {
+  background-image: linear-gradient(
+    to right,
+    rgb(58, 28, 113),
+    rgb(215, 109, 119),
+    rgb(255, 175, 123)
+  );
+}
+.grad79 {
+  background-image: linear-gradient(
+    to right,
+    rgb(241, 242, 181),
+    rgb(19, 80, 88)
+  );
+  text-shadow: 1px 1px 2px black;
+}
+.grad80 {
+  background-image: linear-gradient(
+    to right,
+    rgb(239, 59, 54),
+    rgb(255, 255, 255)
+  );
+  text-shadow: 1px 1px 2px black;
+}
+.grad81 {
+  background-image: linear-gradient(
+    to right,
+    rgb(255, 161, 127),
+    rgb(0, 34, 62)
+  );
+}
+.grad82 {
+  background-image: linear-gradient(
+    to right,
+    rgb(21, 153, 87),
+    rgb(21, 87, 153)
+  );
+}
+.grad83 {
+  background-image: linear-gradient(to right, rgb(0, 0, 70), rgb(28, 181, 224));
+}
+.grad84 {
+  background-image: linear-gradient(
+    to right,
+    rgb(0, 121, 145),
+    rgb(120, 255, 214)
+  );
+  text-shadow: 1px 1px 2px black;
+}
+.grad85 {
+  background-image: linear-gradient(
+    to right,
+    rgb(185, 147, 214),
+    rgb(140, 166, 219)
+  );
+}
+.grad86 {
+  background-image: linear-gradient(
+    to right,
+    rgb(5, 117, 230),
+    rgb(2, 27, 121)
+  );
+}
+.grad87 {
+  background-image: linear-gradient(to right, rgb(235, 87, 87), rgb(0, 0, 0));
+}
+.grad88 {
+  background-image: linear-gradient(
+    to right,
+    rgb(228, 77, 38),
+    rgb(241, 101, 41)
+  );
+}
+.grad89 {
+  background-image: linear-gradient(
+    to right,
+    rgb(233, 211, 98),
+    rgb(51, 51, 51)
+  );
+}
+.grad90 {
+  background-image: linear-gradient(
+    to right,
+    rgb(82, 82, 82),
+    rgb(61, 114, 180)
+  );
+}
+.grad91 {
+  background-image: linear-gradient(
+    to right,
+    rgb(48, 232, 191),
+    rgb(255, 130, 53)
+  );
+  text-shadow: 1px 1px 2px black;
+}
+.grad92 {
+  background-image: linear-gradient(
+    to right,
+    rgb(214, 109, 117),
+    rgb(226, 149, 135)
+  );
+}
+.grad93 {
+  background-image: linear-gradient(
+    to right,
+    rgb(32, 0, 44),
+    rgb(203, 180, 212)
+  );
+}
+.grad94 {
+  background-image: linear-gradient(
+    to right,
+    rgb(195, 55, 100),
+    rgb(29, 38, 113)
+  );
+}
+.grad95 {
+  background-image: linear-gradient(
+    to right,
+    rgb(185, 43, 39),
+    rgb(21, 101, 192)
+  );
+}
+.grad96 {
+  background-image: linear-gradient(
+    to right,
+    rgb(69, 127, 202),
+    rgb(86, 145, 200)
+  );
+}
+.grad97 {
+  background-image: linear-gradient(
+    to right,
+    rgb(230, 218, 218),
+    rgb(39, 64, 70)
+  );
+  text-shadow: 1px 1px 2px black;
+}
+.grad98 {
+  background-image: linear-gradient(
+    to right,
+    rgb(68, 160, 141),
+    rgb(9, 54, 55)
+  );
+}
+.grad99 {
+  background-image: linear-gradient(to right, rgb(32, 1, 34), rgb(111, 0, 0));
+}
+.grad100 {
+  background-image: linear-gradient(
+    to right,
+    rgb(0, 210, 255),
+    rgb(58, 123, 213)
+  );
+  text-shadow: 1px 1px 2px black;
+}

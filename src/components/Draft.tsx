@@ -7,6 +7,7 @@ import { Pixelit } from "~/lib/pixelit.js";
 
 import Button from "~/components/Button";
 import FilePicker from "~/components/FilePicker";
+import StylesReel from "~/components/StylesReel";
 
 const containerStyle = {
   display: "flex",
@@ -27,6 +28,20 @@ const textareaStyle = {
   minHeight: "100px",
   resize: "none" as "none",
   overflow: "hidden",
+};
+const cardStyle = {
+  border: 0,
+  outline: 0,
+  margin: 0,
+  width: "100%",
+  resize: "none" as "none",
+  overflow: "hidden",
+  padding: "12px",
+  marginLeft: "-12px",
+  marginTop: "-12px",
+  textAlign: "center" as "center",
+  color: "#fff",
+  fontSize: "1.4em",
 };
 const btnStyle = {
   backgroundColor: "#ccae3a",
@@ -51,10 +66,11 @@ const imgStyle = {
 };
 
 interface Props {
-  onPost: (text: string, image: string) => void;
+  onPost: (text: string, image: string, styleId: number) => void;
 }
 
 export default function Draft({ onPost }: Props) {
+  const [styleId, setStyleId] = useState<number>(0);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const [imgUrl, setImgUrl] = useState<string>("");
 
@@ -68,16 +84,25 @@ export default function Draft({ onPost }: Props) {
   });
 
   const onClick = useCallback(() => {
-    onPost(textareaRef.current?.value || "", imgUrl);
-  }, [imgUrl, textareaRef, onPost]);
+    onPost(textareaRef.current?.value || "", imgUrl, styleId);
+  }, [styleId, imgUrl, textareaRef, onPost]);
 
   const onFileSelected = useCallback(
     async (file: File) => {
       const blobUrl = URL.createObjectURL(file);
       setImgUrl(await pixelate(blobUrl));
+      setStyleId(0);
       URL.revokeObjectURL(blobUrl);
     },
     [setImgUrl],
+  );
+
+  const onStyleSelected = useCallback(
+    (styleId: number) => {
+      setStyleId(styleId);
+      setImgUrl("");
+    },
+    [setStyleId, setImgUrl],
   );
 
   const hint = "What's on your mind?";
@@ -85,20 +110,23 @@ export default function Draft({ onPost }: Props) {
   return (
     <div style={containerStyle}>
       <textarea
+        className={styleId > 0 ? `grad grad${styleId}` : undefined}
         ref={textareaRef}
-        style={textareaStyle}
+        style={styleId > 0 ? cardStyle : textareaStyle}
         placeholder={hint}
       ></textarea>
       {imgUrl && <img src={imgUrl} style={imgStyle} />}
-      <FilePicker
-        accept="image/*"
-        onFileSelected={onFileSelected}
-        style={iconBtnStyle}
-      >
-        <PixelarticonsImageMultiple
-          style={{ verticalAlign: "middle", width: "1.2em", height: "auto" }}
-        />
-      </FilePicker>
+      <StylesReel onStyleSelected={onStyleSelected} selected={styleId}>
+        <FilePicker
+          accept="image/*"
+          onFileSelected={onFileSelected}
+          style={iconBtnStyle}
+        >
+          <PixelarticonsImageMultiple
+            style={{ verticalAlign: "middle", width: "1.2em", height: "auto" }}
+          />
+        </FilePicker>
+      </StylesReel>
       <Button style={btnStyle} onClick={onClick}>
         Post
       </Button>
