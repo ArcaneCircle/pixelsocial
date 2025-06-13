@@ -26,6 +26,22 @@ button * {
   cursor: pointer;
 }
 
+.noselect,
+.noselect * {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  cursor: default;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.hpad08 {
+  padding-left: 0.8em;
+  padding-right: 0.8em;
+}
+
 .grad {
   color: #fff;
 }

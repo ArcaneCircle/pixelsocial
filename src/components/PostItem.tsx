@@ -1,4 +1,8 @@
+import { useRef, useCallback } from "react";
+import { toJpeg } from "html-to-image";
+
 import UserItem from "~/components/UserItem";
+import PostActionsBar from "~/components/PostActionsBar";
 
 import { formatDateShort } from "~/lib/util";
 
@@ -8,7 +12,7 @@ const containerStyle = {
   flexWrap: "nowrap" as "nowrap",
   gap: "0.5em",
   borderBottom: "1px solid hsl(240, 16%, 23%)",
-  padding: "0.5em 0.8em",
+  padding: "0.5em 0",
 };
 const contentStyle = {
   display: "flex",
@@ -31,18 +35,47 @@ interface Props {
 }
 
 export default function PostItem({ post }: Props) {
+  const textRef = useRef<HTMLDivElement | null>(null);
+
+  const onLike = useCallback(async () => {
+    alert("Feature not implemented yet");
+  }, [post.id]);
+
+  const onShare = useCallback(async () => {
+    let text = "";
+    let file = undefined;
+    if (post.style) {
+      const imgUrl = await toJpeg(textRef.current!, { quality: 0.95 });
+      const base64 = imgUrl.split(",")[1];
+      // @ts-ignore
+      file = { name: "image.jpeg", type: "image", base64 };
+    } else {
+      text = post.text;
+      if (post.image) {
+        const base64 = post.image.split(",")[1];
+        file = { name: "image.png", type: "image", base64 };
+      }
+    }
+    window.webxdc.sendToChat({ file, text });
+  }, [post, textRef]);
+
   return (
     <div style={containerStyle}>
       <UserItem
+        className="hpad08"
         userId={post.authorId}
         name={post.authorName}
         subtitle={formatDateShort(post.date)}
       />
       <div style={contentStyle}>
-        <div className={post.style ? `card grad${post.style}` : undefined}>
+        <div
+          ref={textRef}
+          className={post.style ? `card grad${post.style}` : "hpad08"}
+        >
           {post.text}
         </div>
         {post.image && <img src={post.image} style={imgStyle} />}
+        <PostActionsBar className="hpad08" onLike={onLike} onShare={onShare} />
       </div>
     </div>
   );

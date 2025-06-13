@@ -27,6 +27,7 @@
   "dependencies": {
     "@fontsource/jersey-10": "^5.2.6",
     "dexie": "^4.0.11",
+    "html-to-image": "^1.11.13",
     "lodash": "^4.17.21",
     "preact": "^10.26.5"
   }

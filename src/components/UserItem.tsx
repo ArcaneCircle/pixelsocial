@@ -26,11 +26,12 @@ interface Props {
   name: string;
   userId: string;
   subtitle?: string;
+  [key: string]: any;
 }
 
-export default function UserItem({ name, userId, subtitle }: Props) {
+export default function UserItem({ name, userId, subtitle, ...props }: Props) {
   return (
-    <div style={containerStyle}>
+    <div style={containerStyle} {...props}>
       <MonsterAvatar
         value={userId}
         width={40}
