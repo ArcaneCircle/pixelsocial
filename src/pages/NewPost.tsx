@@ -1,6 +1,6 @@
-import { useMemo } from "react";
+import { useMemo, useContext } from "react";
 
-import { Manager } from "~/lib/manager.ts";
+import { ManagerContext } from "~/lib/manager.ts";
 
 import TitleBar from "~/components/TitleBar";
 import UserItem from "~/components/UserItem";
@@ -21,11 +21,11 @@ const btnStyle = {
 };
 
 interface Props {
-  manager: Manager;
   setPage: (page: PageKey) => void;
 }
 
-export default function NewPost({ manager, setPage }: Props) {
+export default function NewPost({ setPage }: Props) {
+  const manager = useContext(ManagerContext);
   const titleBarM = useMemo(() => {
     const onClick = () => setPage("home");
     return (

@@ -1,8 +1,12 @@
+import { createContext } from "react";
 import { ReceivedStatusUpdate } from "@webxdc/types";
 import throttle from "lodash/throttle";
 
 import { getRandomUUID } from "~/lib/util";
 import { db } from "~/lib/storage";
+
+// @ts-ignore
+export const ManagerContext = createContext<Manager>(null);
 
 export class Manager {
   private onPostsChanged: () => void;
@@ -20,7 +24,11 @@ export class Manager {
   async init(setPosts: (posts: Post[]) => void) {
     const workerLoop = async () => {
       while (this.queue.length > 0) {
-        await this.processUpdate(this.queue.shift()!);
+        try {
+          await this.processUpdate(this.queue.shift()!);
+        } catch (ex) {
+          console.error(ex);
+        }
       }
       setTimeout(workerLoop, 100);
     };
@@ -46,6 +54,20 @@ export class Manager {
     });
   }
 
+  like(postId: string) {
+    window.webxdc.sendUpdate(
+      { payload: { like: { postId, userId: this.selfId } } },
+      "",
+    );
+  }
+
+  unlike(postId: string) {
+    window.webxdc.sendUpdate(
+      { payload: { unlike: { postId, userId: this.selfId } } },
+      "",
+    );
+  }
+
   sendPost(text: string, image: string, style: number) {
     const post = {
       id: getRandomUUID(),
@@ -55,6 +77,7 @@ export class Manager {
       text,
       image,
       style,
+      likes: 0,
     };
     const info = `${this.selfName} created a post`;
     window.webxdc.sendUpdate({ payload: { post }, info }, "");
@@ -71,7 +94,28 @@ export class Manager {
     if ("post" in payload) {
       await db.posts.put(payload.post);
       this.onPostsChanged();
+    } else if ("like" in payload) {
+      const { postId, userId } = payload.like;
+      await db.transaction("rw", db.posts, db.likes, async () => {
+        await db.likes.put({ postId, userId });
+        const post = (await db.posts.where({ id: postId }).first())!;
+        post.likes = await db.likes.where({ postId }).count();
+        if (userId === this.selfId) post.liked = true;
+        await db.posts.put(post);
+      });
+      this.onPostsChanged();
+    } else if ("unlike" in payload) {
+      const { postId, userId } = payload.unlike;
+      await db.transaction("rw", db.posts, db.likes, async () => {
+        await db.likes.where({ postId, userId }).delete();
+        const post = (await db.posts.where({ id: postId }).first())!;
+        post.likes = await db.likes.where({ postId }).count();
+        if (userId === this.selfId) post.liked = false;
+        await db.posts.put(post);
+      });
+      this.onPostsChanged();
     }
+
     if (update.serial === update.max_serial) {
       localStorage.maxSerial = update.serial;
     }

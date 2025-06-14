@@ -8,7 +8,7 @@ interface Props {
 
 export default function Feed({ posts }: Props) {
   const items = posts.map((p) =>
-    useMemo(() => <PostItem key={p.id} post={p} />, [p.id]),
+    useMemo(() => <PostItem key={p.id} post={p} />, [p.id, p.likes, p.liked]),
   );
 
   return (

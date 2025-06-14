@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 
-import { Manager } from "~/lib/manager.ts";
+import { Manager, ManagerContext } from "~/lib/manager.ts";
 
 import Home from "~/pages/Home";
 import NewPost from "~/pages/NewPost";
@@ -27,11 +27,10 @@ export default function App() {
       [posts, setPage],
     );
   } else if (pageKey === "newpost") {
-    page = useMemo(
-      () => <NewPost manager={manager} setPage={setPage} />,
-      [manager, setPage],
-    );
+    page = useMemo(() => <NewPost setPage={setPage} />, [setPage]);
   }
 
-  return page;
+  return (
+    <ManagerContext.Provider value={manager}>{page}</ManagerContext.Provider>
+  );
 }

@@ -1,10 +1,11 @@
-import { useRef, useCallback } from "react";
+import { useRef, useCallback, useContext } from "react";
 import { toJpeg } from "html-to-image";
+
+import { ManagerContext } from "~/lib/manager.ts";
+import { formatDateShort } from "~/lib/util";
 
 import UserItem from "~/components/UserItem";
 import PostActionsBar from "~/components/PostActionsBar";
-
-import { formatDateShort } from "~/lib/util";
 
 const containerStyle = {
   display: "flex",
@@ -35,11 +36,16 @@ interface Props {
 }
 
 export default function PostItem({ post }: Props) {
+  const manager = useContext(ManagerContext);
   const textRef = useRef<HTMLDivElement | null>(null);
 
   const onLike = useCallback(async () => {
-    alert("Feature not implemented yet");
-  }, [post.id]);
+    if (post.liked) {
+      manager.unlike(post.id);
+    } else {
+      manager.like(post.id);
+    }
+  }, [post.id, post.liked]);
 
   const onShare = useCallback(async () => {
     let text = "";
@@ -75,7 +81,12 @@ export default function PostItem({ post }: Props) {
           {post.text}
         </div>
         {post.image && <img src={post.image} style={imgStyle} />}
-        <PostActionsBar className="hpad08" onLike={onLike} onShare={onShare} />
+        <PostActionsBar
+          className="hpad08"
+          post={post}
+          onLike={onLike}
+          onShare={onShare}
+        />
       </div>
     </div>
   );
