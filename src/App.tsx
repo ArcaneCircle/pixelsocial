@@ -1,9 +1,11 @@
 import { useState, useMemo } from "react";
 
-import { Manager, ManagerContext } from "~/lib/manager.ts";
+import { Manager } from "~/lib/manager.ts";
+import { ManagerContext, PageContext } from "~/contexts.ts";
 
 import Home from "~/pages/Home";
 import NewPost from "~/pages/NewPost";
+import PostComments from "~/pages/PostComments";
 
 // @ts-ignore
 import "@fontsource/jersey-10";
@@ -16,21 +18,27 @@ export default function App() {
     manager.init(setPosts);
     return manager;
   }, []);
-  const [pageKey, setPage] = useState<PageKey>("home");
+  const [pageData, setPage] = useState<PageData>({ key: "home" });
 
   if (!posts) return;
 
   let page: any = null;
-  if (pageKey === "home") {
-    page = useMemo(
-      () => <Home posts={posts} setPage={setPage} />,
-      [posts, setPage],
-    );
-  } else if (pageKey === "newpost") {
-    page = useMemo(() => <NewPost setPage={setPage} />, [setPage]);
+  if (pageData.key === "home") {
+    page = useMemo(() => <Home posts={posts} />, [posts]);
+  } else if (pageData.key === "newpost") {
+    page = useMemo(() => <NewPost />, []);
+  } else if (pageData.key === "comments") {
+    const post = posts.find((p) => pageData.postId === p.id);
+    if (post) {
+      page = useMemo(() => <PostComments post={post} />, [post]);
+    }
   }
 
   return (
-    <ManagerContext.Provider value={manager}>{page}</ManagerContext.Provider>
+    <ManagerContext.Provider value={manager}>
+      <PageContext.Provider value={{ pageData, setPage }}>
+        {page}
+      </PageContext.Provider>
+    </ManagerContext.Provider>
   );
 }

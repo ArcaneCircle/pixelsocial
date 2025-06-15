@@ -1,12 +1,8 @@
-import { createContext } from "react";
 import { ReceivedStatusUpdate } from "@webxdc/types";
 import throttle from "lodash/throttle";
 
 import { getRandomUUID } from "~/lib/util";
 import { db } from "~/lib/storage";
-
-// @ts-ignore
-export const ManagerContext = createContext<Manager>(null);
 
 export class Manager {
   private onPostsChanged: () => void;
@@ -78,9 +74,31 @@ export class Manager {
       image,
       style,
       likes: 0,
+      replies: 0,
     };
     const info = `${this.selfName} created a post`;
     window.webxdc.sendUpdate({ payload: { post }, info }, "");
+  }
+
+  reply(postId: string, text: string) {
+    const reply = {
+      postId,
+      id: getRandomUUID(),
+      authorName: this.selfName,
+      authorId: this.selfId,
+      date: Date.now(),
+      text,
+    };
+    const info = `${this.selfName} replied a post`;
+    window.webxdc.sendUpdate({ payload: { reply }, info }, "");
+  }
+
+  async getReplies(postId: string): Promise<Reply[]> {
+    return await db.replies
+      .where({ postId })
+      .reverse()
+      .limit(500)
+      .sortBy("date");
   }
 
   private async processUpdate(update: ReceivedStatusUpdate<Payload>) {
@@ -93,6 +111,15 @@ export class Manager {
 
     if ("post" in payload) {
       await db.posts.put(payload.post);
+      this.onPostsChanged();
+    } else if ("reply" in payload) {
+      const reply = payload.reply;
+      await db.transaction("rw", db.posts, db.replies, async () => {
+        await db.replies.put(reply);
+        const post = (await db.posts.where({ id: reply.postId }).first())!;
+        post.replies = await db.replies.where({ postId: reply.postId }).count();
+        await db.posts.put(post);
+      });
       this.onPostsChanged();
     } else if ("like" in payload) {
       const { postId, userId } = payload.like;

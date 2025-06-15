@@ -6,6 +6,9 @@ declare type Payload =
       post: Post;
     }
   | {
+      reply: Reply;
+    }
+  | {
       like: Like;
     }
   | {
@@ -15,7 +18,9 @@ declare type Payload =
       delete: string;
     };
 
-declare type PageKey = "home" | "newpost";
+declare type PageData =
+  | { key: "home" | "newpost" }
+  | { key: "comments"; postId: string };
 
 declare interface Post {
   id: string;
@@ -27,6 +32,7 @@ declare interface Post {
   style: number;
   likes: number;
   liked?: boolean;
+  replies: number;
 }
 
 declare interface Like {

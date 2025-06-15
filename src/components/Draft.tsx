@@ -1,11 +1,12 @@
-import { useRef, useState, useCallback, useEffect } from "react";
+import { useRef, useState, useCallback, useEffect, useContext } from "react";
 import PixelarticonsImageMultiple from "~icons/pixelarticons/image-multiple";
 
 import { loadImage } from "~/lib/util.js";
 // @ts-ignore
 import { Pixelit } from "~/lib/pixelit.js";
+import { ManagerContext, PageContext } from "~/contexts.ts";
 
-import Button from "~/components/Button";
+import PrimaryButton from "~/components/PrimaryButton";
 import FilePicker from "~/components/FilePicker";
 import StylesReel from "~/components/StylesReel";
 
@@ -43,8 +44,6 @@ const cardStyle = {
   fontSize: "1.4em",
 };
 const btnStyle = {
-  backgroundColor: "rgb(213, 176, 34)",
-  color: "black",
   flex: "1 1 auto",
   marginTop: "0.5em",
 };
@@ -64,14 +63,13 @@ const imgStyle = {
   alignSelf: "center",
 };
 
-interface Props {
-  onPost: (text: string, image: string, styleId: number) => void;
-}
+export default function Draft() {
+  const manager = useContext(ManagerContext);
+  const { setPage } = useContext(PageContext);
 
-export default function Draft({ onPost }: Props) {
   const [styleId, setStyleId] = useState<number>(0);
-  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const [imgUrl, setImgUrl] = useState<string>("");
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   useEffect(() => {
     const textarea = textareaRef.current;
@@ -83,8 +81,11 @@ export default function Draft({ onPost }: Props) {
   });
 
   const onClick = useCallback(() => {
-    onPost(textareaRef.current?.value || "", imgUrl, styleId);
-  }, [styleId, imgUrl, textareaRef, onPost]);
+    const text = textareaRef.current?.value || "";
+    if (!text && !imgUrl) return;
+    manager.sendPost(text, imgUrl, styleId);
+    setPage({ key: "home" });
+  }, [styleId, imgUrl, textareaRef, manager, setPage]);
 
   const onFileSelected = useCallback(
     async (file: File) => {
@@ -126,9 +127,9 @@ export default function Draft({ onPost }: Props) {
           />
         </FilePicker>
       </StylesReel>
-      <Button style={btnStyle} onClick={onClick}>
+      <PrimaryButton style={btnStyle} onClick={onClick}>
         Post
-      </Button>
+      </PrimaryButton>
     </div>
   );
 }

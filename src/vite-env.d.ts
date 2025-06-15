@@ -1,2 +1,8 @@
 /// <reference types="vite/client" />
-/// <reference types="@webxdc/types/global" />
+import { Webxdc } from "@webxdc/types";
+
+declare global {
+  interface Window {
+    webxdc: Webxdc<Payload>;
+  }
+}

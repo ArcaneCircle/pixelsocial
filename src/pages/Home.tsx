@@ -1,28 +1,22 @@
-import { useMemo } from "react";
+import { useMemo, useContext } from "react";
+
+import { PageContext } from "~/contexts.ts";
 
 import TitleBar from "~/components/TitleBar";
 import Feed from "~/components/Feed";
-import Button from "~/components/Button";
-
-const btnStyle = {
-  background: "none",
-  border: "1px solid #ccae3a",
-  color: "#ccae3a",
-};
+import SecondaryButton from "~/components/SecondaryButton";
 
 interface Props {
   posts: Post[];
-  setPage: (page: PageKey) => void;
 }
 
-export default function Home({ posts, setPage }: Props) {
+export default function Home({ posts }: Props) {
+  const { setPage } = useContext(PageContext);
   const TitleBarM = useMemo(() => {
-    const onClick = () => setPage("newpost");
+    const onClick = () => setPage({ key: "newpost" });
     return (
       <TitleBar>
-        <Button style={btnStyle} onClick={onClick}>
-          New post
-        </Button>
+        <SecondaryButton onClick={onClick}>New post</SecondaryButton>
       </TitleBar>
     );
   }, [setPage]);

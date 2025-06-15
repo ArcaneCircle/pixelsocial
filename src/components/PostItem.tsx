@@ -1,7 +1,6 @@
-import { useRef, useCallback, useContext } from "react";
+import { useRef, useCallback } from "react";
 import { toJpeg } from "html-to-image";
 
-import { ManagerContext } from "~/lib/manager.ts";
 import { formatDateShort } from "~/lib/util";
 
 import UserItem from "~/components/UserItem";
@@ -36,16 +35,7 @@ interface Props {
 }
 
 export default function PostItem({ post }: Props) {
-  const manager = useContext(ManagerContext);
   const textRef = useRef<HTMLDivElement | null>(null);
-
-  const onLike = useCallback(async () => {
-    if (post.liked) {
-      manager.unlike(post.id);
-    } else {
-      manager.like(post.id);
-    }
-  }, [post.id, post.liked]);
 
   const onShare = useCallback(async () => {
     let text = "";
@@ -63,7 +53,7 @@ export default function PostItem({ post }: Props) {
       }
     }
     window.webxdc.sendToChat({ file, text });
-  }, [post, textRef]);
+  }, [post.text, post.image, post.style, textRef]);
 
   return (
     <div style={containerStyle}>
@@ -81,12 +71,7 @@ export default function PostItem({ post }: Props) {
           {post.text}
         </div>
         {post.image && <img src={post.image} style={imgStyle} />}
-        <PostActionsBar
-          className="hpad08"
-          post={post}
-          onLike={onLike}
-          onShare={onShare}
-        />
+        <PostActionsBar className="hpad08" post={post} onShare={onShare} />
       </div>
     </div>
   );

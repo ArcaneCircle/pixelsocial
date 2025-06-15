@@ -1,6 +1,6 @@
 import { useRef, useCallback } from "react";
 
-import Button from "~/components/Button";
+import IconButton from "~/components/IconButton";
 
 interface Props {
   accept: string;
@@ -30,7 +30,7 @@ export default function FilePicker({
   }, [inputFile]);
 
   return (
-    <Button onClick={onClick} {...props}>
+    <IconButton onClick={onClick} {...props}>
       {children}
       <input
         type="file"
@@ -40,6 +40,6 @@ export default function FilePicker({
         ref={inputFile}
         style={{ display: "none" }}
       />
-    </Button>
+    </IconButton>
   );
 }

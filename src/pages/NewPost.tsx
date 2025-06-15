@@ -1,11 +1,11 @@
 import { useMemo, useContext } from "react";
 
-import { ManagerContext } from "~/lib/manager.ts";
+import { ManagerContext, PageContext } from "~/contexts.ts";
 
 import TitleBar from "~/components/TitleBar";
 import UserItem from "~/components/UserItem";
 import Draft from "~/components/Draft";
-import Button from "~/components/Button";
+import SecondaryButton from "~/components/SecondaryButton";
 
 const containerStyle = {
   display: "flex",
@@ -14,25 +14,15 @@ const containerStyle = {
   gap: "0.5em",
   padding: "0.8em",
 };
-const btnStyle = {
-  background: "none",
-  border: "1px solid #ccae3a",
-  color: "#ccae3a",
-};
 
-interface Props {
-  setPage: (page: PageKey) => void;
-}
-
-export default function NewPost({ setPage }: Props) {
+export default function NewPost() {
   const manager = useContext(ManagerContext);
+  const { setPage } = useContext(PageContext);
   const titleBarM = useMemo(() => {
-    const onClick = () => setPage("home");
+    const onClick = () => setPage({ key: "home" });
     return (
       <TitleBar>
-        <Button style={btnStyle} onClick={onClick}>
-          Cancel
-        </Button>
+        <SecondaryButton onClick={onClick}>Cancel</SecondaryButton>
       </TitleBar>
     );
   }, [setPage]);
@@ -41,14 +31,7 @@ export default function NewPost({ setPage }: Props) {
     return <UserItem userId={manager.selfId} name={manager.selfName} />;
   }, [manager]);
 
-  const draftM = useMemo(() => {
-    const onPost = (text: string, image: string, style: number) => {
-      if (!text && !image) return;
-      manager.sendPost(text, image, style);
-      setPage("home");
-    };
-    return <Draft onPost={onPost} />;
-  }, [manager]);
+  const draftM = useMemo(() => <Draft />, []);
 
   return (
     <div>
