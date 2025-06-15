@@ -11,7 +11,7 @@ export default defineConfig({
     buildXDC(),
     eruda(),
     mockWebxdc(),
-    Icons({ compiler: "jsx", jsx: "react" }),
+    Icons({ scale: 1, compiler: "jsx", jsx: "react" }),
   ],
   resolve: {
     alias: {

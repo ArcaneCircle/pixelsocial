@@ -48,16 +48,16 @@ export default function PostActionsBar({ post, onShare, ...props }: Props) {
         {post.liked ? (
           <IconHeartFill />
         ) : (
-          <PixelarticonsHeart style={{ width: "1em" }} />
+          <PixelarticonsHeart />
         )}
         {post.likes}
       </IconButton>
       <IconButton onClick={onComment}>
-        <PixelarticonsComment style={{ width: "1em" }} />
+        <PixelarticonsComment />
         {post.replies}
       </IconButton>
       <IconButton>
-        <PixelarticonsForward onClick={onShare} />
+        <PixelarticonsForward style={{ width: "1.2em", height: "auto" }} onClick={onShare} />
       </IconButton>
     </div>
   );
