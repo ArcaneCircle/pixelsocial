@@ -4,8 +4,8 @@ import { ManagerContext, PageContext } from "~/contexts.ts";
 import PixelarticonsHeart from "~icons/pixelarticons/heart";
 import PixelarticonsComment from "~icons/pixelarticons/comment";
 import PixelarticonsForward from "~icons/pixelarticons/forward";
+import IconHeartFilled from "~icons/custom/heart-filled";
 
-import IconHeartFill from "~/components/IconHeartFill";
 import IconButton from "~/components/IconButton";
 
 const containerStyle = {
@@ -45,11 +45,7 @@ export default function PostActionsBar({ post, onShare, ...props }: Props) {
   return (
     <div style={containerStyle} {...props}>
       <IconButton style={likeIconStyle} onClick={onLike}>
-        {post.liked ? (
-          <IconHeartFill />
-        ) : (
-          <PixelarticonsHeart />
-        )}
+        {post.liked ? <IconHeartFilled /> : <PixelarticonsHeart />}
         {post.likes}
       </IconButton>
       <IconButton onClick={onComment}>
@@ -57,7 +53,10 @@ export default function PostActionsBar({ post, onShare, ...props }: Props) {
         {post.replies}
       </IconButton>
       <IconButton>
-        <PixelarticonsForward style={{ width: "1.2em", height: "auto" }} onClick={onShare} />
+        <PixelarticonsForward
+          style={{ width: "1.2em", height: "auto" }}
+          onClick={onShare}
+        />
       </IconButton>
     </div>
   );
