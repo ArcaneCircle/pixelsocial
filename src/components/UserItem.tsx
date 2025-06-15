@@ -4,6 +4,7 @@ const containerStyle = {
   display: "flex",
   alignItems: "center",
   gap: "10px",
+  overflow: "hidden",
 };
 const rightStyle = {
   display: "flex",

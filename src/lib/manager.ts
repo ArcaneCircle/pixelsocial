@@ -64,6 +64,10 @@ export class Manager {
     );
   }
 
+  deletePost(postId: string) {
+    window.webxdc.sendUpdate({ payload: { delete: postId } }, "");
+  }
+
   sendPost(text: string, image: string, style: number) {
     const now = Date.now();
     const post = {
@@ -142,6 +146,14 @@ export class Manager {
         post.likes = await db.likes.where({ postId }).count();
         if (userId === this.selfId) post.liked = false;
         await db.posts.put(post);
+      });
+      this.onPostsChanged();
+    } else if ("delete" in payload) {
+      const postId = payload.delete;
+      await db.transaction("rw", db.posts, db.replies, db.likes, async () => {
+        await db.posts.where({ id: postId }).delete();
+        await db.replies.where({ postId }).delete();
+        await db.likes.where({ postId }).delete();
       });
       this.onPostsChanged();
     }

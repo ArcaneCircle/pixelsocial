@@ -1,0 +1,10 @@
+.modal {
+  background-color: hsl(240, 16%, 11%);
+  color: inherit;
+  border: 1px solid hsl(240, 16%, 23%);
+  outline: 0;
+  padding: 0;
+}
+.modal::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+}

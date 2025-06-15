@@ -31,6 +31,9 @@ export default function App() {
     const post = posts.find((p) => pageData.postId === p.id);
     if (post) {
       page = useMemo(() => <PostComments post={post} />, [post]);
+    } else {
+      // post deleted, go home
+      setPage({ key: "home" });
     }
   }
 
