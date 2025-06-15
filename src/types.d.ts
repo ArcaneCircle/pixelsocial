@@ -27,6 +27,7 @@ declare interface Post {
   authorName: string;
   authorId: string;
   date: number;
+  active: number;
   text: string;
   image: string;
   style: number;

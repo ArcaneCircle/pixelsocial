@@ -36,10 +36,10 @@ export class Manager {
     );
     const today = new Date().setHours(0, 0, 0, 0);
     const oldDate = new Date(today).setDate(new Date(today).getDate() - 360);
-    await db.posts.where("date").below(oldDate).delete();
+    await db.posts.where("active").below(oldDate).delete();
 
     const onPostsChanged = throttle(async () => {
-      setPosts(await db.posts.orderBy("date").reverse().limit(500).toArray());
+      setPosts(await db.posts.orderBy("active").reverse().limit(500).toArray());
     }, 500);
     this.queue.push({
       payload: {
@@ -65,9 +65,11 @@ export class Manager {
   }
 
   sendPost(text: string, image: string, style: number) {
+    const now = Date.now();
     const post = {
       id: getRandomUUID(),
-      date: Date.now(),
+      date: now,
+      active: now,
       authorName: this.selfName,
       authorId: this.selfId,
       text,
@@ -118,6 +120,7 @@ export class Manager {
         await db.replies.put(reply);
         const post = (await db.posts.where({ id: reply.postId }).first())!;
         post.replies = await db.replies.where({ postId: reply.postId }).count();
+        post.active = Math.max(post.active, reply.date);
         await db.posts.put(post);
       });
       this.onPostsChanged();
