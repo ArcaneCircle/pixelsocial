@@ -8,5 +8,5 @@ export const db = new Dexie("appdb") as Dexie & {
 db.version(1).stores({
   posts: "id, active",
   likes: "[postId+userId]",
-  replies: "[postId+id]",
+  replies: "id, postId",
 });

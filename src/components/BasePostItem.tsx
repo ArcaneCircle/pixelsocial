@@ -1,0 +1,89 @@
+import { useCallback, useState, useMemo } from "react";
+
+import PixelarticonsMoreHorizontal from "~icons/pixelarticons/more-horizontal";
+import PixelarticonsTrash from "~icons/pixelarticons/trash";
+
+import { formatDateShort } from "~/lib/util";
+
+import UserItem from "~/components/UserItem";
+import IconButton from "~/components/IconButton";
+import { Modal, ModalContext } from "~/components/modals/Modal";
+
+const containerStyle = {
+  display: "flex",
+  flexDirection: "column" as "column",
+  flexWrap: "nowrap" as "nowrap",
+  gap: "0.5em",
+  borderBottom: "1px solid hsl(240, 16%, 23%)",
+  padding: "0.5em 0",
+  overflow: "hidden",
+};
+const topStyle = {
+  display: "flex",
+  justifyContent: "space-between",
+  gap: "0.5em",
+};
+const contentStyle = {
+  display: "flex",
+  flexDirection: "column" as "column",
+  gap: "0.3em",
+  overflowWrap: "break-word" as "break-word",
+  wordBreak: "break-word" as "break-word",
+  whiteSpace: "pre-wrap",
+};
+const menuIconStyle = { width: "1.2em", height: "auto" };
+
+interface Props {
+  children: React.ReactNode;
+  authorId: string;
+  authorName: string;
+  date: number;
+  deletePost: () => void;
+}
+
+export default function BasePostItem({
+  authorName,
+  authorId,
+  date,
+  deletePost,
+  children,
+}: Props) {
+  const [isOpen, setOpen] = useState<boolean>(false);
+
+  const onMenu = useCallback(() => {
+    setOpen((isOpen) => !isOpen);
+  }, []);
+
+  let modal: any = null;
+  if (isOpen) {
+    modal = useMemo(() => {
+      return (
+        <ModalContext.Provider value={{ isOpen, setOpen }}>
+          <Modal style={{ padding: "0.5em 1em" }}>
+            <IconButton onClick={deletePost}>
+              <PixelarticonsTrash />
+              Delete
+            </IconButton>
+          </Modal>
+        </ModalContext.Provider>
+      );
+    }, [deletePost]);
+  }
+
+  return (
+    <div style={containerStyle}>
+      {modal}
+      <div className="hpad08" style={topStyle}>
+        <UserItem
+          userId={authorId}
+          name={authorName}
+          subtitle={formatDateShort(date)}
+        />
+        <IconButton onClick={onMenu}>
+          <PixelarticonsMoreHorizontal style={menuIconStyle} />
+        </IconButton>
+      </div>
+      <div style={contentStyle}>{children}</div>
+    </div>
+  );
+}

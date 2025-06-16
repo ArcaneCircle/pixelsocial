@@ -65,7 +65,11 @@ export class Manager {
   }
 
   deletePost(postId: string) {
-    window.webxdc.sendUpdate({ payload: { delete: postId } }, "");
+    window.webxdc.sendUpdate({ payload: { deleteP: postId } }, "");
+  }
+
+  deleteReply(postId: string, replyId: string) {
+    window.webxdc.sendUpdate({ payload: { deleteR: { postId, replyId } } }, "");
   }
 
   sendPost(text: string, image: string, style: number) {
@@ -148,12 +152,23 @@ export class Manager {
         await db.posts.put(post);
       });
       this.onPostsChanged();
-    } else if ("delete" in payload) {
-      const postId = payload.delete;
+    } else if ("deleteP" in payload) {
+      const postId = payload.deleteP;
       await db.transaction("rw", db.posts, db.replies, db.likes, async () => {
         await db.posts.where({ id: postId }).delete();
         await db.replies.where({ postId }).delete();
         await db.likes.where({ postId }).delete();
+      });
+      this.onPostsChanged();
+    } else if ("deleteR" in payload) {
+      const { postId, replyId } = payload.deleteR;
+      await db.transaction("rw", db.posts, db.replies, async () => {
+        await db.replies.where({ postId, id: replyId }).delete();
+        const post = (await db.posts.where({ id: postId }).first())!;
+        post.replies = await db.replies.where({ postId }).count();
+        const reply = await db.replies.where({ postId }).reverse().first();
+        post.active = Math.max(post.date, reply ? reply.date : post.date);
+        await db.posts.put(post);
       });
       this.onPostsChanged();
     }

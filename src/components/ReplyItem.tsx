@@ -1,37 +1,28 @@
-import { formatDateShort } from "~/lib/util";
+import { useCallback, useContext } from "react";
 
-import UserItem from "~/components/UserItem";
+import { ManagerContext } from "~/contexts.ts";
 
-const containerStyle = {
-  display: "flex",
-  flexDirection: "column" as "column",
-  flexWrap: "nowrap" as "nowrap",
-  gap: "0.5em",
-  borderBottom: "1px solid hsl(240, 16%, 23%)",
-  padding: "0.5em 0",
-};
-const contentStyle = {
-  overflowWrap: "break-word" as "break-word",
-  wordBreak: "break-word" as "break-word",
-  whiteSpace: "pre-wrap",
-};
+import BasePostItem from "~/components/BasePostItem";
 
 interface Props {
   reply: Reply;
 }
 
 export default function ReplyItem({ reply }: Props) {
+  const manager = useContext(ManagerContext);
+  const deleteReply = useCallback(
+    () => manager.deleteReply(reply.postId, reply.id),
+    [reply.id],
+  );
+
   return (
-    <div style={containerStyle}>
-      <UserItem
-        className="hpad08"
-        userId={reply.authorId}
-        name={reply.authorName}
-        subtitle={formatDateShort(reply.date)}
-      />
-      <div className="hpad08" style={contentStyle}>
-        {reply.text}
-      </div>
-    </div>
+    <BasePostItem
+      authorId={reply.authorId}
+      authorName={reply.authorName}
+      date={reply.date}
+      deletePost={deleteReply}
+    >
+      <span className="hpad08">{reply.text}</span>
+    </BasePostItem>
   );
 }

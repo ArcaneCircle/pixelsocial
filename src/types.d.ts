@@ -15,7 +15,10 @@ declare type Payload =
       unlike: Like;
     }
   | {
-      delete: string;
+      deleteP: string;
+    }
+  | {
+      deleteR: { postId: string; replyId: string };
     };
 
 declare type PageData =
