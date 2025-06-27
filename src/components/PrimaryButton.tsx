@@ -1,7 +1,7 @@
 import Button from "~/components/Button";
 
 const btnStyle = {
-  backgroundColor: "rgb(213, 176, 34)",
+  backgroundColor: "#d5b022",
   color: "black",
 };
 

@@ -18,7 +18,7 @@ const nameStyle = {
   whiteSpace: "nowrap",
 };
 const subtitleStyle = {
-  color: "rgb(132, 132, 132)",
+  color: "#848484",
   textWrap: "nowrap" as "nowrap",
   fontSize: "0.8em",
 };

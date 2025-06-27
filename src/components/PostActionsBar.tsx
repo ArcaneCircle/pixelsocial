@@ -39,7 +39,7 @@ export default function PostActionsBar({ post, onShare, ...props }: Props) {
   }, [post.id]);
 
   const likeIconStyle = {
-    color: post.liked ? "rgb(213, 176, 34)" : undefined,
+    color: post.liked ? "#d5b022" : undefined,
   };
 
   return (

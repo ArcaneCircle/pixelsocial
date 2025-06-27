@@ -16,11 +16,11 @@ const containerStyle = {
   flexWrap: "nowrap" as "nowrap",
   gap: "12px",
   padding: "12px",
-  backgroundColor: "hsl(240,16%,19%)",
+  backgroundColor: "#292938",
 };
 const textareaStyle = {
   color: "#ddd9e8",
-  backgroundColor: "hsl(240,16%,19%)",
+  backgroundColor: "#292938",
   border: 0,
   outline: 0,
   margin: 0,

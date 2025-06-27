@@ -9,10 +9,10 @@ export default function TitleBar({ children }: Props) {
     alignItems: "center",
     justifyContent: "space-between",
     padding: "0.4em 0.8em",
-    borderBottom: "1px solid hsl(240, 16%, 23%)",
+    borderBottom: "1px solid #313144",
     position: "sticky" as "sticky",
     top: 0,
-    backgroundColor: "hsl(240, 16%, 11%)",
+    backgroundColor: "#181821",
   };
   const imgStyle = {
     width: "1.4em",

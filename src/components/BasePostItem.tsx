@@ -14,7 +14,7 @@ const containerStyle = {
   flexDirection: "column" as "column",
   flexWrap: "nowrap" as "nowrap",
   gap: "0.5em",
-  borderBottom: "1px solid hsl(240, 16%, 23%)",
+  borderBottom: "1px solid #313144",
   padding: "0.5em 0",
   overflow: "hidden",
 };
