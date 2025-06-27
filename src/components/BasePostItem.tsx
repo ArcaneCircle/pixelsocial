@@ -39,6 +39,7 @@ interface Props {
   authorName: string;
   date: number;
   deletePost: () => void;
+  [key: string]: any;
 }
 
 export default function BasePostItem({
@@ -47,7 +48,9 @@ export default function BasePostItem({
   date,
   deletePost,
   children,
+  ...props
 }: Props) {
+  props.style = { ...containerStyle, ...(props.style || {}) };
   const [isOpen, setOpen] = useState<boolean>(false);
 
   const onMenu = useCallback(() => {
@@ -71,7 +74,7 @@ export default function BasePostItem({
   }
 
   return (
-    <div style={containerStyle}>
+    <div {...props}>
       {modal}
       <div className="hpad08" style={topStyle}>
         <UserItem

@@ -21,6 +21,7 @@ export default function ReplyItem({ reply }: Props) {
       authorName={reply.authorName}
       date={reply.date}
       deletePost={deleteReply}
+      style={{ backgroundColor: "#23232f" }}
     >
       <span className="hpad08">{reply.text}</span>
     </BasePostItem>
