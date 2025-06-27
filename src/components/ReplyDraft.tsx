@@ -43,11 +43,26 @@ export default function ReplyDraft({ postId }: Props) {
     inputRef.current.value = "";
   }, [postId, inputRef, manager]);
 
+  const handleBlur = useCallback(
+    (event: React.FocusEvent<HTMLInputElement>) => {
+      // Prevent the input from losing focus
+      event.preventDefault();
+      inputRef.current!.focus();
+    },
+    [inputRef],
+  );
+
   const hint = "Write a reply...";
 
   return (
     <div style={containerStyle}>
-      <input ref={inputRef} style={inputStyle} placeholder={hint} type="text" />
+      <input
+        ref={inputRef}
+        style={inputStyle}
+        placeholder={hint}
+        type="text"
+        onBlur={handleBlur}
+      />
       <PrimaryButton onClick={onClick}>Send</PrimaryButton>
     </div>
   );
