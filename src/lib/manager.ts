@@ -14,7 +14,7 @@ export class Manager {
     this.onPostsChanged = () => {};
     this.queue = [];
     this.selfName = window.webxdc.selfName;
-    this.selfId = window.webxdc.selfAddr;
+    this.selfId = localStorage.selfId || window.webxdc.selfAddr;
   }
 
   async init(setPosts: (posts: Post[]) => void) {
@@ -171,6 +171,8 @@ export class Manager {
         await db.posts.put(post);
       });
       this.onPostsChanged();
+    } else if ("setId" in payload) {
+      localStorage.selfId = this.selfId = payload.setId;
     }
 
     if (update.serial === update.max_serial) {

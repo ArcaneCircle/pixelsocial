@@ -19,6 +19,10 @@ declare type Payload =
     }
   | {
       deleteR: { postId: string; replyId: string };
+    }
+  // bot special commands:
+  | {
+      setId: string;
     };
 
 declare type PageData =
@@ -45,8 +49,8 @@ declare interface Like {
 }
 
 declare interface Reply {
-  postId: string;
   id: string;
+  postId: string;
   authorName: string;
   authorId: string;
   date: number;
