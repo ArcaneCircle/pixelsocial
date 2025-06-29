@@ -46,6 +46,7 @@ export default function PostItem({ post }: Props) {
     <BasePostItem
       authorId={post.authorId}
       authorName={post.authorName}
+      isAdmin={!!post.isAdmin}
       date={post.date}
       deletePost={deletePost}
     >

@@ -1,3 +1,5 @@
+import PixelarticonsShield from "~icons/pixelarticons/shield";
+
 import MonsterAvatar from "~/components/MonsterAvatar";
 
 const containerStyle = {
@@ -26,19 +28,34 @@ const subtitleStyle = {
 interface Props {
   name: string;
   userId: string;
+  isAdmin: boolean;
   subtitle?: string;
   [key: string]: any;
 }
 
-export default function UserItem({ name, userId, subtitle, ...props }: Props) {
+export default function UserItem({
+  name,
+  userId,
+  isAdmin,
+  subtitle,
+  ...props
+}: Props) {
   return (
     <div style={containerStyle} {...props}>
-      <MonsterAvatar
-        value={userId}
-        width={40}
-        height={40}
-        style={{ background: "black" }}
-      />
+      {isAdmin ? (
+        <div style={{ backgroundColor: "#e1b302" }}>
+          <PixelarticonsShield
+            style={{ width: "40px", height: "40px", verticalAlign: "middle" }}
+          />
+        </div>
+      ) : (
+        <MonsterAvatar
+          value={userId}
+          width={40}
+          height={40}
+          style={{ background: "black" }}
+        />
+      )}
       <div style={rightStyle}>
         <span style={nameStyle}>{name}</span>
         {subtitle && <span style={subtitleStyle}>{subtitle}</span>}

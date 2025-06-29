@@ -19,6 +19,7 @@ export default function ReplyItem({ reply }: Props) {
     <BasePostItem
       authorId={reply.authorId}
       authorName={reply.authorName}
+      isAdmin={!!reply.isAdmin}
       date={reply.date}
       deletePost={deleteReply}
       style={{ backgroundColor: "#23232f" }}

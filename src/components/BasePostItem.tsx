@@ -37,6 +37,7 @@ interface Props {
   children: React.ReactNode;
   authorId: string;
   authorName: string;
+  isAdmin: boolean;
   date: number;
   deletePost: () => void;
   [key: string]: any;
@@ -45,6 +46,7 @@ interface Props {
 export default function BasePostItem({
   authorName,
   authorId,
+  isAdmin,
   date,
   deletePost,
   children,
@@ -78,6 +80,7 @@ export default function BasePostItem({
       {modal}
       <div className="hpad08" style={topStyle}>
         <UserItem
+          isAdmin={isAdmin}
           userId={authorId}
           name={authorName}
           subtitle={formatDateShort(date)}

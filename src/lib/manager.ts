@@ -9,12 +9,14 @@ export class Manager {
   private queue: ReceivedStatusUpdate<Payload>[];
   public selfName: string;
   public selfId: string;
+  public isAdmin: boolean;
 
   constructor() {
     this.onPostsChanged = () => {};
     this.queue = [];
-    this.selfName = window.webxdc.selfName;
+    this.selfName = localStorage.selfName || window.webxdc.selfName;
     this.selfId = localStorage.selfId || window.webxdc.selfAddr;
+    this.isAdmin = localStorage.isAdmin === "true";
   }
 
   async init(setPosts: (posts: Post[]) => void) {
@@ -80,13 +82,15 @@ export class Manager {
       active: now,
       authorName: this.selfName,
       authorId: this.selfId,
+      isAdmin: this.isAdmin,
       text,
       image,
       style,
       likes: 0,
       replies: 0,
     };
-    const info = `${this.selfName} created a post`;
+    const botMode = this.selfId !== window.webxdc.selfAddr;
+    const info = botMode ? undefined : `${this.selfName} created a post`;
     window.webxdc.sendUpdate({ payload: { post }, info }, "");
   }
 
@@ -96,10 +100,12 @@ export class Manager {
       id: getRandomUUID(),
       authorName: this.selfName,
       authorId: this.selfId,
+      isAdmin: this.isAdmin,
       date: Date.now(),
       text,
     };
-    const info = `${this.selfName} replied a post`;
+    const botMode = this.selfId !== window.webxdc.selfAddr;
+    const info = botMode ? undefined : `${this.selfName} replied a post`;
     window.webxdc.sendUpdate({ payload: { reply }, info }, "");
   }
 
@@ -171,8 +177,13 @@ export class Manager {
         await db.posts.put(post);
       });
       this.onPostsChanged();
-    } else if ("setId" in payload) {
-      localStorage.selfId = this.selfId = payload.setId;
+    } else if ("botMode" in payload) {
+      const { selfId, isAdmin, selfName } = payload.botMode;
+      localStorage.selfId = this.selfId = selfId;
+      if (selfName) {
+        localStorage.selfName = this.selfName = selfName;
+      }
+      localStorage.isAdmin = this.isAdmin = isAdmin;
     }
 
     if (update.serial === update.max_serial) {

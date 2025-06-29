@@ -22,7 +22,7 @@ declare type Payload =
     }
   // bot special commands:
   | {
-      setId: string;
+      botMode: { selfId: string; selfName: string; isAdmin: boolean };
     };
 
 declare type PageData =
@@ -33,6 +33,7 @@ declare interface Post {
   id: string;
   authorName: string;
   authorId: string;
+  isAdmin: boolean;
   date: number;
   active: number;
   text: string;
@@ -53,6 +54,7 @@ declare interface Reply {
   postId: string;
   authorName: string;
   authorId: string;
+  isAdmin: boolean;
   date: number;
   text: string;
 }

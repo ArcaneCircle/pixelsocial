@@ -28,7 +28,13 @@ export default function NewPost() {
   }, [setPage]);
 
   const userM = useMemo(() => {
-    return <UserItem userId={manager.selfId} name={manager.selfName} />;
+    return (
+      <UserItem
+        isAdmin={manager.isAdmin}
+        userId={manager.selfId}
+        name={manager.selfName}
+      />
+    );
   }, [manager]);
 
   const draftM = useMemo(() => <Draft />, []);
