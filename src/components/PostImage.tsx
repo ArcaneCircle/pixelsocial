@@ -2,7 +2,7 @@ const maxHeight = "40vh";
 const imgStyle = {
   maxHeight,
   width: "100%",
-  objectFit: "contain",
+  objectFit: "contain" as "contain",
   backdropFilter: "blur(8px)",
 };
 
