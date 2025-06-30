@@ -40,7 +40,7 @@ export default function UserItem({
 }: Props) {
   return (
     <div style={containerStyle} {...props}>
-      {!isAdmin ? (
+      {isAdmin ? (
         <img width="40px" height="40px" src="./icon.png" />
       ) : (
         <MonsterAvatar
