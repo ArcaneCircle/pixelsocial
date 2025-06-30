@@ -5,14 +5,7 @@ import { ManagerContext } from "~/contexts.ts";
 
 import BasePostItem from "~/components/BasePostItem";
 import PostActionsBar from "~/components/PostActionsBar";
-
-const imgStyle = {
-  display: "block",
-  maxHeight: "40vh",
-  width: "fit-content",
-  maxWidth: "100%",
-  alignSelf: "center",
-};
+import PostImage from "~/components/PostImage";
 
 interface Props {
   post: Post;
@@ -56,7 +49,7 @@ export default function PostItem({ post }: Props) {
       >
         {post.text}
       </div>
-      {post.image && <img src={post.image} style={imgStyle} />}
+      {post.image && <PostImage src={post.image} />}
       <PostActionsBar className="hpad08" post={post} onShare={onShare} />
     </BasePostItem>
   );

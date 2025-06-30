@@ -9,6 +9,7 @@ import { ManagerContext, PageContext } from "~/contexts.ts";
 import PrimaryButton from "~/components/PrimaryButton";
 import FilePicker from "~/components/FilePicker";
 import StylesReel from "~/components/StylesReel";
+import PostImage from "~/components/PostImage";
 
 const containerStyle = {
   display: "flex",
@@ -53,14 +54,6 @@ const iconBtnStyle = {
   color: "white",
   alignSelf: "start",
   padding: "2px",
-};
-
-const imgStyle = {
-  display: "block",
-  maxHeight: "40vh",
-  width: "fit-content",
-  maxWidth: "100%",
-  alignSelf: "center",
 };
 
 export default function Draft() {
@@ -115,7 +108,7 @@ export default function Draft() {
         style={styleId > 0 ? cardStyle : textareaStyle}
         placeholder={hint}
       ></textarea>
-      {imgUrl && <img src={imgUrl} style={imgStyle} />}
+      {imgUrl && <PostImage src={imgUrl} />}
       <StylesReel onStyleSelected={onStyleSelected} selected={styleId}>
         <FilePicker
           accept="image/*"

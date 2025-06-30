@@ -1,24 +1,25 @@
+const barStyle = {
+  display: "flex",
+  flexDirection: "row" as "row",
+  alignItems: "center",
+  justifyContent: "space-between",
+  padding: "0.4em 0.8em",
+  borderBottom: "1px solid #313144",
+  position: "sticky" as "sticky",
+  top: 0,
+  backgroundColor: "#181821",
+  zIndex: 99,
+};
+const imgStyle = {
+  width: "1.4em",
+  height: "auto",
+};
+
 interface Props {
   children: React.ReactNode;
 }
 
 export default function TitleBar({ children }: Props) {
-  const barStyle = {
-    display: "flex",
-    flexDirection: "row" as "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    padding: "0.4em 0.8em",
-    borderBottom: "1px solid #313144",
-    position: "sticky" as "sticky",
-    top: 0,
-    backgroundColor: "#181821",
-  };
-  const imgStyle = {
-    width: "1.4em",
-    height: "auto",
-  };
-
   return (
     <div style={barStyle}>
       <div style={{ display: "flex", alignItems: "center", gap: "0.5em" }}>
