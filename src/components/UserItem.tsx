@@ -1,5 +1,3 @@
-import PixelarticonsShield from "~icons/pixelarticons/shield";
-
 import MonsterAvatar from "~/components/MonsterAvatar";
 
 const containerStyle = {
@@ -42,12 +40,8 @@ export default function UserItem({
 }: Props) {
   return (
     <div style={containerStyle} {...props}>
-      {isAdmin ? (
-        <div style={{ backgroundColor: "#e1b302" }}>
-          <PixelarticonsShield
-            style={{ width: "40px", height: "40px", verticalAlign: "middle" }}
-          />
-        </div>
+      {!isAdmin ? (
+        <img width="40px" height="40px" src="./icon.png" />
       ) : (
         <MonsterAvatar
           value={userId}
