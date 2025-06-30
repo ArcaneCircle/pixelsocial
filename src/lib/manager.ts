@@ -89,8 +89,7 @@ export class Manager {
       likes: 0,
       replies: 0,
     };
-    const botMode = this.selfId !== window.webxdc.selfAddr;
-    const info = botMode ? undefined : `${this.selfName} created a post`;
+    const info = `${this.selfName} created a post`;
     window.webxdc.sendUpdate({ payload: { post }, info }, "");
   }
 
@@ -104,8 +103,7 @@ export class Manager {
       date: Date.now(),
       text,
     };
-    const botMode = this.selfId !== window.webxdc.selfAddr;
-    const info = botMode ? undefined : `${this.selfName} replied a post`;
+    const info = `${this.selfName} replied a post`;
     window.webxdc.sendUpdate({ payload: { reply }, info }, "");
   }
 
