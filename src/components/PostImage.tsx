@@ -4,6 +4,7 @@ const imgStyle = {
   width: "100%",
   objectFit: "contain" as "contain",
   backdropFilter: "blur(8px)",
+  verticalAlign: "middle",
 };
 
 interface Props {
