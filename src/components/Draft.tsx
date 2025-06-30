@@ -143,7 +143,7 @@ async function pixelate(url: string): Promise<string> {
   const config = {
     to: canvas,
     from: img,
-    scale: 12, // int from 0-50
+    scale: 18, // int from 0-50
     maxHeight,
     maxWidth,
   };
@@ -154,7 +154,11 @@ async function pixelate(url: string): Promise<string> {
     config.from = await loadImage(canvas.toDataURL("image/png"));
   }
 
-  new Pixelit(config).draw().pixelate();
+  if (localStorage.noPixelate) {
+    new Pixelit(config).draw();
+  } else {
+    new Pixelit(config).draw().pixelate();
+  }
 
   url = canvas.toDataURL("image/png");
   canvas.remove();
