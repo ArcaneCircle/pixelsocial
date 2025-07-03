@@ -1,0 +1,7 @@
+.img {
+  width: 100%;
+  object-fit: contain;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  vertical-align: middle;
+}

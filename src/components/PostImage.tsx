@@ -1,10 +1,8 @@
+import styles from "./PostImage.module.css";
+
 const maxHeight = "40vh";
 const imgStyle = {
   maxHeight,
-  width: "100%",
-  objectFit: "contain" as "contain",
-  backdropFilter: "blur(8px)",
-  verticalAlign: "middle",
 };
 
 interface Props {
@@ -21,7 +19,7 @@ export default function PostImage({ src, ...props }: Props) {
   props.style = { ...wrapperStyle, ...(props.style || {}) };
   return (
     <div {...props}>
-      <img style={imgStyle} src={src} />
+      <img className={styles.img} style={imgStyle} src={src} />
     </div>
   );
 }
