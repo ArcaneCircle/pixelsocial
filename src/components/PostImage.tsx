@@ -1,9 +1,7 @@
 import styles from "./PostImage.module.css";
 
 const maxHeight = "40vh";
-const imgStyle = {
-  maxHeight,
-};
+const imgStyle = { maxHeight };
 
 interface Props {
   src: string;
