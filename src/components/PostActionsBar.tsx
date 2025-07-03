@@ -35,6 +35,7 @@ export default function PostActionsBar({ post, onShare, ...props }: Props) {
   }, [post.id, post.liked]);
 
   const onComment = useCallback(() => {
+    sessionStorage.feedScrollPos = window.pageYOffset;
     setPage({ key: "comments", postId: post.id });
   }, [post.id]);
 

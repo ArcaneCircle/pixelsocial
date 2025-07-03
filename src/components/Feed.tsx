@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
 
 import PostItem from "~/components/PostItem";
 
@@ -13,6 +13,14 @@ export default function Feed({ posts }: Props) {
       [p.id, p.likes, p.liked, p.replies],
     ),
   );
+
+  useEffect(() => {
+    const pos = sessionStorage.feedScrollPos;
+    if (pos) {
+      window.scrollTo(0, parseInt(pos));
+      sessionStorage.removeItem("feedScrollPos");
+    }
+  }, []);
 
   return (
     <div>
