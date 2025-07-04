@@ -17,7 +17,15 @@ export default function RepliesList({ replies }: Props) {
       {replies.length ? (
         items
       ) : (
-        <p style={{ textAlign: "center", fontSize: "1.5em", color: "#737373", paddingLeft: "0.5em", paddingRight: "0.5em" }}>
+        <p
+          style={{
+            textAlign: "center",
+            fontSize: "1.5em",
+            color: "#737373",
+            paddingLeft: "0.5em",
+            paddingRight: "0.5em",
+          }}
+        >
           {_("No comments yet")}
         </p>
       )}

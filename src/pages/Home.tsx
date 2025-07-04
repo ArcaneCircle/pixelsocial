@@ -1,5 +1,5 @@
 import { useMemo, useContext } from "react";
-import PixelarticonsPlus from '~icons/pixelarticons/plus';
+import PixelarticonsPlus from "~icons/pixelarticons/plus";
 
 import { _ } from "~/lib/i18n";
 import { PageContext } from "~/contexts";
@@ -18,7 +18,9 @@ export default function Home({ posts }: Props) {
     const onClick = () => setPage({ key: "newpost" });
     return (
       <TitleBar>
-        <SecondaryButton onClick={onClick} style={{padding: "5px 10px"}}><PixelarticonsPlus style={{verticalAlign: "middle"}}/></SecondaryButton>
+        <SecondaryButton onClick={onClick} style={{ padding: "5px 10px" }}>
+          <PixelarticonsPlus style={{ verticalAlign: "middle" }} />
+        </SecondaryButton>
       </TitleBar>
     );
   }, [setPage]);

@@ -1,5 +1,5 @@
 import { useMemo, useContext } from "react";
-import PixelarticonsClose from '~icons/pixelarticons/close';
+import PixelarticonsClose from "~icons/pixelarticons/close";
 
 import { _ } from "~/lib/i18n";
 import { ManagerContext, PageContext } from "~/contexts";
@@ -24,7 +24,9 @@ export default function NewPost() {
     const onClick = () => setPage({ key: "home" });
     return (
       <TitleBar>
-        <SecondaryButton onClick={onClick} style={{padding: "5px 10px"}}><PixelarticonsClose style={{verticalAlign: "middle"}} /></SecondaryButton>
+        <SecondaryButton onClick={onClick} style={{ padding: "5px 10px" }}>
+          <PixelarticonsClose style={{ verticalAlign: "middle" }} />
+        </SecondaryButton>
       </TitleBar>
     );
   }, [setPage]);
