@@ -1,6 +1,6 @@
 import { useMemo, useContext } from "react";
 
-import { ManagerContext, PageContext } from "~/contexts.ts";
+import { ManagerContext, PageContext } from "~/contexts";
 
 import TitleBar from "~/components/TitleBar";
 import UserItem from "~/components/UserItem";

@@ -1,10 +1,10 @@
 import { useRef, useState, useCallback, useEffect, useContext } from "react";
 import PixelarticonsImageMultiple from "~icons/pixelarticons/image-multiple";
 
-import { loadImage } from "~/lib/util.js";
+import { loadImage } from "~/lib/util";
 // @ts-ignore
 import { Pixelit } from "~/lib/pixelit.js";
-import { ManagerContext, PageContext } from "~/contexts.ts";
+import { ManagerContext, PageContext } from "~/contexts";
 
 import PrimaryButton from "~/components/PrimaryButton";
 import FilePicker from "~/components/FilePicker";

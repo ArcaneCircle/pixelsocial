@@ -1,6 +1,6 @@
 import { useMemo, useContext } from "react";
 
-import { PageContext } from "~/contexts.ts";
+import { PageContext } from "~/contexts";
 
 import TitleBar from "~/components/TitleBar";
 import Feed from "~/components/Feed";

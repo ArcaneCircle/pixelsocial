@@ -1,6 +1,6 @@
 import { useRef, useCallback, useContext } from "react";
 
-import { ManagerContext } from "~/contexts.ts";
+import { ManagerContext } from "~/contexts";
 
 import PrimaryButton from "~/components/PrimaryButton";
 

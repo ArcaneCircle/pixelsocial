@@ -1,7 +1,7 @@
 import { useRef, useCallback, useContext } from "react";
 import { toJpeg } from "html-to-image";
 
-import { ManagerContext } from "~/contexts.ts";
+import { ManagerContext } from "~/contexts";
 
 import BasePostItem from "~/components/BasePostItem";
 import PostActionsBar from "~/components/PostActionsBar";

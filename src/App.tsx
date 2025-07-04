@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 
-import { Manager } from "~/lib/manager.ts";
-import { ManagerContext, PageContext } from "~/contexts.ts";
+import { Manager } from "~/lib/manager";
+import { ManagerContext, PageContext } from "~/contexts";
 
 import Home from "~/pages/Home";
 import NewPost from "~/pages/NewPost";

@@ -1,6 +1,6 @@
 import { useCallback, useContext } from "react";
 
-import { ManagerContext } from "~/contexts.ts";
+import { ManagerContext } from "~/contexts";
 
 import BasePostItem from "~/components/BasePostItem";
 
