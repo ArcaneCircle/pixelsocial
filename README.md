@@ -1,4 +1,4 @@
-# Pixel It!
+# PixelSocial
 
 A small micro-blogging social network app where images are
 converted to pixel art.

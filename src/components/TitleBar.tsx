@@ -25,7 +25,7 @@ export default function TitleBar({ children }: Props) {
       <div style={{ display: "flex", alignItems: "center", gap: "0.5em" }}>
         <img src="./icon.png" style={imgStyle} />
         <span className="noselect" style={{ fontSize: "1.4em" }}>
-          Pixel It!
+          PixelSocial
         </span>
       </div>
       {children}
