@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 
+import { _ } from "~/lib/i18n";
 import ReplyItem from "~/components/ReplyItem";
 
 interface Props {
@@ -16,8 +17,8 @@ export default function RepliesList({ replies }: Props) {
       {replies.length ? (
         items
       ) : (
-        <p style={{ textAlign: "center", fontSize: "1.5em", color: "#737373" }}>
-          No comments yet.
+        <p style={{ textAlign: "center", fontSize: "1.5em", color: "#737373", paddingLeft: "0.5em", paddingRight: "0.5em" }}>
+          {_("No comments yet")}
         </p>
       )}
     </div>

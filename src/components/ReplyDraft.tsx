@@ -1,5 +1,7 @@
 import { useRef, useCallback, useContext } from "react";
+import PixelarticonsArrowRight from '~icons/pixelarticons/arrow-right';
 
+import { _ } from "~/lib/i18n";
 import { ManagerContext } from "~/contexts";
 
 import PrimaryButton from "~/components/PrimaryButton";
@@ -52,7 +54,7 @@ export default function ReplyDraft({ postId }: Props) {
     [inputRef],
   );
 
-  const hint = "Write a reply...";
+  const hint = _("Write a comment...");
 
   return (
     <div style={containerStyle}>
@@ -63,7 +65,7 @@ export default function ReplyDraft({ postId }: Props) {
         type="text"
         onBlur={handleBlur}
       />
-      <PrimaryButton onClick={onClick}>Send</PrimaryButton>
+      <PrimaryButton onClick={onClick} style={{padding: "5px 10px"}}><PixelarticonsArrowRight style={{height: "100%"}}/></PrimaryButton>
     </div>
   );
 }

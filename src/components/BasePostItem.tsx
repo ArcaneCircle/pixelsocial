@@ -3,6 +3,7 @@ import { useCallback, useState, useMemo } from "react";
 import PixelarticonsMoreHorizontal from "~icons/pixelarticons/more-horizontal";
 import PixelarticonsTrash from "~icons/pixelarticons/trash";
 
+import { _ } from "~/lib/i18n";
 import { formatDateShort } from "~/lib/util";
 
 import UserItem from "~/components/UserItem";
@@ -67,7 +68,7 @@ export default function BasePostItem({
           <Modal style={{ padding: "0.5em 1em" }}>
             <IconButton onClick={deletePost}>
               <PixelarticonsTrash />
-              Delete
+              {_("Delete")}
             </IconButton>
           </Modal>
         </ModalContext.Provider>

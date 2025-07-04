@@ -1,5 +1,7 @@
 import { useMemo, useEffect } from "react";
 
+import { _ } from "~/lib/i18n";
+
 import PostItem from "~/components/PostItem";
 
 interface Props {
@@ -27,8 +29,8 @@ export default function Feed({ posts }: Props) {
       {posts.length ? (
         items
       ) : (
-        <p style={{ textAlign: "center", fontSize: "1.5em", color: "#737373" }}>
-          No posts yet.
+        <p style={{ textAlign: "center", fontSize: "1.5em", color: "#737373", paddingLeft: "0.5em", paddingRight: "0.5em" }}>
+          {_("No posts yet")}
         </p>
       )}
     </div>

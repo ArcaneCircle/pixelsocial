@@ -1,6 +1,7 @@
 import { useRef, useState, useCallback, useEffect, useContext } from "react";
 import PixelarticonsImageMultiple from "~icons/pixelarticons/image-multiple";
 
+import { _ } from "~/lib/i18n";
 import { loadImage } from "~/lib/util";
 // @ts-ignore
 import { Pixelit } from "~/lib/pixelit.js";
@@ -98,7 +99,7 @@ export default function Draft() {
     [setStyleId, setImgUrl],
   );
 
-  const hint = "What's on your mind?";
+  const hint = _("What's on your mind?");
 
   return (
     <div style={containerStyle}>
@@ -121,7 +122,7 @@ export default function Draft() {
         </FilePicker>
       </StylesReel>
       <PrimaryButton style={btnStyle} onClick={onClick}>
-        Post
+        {_("Post")}
       </PrimaryButton>
     </div>
   );

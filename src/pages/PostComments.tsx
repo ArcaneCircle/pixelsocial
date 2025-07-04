@@ -1,5 +1,6 @@
 import { useMemo, useContext, useState, useEffect } from "react";
 
+import { _ } from "~/lib/i18n";
 import { ManagerContext, PageContext } from "~/contexts";
 
 import TitleBar from "~/components/TitleBar";
@@ -21,7 +22,7 @@ export default function PostComments({ post }: Props) {
     const onClick = () => setPage({ key: "home" });
     return (
       <TitleBar>
-        <SecondaryButton onClick={onClick}>Back</SecondaryButton>
+        <SecondaryButton onClick={onClick}>{_("Back")}</SecondaryButton>
       </TitleBar>
     );
   }, [setPage]);

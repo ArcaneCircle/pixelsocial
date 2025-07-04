@@ -1,5 +1,7 @@
 import { useMemo, useContext } from "react";
+import PixelarticonsPlus from '~icons/pixelarticons/plus';
 
+import { _ } from "~/lib/i18n";
 import { PageContext } from "~/contexts";
 
 import TitleBar from "~/components/TitleBar";
@@ -16,7 +18,7 @@ export default function Home({ posts }: Props) {
     const onClick = () => setPage({ key: "newpost" });
     return (
       <TitleBar>
-        <SecondaryButton onClick={onClick}>New post</SecondaryButton>
+        <SecondaryButton onClick={onClick} style={{padding: "5px 10px"}}><PixelarticonsPlus style={{verticalAlign: "middle"}}/></SecondaryButton>
       </TitleBar>
     );
   }, [setPage]);
