@@ -15,6 +15,9 @@ declare type Payload =
       unlike: Like;
     }
   | {
+      deleteAll: string;
+    }
+  | {
       deleteP: string;
     }
   | {

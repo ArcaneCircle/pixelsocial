@@ -6,7 +6,7 @@ export const db = new Dexie("appdb") as Dexie & {
   replies: EntityTable<Reply, "id">;
 };
 db.version(1).stores({
-  posts: "id, active",
+  posts: "id, active, authorId",
   likes: "[postId+userId]",
-  replies: "id, postId",
+  replies: "id, postId, authorId",
 });

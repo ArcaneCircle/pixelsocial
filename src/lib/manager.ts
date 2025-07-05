@@ -66,6 +66,10 @@ export class Manager {
     );
   }
 
+  deleteAll(userId: string) {
+    window.webxdc.sendUpdate({ payload: { deleteAll: userId } }, "");
+  }
+
   deletePost(postId: string) {
     window.webxdc.sendUpdate({ payload: { deleteP: postId } }, "");
   }
@@ -154,6 +158,31 @@ export class Manager {
         post.likes = await db.likes.where({ postId }).count();
         if (userId === this.selfId) post.liked = false;
         await db.posts.put(post);
+      });
+      this.onPostsChanged();
+    } else if ("deleteAll" in payload) {
+      const userId = payload.deleteAll;
+      await db.transaction("rw", db.posts, db.replies, db.likes, async () => {
+        const posts = await db.posts.where({ authorId: userId }).toArray();
+        for (const post of posts) {
+          await db.replies.where({ postId: post.id }).delete();
+          await db.likes.where({ postId: post.id }).delete();
+        }
+        await db.posts.where({ authorId: userId }).delete();
+
+        const postIds = new Set();
+        const replies = await db.replies.where({ authorId: userId }).toArray();
+        for (const reply of replies) {
+          postIds.add(reply.postId);
+        }
+        await db.replies.where({ authorId: userId }).delete();
+        for (const postId of postIds) {
+          const post = (await db.posts.where({ id: postId }).first())!;
+          post.replies = await db.replies.where({ postId }).count();
+          const reply = await db.replies.where({ postId }).reverse().first();
+          post.active = Math.max(post.date, reply ? reply.date : post.date);
+          await db.posts.put(post);
+        }
       });
       this.onPostsChanged();
     } else if ("deleteP" in payload) {

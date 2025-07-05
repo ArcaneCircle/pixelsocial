@@ -1,10 +1,11 @@
-import { useCallback, useState, useMemo } from "react";
+import { useCallback, useState, useMemo, useContext } from "react";
 
 import PixelarticonsMoreHorizontal from "~icons/pixelarticons/more-horizontal";
 import PixelarticonsTrash from "~icons/pixelarticons/trash";
 
 import { _ } from "~/lib/i18n";
 import { formatDateShort } from "~/lib/util";
+import { ManagerContext } from "~/contexts";
 
 import UserItem from "~/components/UserItem";
 import IconButton from "~/components/IconButton";
@@ -55,10 +56,15 @@ export default function BasePostItem({
 }: Props) {
   props.style = { ...containerStyle, ...(props.style || {}) };
   const [isOpen, setOpen] = useState<boolean>(false);
+  const manager = useContext(ManagerContext);
 
   const onMenu = useCallback(() => {
     setOpen((isOpen) => !isOpen);
   }, []);
+
+  const deleteAll = useCallback(() => {
+    manager.deleteAll(authorId);
+  }, [authorId]);
 
   let modal: any = null;
   if (isOpen) {
@@ -66,10 +72,22 @@ export default function BasePostItem({
       return (
         <ModalContext.Provider value={{ isOpen, setOpen }}>
           <Modal style={{ padding: "0.5em 1em" }}>
-            <IconButton onClick={deletePost}>
-              <PixelarticonsTrash />
-              {_("Delete")}
-            </IconButton>
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <IconButton
+                onClick={deletePost}
+                style={{
+                  padding: "0.5em 0",
+                  borderBottom: "1px solid #313144",
+                }}
+              >
+                <PixelarticonsTrash />
+                {_("Delete")}
+              </IconButton>
+              <IconButton onClick={deleteAll} style={{ padding: "0.5em 0" }}>
+                <PixelarticonsTrash />
+                {_("Delete all from user")}
+              </IconButton>
+            </div>
           </Modal>
         </ModalContext.Provider>
       );
