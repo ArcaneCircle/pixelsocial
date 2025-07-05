@@ -1,7 +1,7 @@
 # PixelSocial
 
-A small micro-blogging social network app where images are
-converted to pixel art.
+A small micro-blogging social network app with PixelArt aesthetics
+and integrated filter to pixelate shared images.
 
 ## Contributing
 
