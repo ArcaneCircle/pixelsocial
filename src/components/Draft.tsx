@@ -1,6 +1,7 @@
 import { useRef, useState, useCallback, useEffect, useContext } from "react";
 import PixelarticonsImageMultiple from "~icons/pixelarticons/image-multiple";
 
+import { MAX_CARD_SIZE, MAX_CARD_LINES } from "~/constants";
 import { _ } from "~/lib/i18n";
 import { loadImage } from "~/lib/util";
 // @ts-ignore
@@ -62,24 +63,31 @@ export default function Draft() {
   const { setPage } = useContext(PageContext);
 
   const [styleId, setStyleId] = useState<number>(0);
+  const [styleDisabled, setStyleDisabled] = useState<boolean>(false);
   const [imgUrl, setImgUrl] = useState<string>("");
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   useEffect(() => {
     const textarea = textareaRef.current;
     if (!textarea) return;
+    textarea.style.height = "auto";
+    textarea.style.height = textarea.scrollHeight + "px";
     textarea.addEventListener("input", () => {
       textarea.style.height = "auto";
       textarea.style.height = textarea.scrollHeight + "px";
+      const text = textarea.value || "";
+      setStyleDisabled(
+        text.length > MAX_CARD_SIZE || text.split("\n").length > MAX_CARD_LINES,
+      );
     });
   });
 
   const onClick = useCallback(() => {
     const text = (textareaRef.current?.value || "").trim();
     if (!text && !imgUrl) return;
-    manager.sendPost(text, imgUrl, styleId);
+    manager.sendPost(text, imgUrl, styleDisabled ? 0 : styleId);
     setPage({ key: "home" });
-  }, [styleId, imgUrl, textareaRef, manager, setPage]);
+  }, [styleId, styleDisabled, imgUrl, textareaRef, manager, setPage]);
 
   const onFileSelected = useCallback(
     async (file: File) => {
@@ -100,13 +108,14 @@ export default function Draft() {
   );
 
   const hint = _("What's on your mind?");
+  const styled = !styleDisabled && styleId > 0;
 
   return (
     <div style={containerStyle}>
       <textarea
-        className={styleId > 0 ? `grad grad${styleId}` : undefined}
+        className={styled ? `grad grad${styleId}` : undefined}
         ref={textareaRef}
-        style={styleId > 0 ? cardStyle : textareaStyle}
+        style={styled ? cardStyle : textareaStyle}
         placeholder={hint}
       ></textarea>
       {imgUrl && <PostImage src={imgUrl} />}
