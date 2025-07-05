@@ -39,7 +39,7 @@ export default function ReplyDraft({ postId }: Props) {
 
   const onClick = useCallback(() => {
     if (!inputRef.current) return;
-    const text = inputRef.current.value || "";
+    const text = (inputRef.current.value || "").trim();
     if (!text) return;
     manager.reply(postId, text);
     inputRef.current.value = "";

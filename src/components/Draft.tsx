@@ -75,7 +75,7 @@ export default function Draft() {
   });
 
   const onClick = useCallback(() => {
-    const text = textareaRef.current?.value || "";
+    const text = (textareaRef.current?.value || "").trim();
     if (!text && !imgUrl) return;
     manager.sendPost(text, imgUrl, styleId);
     setPage({ key: "home" });
