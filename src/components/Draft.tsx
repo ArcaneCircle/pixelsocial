@@ -64,6 +64,7 @@ export default function Draft() {
 
   const [styleId, setStyleId] = useState<number>(0);
   const [styleDisabled, setStyleDisabled] = useState<boolean>(false);
+  const [pixelated, setPixelated] = useState<boolean>(false);
   const [imgUrl, setImgUrl] = useState<string>("");
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
@@ -92,12 +93,18 @@ export default function Draft() {
   const onFileSelected = useCallback(
     async (file: File) => {
       const blobUrl = URL.createObjectURL(file);
-      setImgUrl(await pixelate(blobUrl));
+      setImgUrl(await resizeImage(blobUrl));
+      setPixelated(false);
       setStyleId(0);
       URL.revokeObjectURL(blobUrl);
     },
     [setImgUrl],
   );
+
+  const onPixelIt = useCallback(async () => {
+    setImgUrl(await pixelate(imgUrl));
+    setPixelated(true);
+  }, [imgUrl]);
 
   const onStyleSelected = useCallback(
     (styleId: number) => {
@@ -119,6 +126,14 @@ export default function Draft() {
         placeholder={hint}
       ></textarea>
       {imgUrl && <PostImage src={imgUrl} />}
+      {imgUrl && !pixelated && (
+        <PrimaryButton
+          style={{ marginTop: "-12px", flex: "1 1 auto" }}
+          onClick={onPixelIt}
+        >
+          {_("Pixel It!")}
+        </PrimaryButton>
+      )}
       <StylesReel onStyleSelected={onStyleSelected} selected={styleId}>
         <FilePicker
           accept="image/*"
@@ -137,31 +152,35 @@ export default function Draft() {
   );
 }
 
+async function resizeImage(url: string): Promise<string> {
+  const img = await loadImage(url);
+  const canvas = document.createElement("canvas");
+
+  const config = {
+    to: canvas,
+    from: img,
+    maxHeight: 500,
+    maxWidth: 500,
+  };
+  new Pixelit(config).draw();
+
+  url = canvas.toDataURL("image/png");
+  canvas.remove();
+  return url;
+}
+
 async function pixelate(url: string): Promise<string> {
   const img = await loadImage(url);
-  const maxWidth = 500;
-  const maxHeight = 500;
   const canvas = document.createElement("canvas");
 
   const config = {
     to: canvas,
     from: img,
     scale: 18, // int from 0-50
-    maxHeight,
-    maxWidth,
+    maxHeight: 500,
+    maxWidth: 500,
   };
-
-  if (img.width > maxWidth || img.height > maxHeight) {
-    // just resize
-    new Pixelit(config).draw();
-    config.from = await loadImage(canvas.toDataURL("image/png"));
-  }
-
-  if (localStorage.noPixelate) {
-    new Pixelit(config).draw();
-  } else {
-    new Pixelit(config).draw().pixelate();
-  }
+  new Pixelit(config).draw().pixelate();
 
   url = canvas.toDataURL("image/png");
   canvas.remove();
