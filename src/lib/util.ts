@@ -77,3 +77,12 @@ export async function loadImage(url: string): Promise<HTMLImageElement> {
     };
   });
 }
+
+export function getImageExtension(dataUrl: string): string | null {
+  const regex = /^data:image\/([a-zA-Z]+);base64/;
+  const match = dataUrl.match(regex);
+  if (match && match[1]) {
+    return match[1];
+  }
+  return null; // Return null if no valid image type is found
+}

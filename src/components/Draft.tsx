@@ -98,7 +98,9 @@ export default function Draft() {
   const onFileSelected = useCallback(
     async (file: File) => {
       const blobUrl = URL.createObjectURL(file);
-      setImgUrl(await resizeImage(blobUrl));
+      const url = await resizeImage(blobUrl);
+      console.log("resizeImage:" + url.length);
+      setImgUrl(url);
       setPixelated(false);
       setStyleId(0);
       URL.revokeObjectURL(blobUrl);
@@ -107,7 +109,9 @@ export default function Draft() {
   );
 
   const onPixelIt = useCallback(async () => {
-    setImgUrl(await pixelate(imgUrl));
+    const url = await pixelate(imgUrl);
+    console.log("pixelate:" + url.length);
+    setImgUrl(url);
     setPixelated(true);
   }, [imgUrl]);
 
@@ -167,9 +171,9 @@ async function resizeImage(url: string): Promise<string> {
     maxHeight: 500,
     maxWidth: 500,
   };
-  new Pixelit(config).draw();
+  new Pixelit(config).draw(); // just resize
 
-  url = canvas.toDataURL("image/png");
+  url = canvas.toDataURL("image/jpeg");
   canvas.remove();
   return url;
 }

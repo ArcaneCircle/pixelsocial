@@ -8,6 +8,7 @@ import {
 } from "~/constants";
 import { ManagerContext } from "~/contexts";
 import { _ } from "~/lib/i18n";
+import { getImageExtension } from "~/lib/util";
 
 import BasePostItem from "~/components/BasePostItem";
 import PostActionsBar from "~/components/PostActionsBar";
@@ -38,8 +39,9 @@ export default function PostItem({ post }: Props) {
     } else {
       text = post.text;
       if (post.image) {
-        const base64 = post.image.split(",")[1];
-        file = { name: "image.png", type: "image", base64 };
+        const [meta, base64] = post.image.split(",", 2);
+        const ext = getImageExtension(meta) || "png";
+        file = { name: "image." + ext, type: "image", base64 };
       }
     }
     window.webxdc.sendToChat({ file, text });
