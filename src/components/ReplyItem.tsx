@@ -1,13 +1,18 @@
 import { useState, useCallback, useContext } from "react";
 
-import { TEXT_TRUNCATE_SIZE, TEXT_TRUNCATE_LINES } from "~/constants";
+import {
+  TEXT_TRUNCATE_SIZE,
+  TEXT_TRUNCATE_LINES,
+  ACCENT_COLOR,
+  REPLY_BG_COLOR,
+} from "~/constants";
 import { ManagerContext } from "~/contexts";
 import { _ } from "~/lib/i18n";
 
 import BasePostItem from "~/components/BasePostItem";
 
 const linkStyle = {
-  color: "#ccae3a",
+  color: ACCENT_COLOR,
   cursor: "pointer",
 };
 
@@ -50,7 +55,7 @@ export default function ReplyItem({ reply }: Props) {
       isAdmin={!!reply.isAdmin}
       date={reply.date}
       deletePost={deleteReply}
-      style={{ backgroundColor: "#23232f" }}
+      style={{ backgroundColor: REPLY_BG_COLOR }}
     >
       <div className="hpad08">
         {text}

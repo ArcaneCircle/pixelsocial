@@ -1,3 +1,5 @@
+import { GRAY_COLOR } from "~/constants";
+
 import MonsterAvatar from "~/components/MonsterAvatar";
 
 const containerStyle = {
@@ -18,7 +20,7 @@ const nameStyle = {
   whiteSpace: "nowrap",
 };
 const subtitleStyle = {
-  color: "#848484",
+  color: GRAY_COLOR,
   textWrap: "nowrap" as "nowrap",
   fontSize: "0.8em",
 };

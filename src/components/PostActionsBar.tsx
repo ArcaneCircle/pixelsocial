@@ -5,6 +5,7 @@ import PixelarticonsComment from "~icons/pixelarticons/comment";
 import PixelarticonsForward from "~icons/pixelarticons/forward";
 import IconHeartFilled from "~icons/custom/heart-filled";
 
+import { LIKE_COLOR } from "~/constants";
 import { ManagerContext, PageContext } from "~/contexts";
 import IconButton from "~/components/IconButton";
 
@@ -40,7 +41,7 @@ export default function PostActionsBar({ post, onShare, ...props }: Props) {
   }, [post.id]);
 
   const likeIconStyle = {
-    color: post.liked ? "#d5b022" : undefined,
+    color: post.liked ? LIKE_COLOR : undefined,
   };
 
   return (

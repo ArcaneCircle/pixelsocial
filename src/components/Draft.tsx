@@ -1,7 +1,12 @@
 import { useRef, useState, useCallback, useEffect, useContext } from "react";
 import PixelarticonsImageMultiple from "~icons/pixelarticons/image-multiple";
 
-import { MAX_CARD_SIZE, MAX_CARD_LINES } from "~/constants";
+import {
+  MAX_CARD_SIZE,
+  MAX_CARD_LINES,
+  INPUT_BG_COLOR,
+  INPUT_FG_COLOR,
+} from "~/constants";
 import { _ } from "~/lib/i18n";
 import { loadImage } from "~/lib/util";
 // @ts-ignore
@@ -19,11 +24,11 @@ const containerStyle = {
   flexWrap: "nowrap" as "nowrap",
   gap: "12px",
   padding: "12px",
-  backgroundColor: "#292938",
+  backgroundColor: INPUT_BG_COLOR,
 };
 const textareaStyle = {
-  color: "#ddd9e8",
-  backgroundColor: "#292938",
+  color: INPUT_FG_COLOR,
+  backgroundColor: INPUT_BG_COLOR,
   border: 0,
   outline: 0,
   margin: 0,

@@ -1,7 +1,11 @@
 import { useState, useRef, useCallback, useContext } from "react";
 import { toJpeg } from "html-to-image";
 
-import { TEXT_TRUNCATE_SIZE, TEXT_TRUNCATE_LINES } from "~/constants";
+import {
+  TEXT_TRUNCATE_SIZE,
+  TEXT_TRUNCATE_LINES,
+  ACCENT_COLOR,
+} from "~/constants";
 import { ManagerContext } from "~/contexts";
 import { _ } from "~/lib/i18n";
 
@@ -10,7 +14,7 @@ import PostActionsBar from "~/components/PostActionsBar";
 import PostImage from "~/components/PostImage";
 
 const linkStyle = {
-  color: "#ccae3a",
+  color: ACCENT_COLOR,
   cursor: "pointer",
 };
 

@@ -6,6 +6,7 @@ import PixelarticonsTrash from "~icons/pixelarticons/trash";
 import { _ } from "~/lib/i18n";
 import { formatDateShort } from "~/lib/util";
 import { ManagerContext } from "~/contexts";
+import { BORDER_COLOR } from "~/constants";
 
 import UserItem from "~/components/UserItem";
 import IconButton from "~/components/IconButton";
@@ -16,7 +17,7 @@ const containerStyle = {
   flexDirection: "column" as "column",
   flexWrap: "nowrap" as "nowrap",
   gap: "0.5em",
-  borderBottom: "1px solid #313144",
+  borderBottom: "1px solid " + BORDER_COLOR,
   padding: "0.5em 0",
   overflow: "hidden",
 };
@@ -77,7 +78,7 @@ export default function BasePostItem({
                 onClick={deletePost}
                 style={{
                   padding: "0.5em 0",
-                  borderBottom: "1px solid #313144",
+                  borderBottom: "1px solid " + BORDER_COLOR,
                 }}
               >
                 <PixelarticonsTrash />

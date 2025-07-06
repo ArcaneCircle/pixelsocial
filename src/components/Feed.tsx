@@ -1,6 +1,7 @@
 import { useMemo, useEffect } from "react";
 
 import { _ } from "~/lib/i18n";
+import { GRAY_COLOR } from "~/constants";
 
 import PostItem from "~/components/PostItem";
 
@@ -33,7 +34,7 @@ export default function Feed({ posts }: Props) {
           style={{
             textAlign: "center",
             fontSize: "1.5em",
-            color: "#737373",
+            color: GRAY_COLOR,
             paddingLeft: "0.5em",
             paddingRight: "0.5em",
           }}

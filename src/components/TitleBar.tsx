@@ -1,13 +1,15 @@
+import { BORDER_COLOR, BG_COLOR } from "~/constants";
+
 const barStyle = {
   display: "flex",
   flexDirection: "row" as "row",
   alignItems: "center",
   justifyContent: "space-between",
   padding: "0.4em 0.8em",
-  borderBottom: "1px solid #313144",
+  borderBottom: "1px solid " + BORDER_COLOR,
   position: "sticky" as "sticky",
   top: 0,
-  backgroundColor: "#181821",
+  backgroundColor: BG_COLOR,
   zIndex: 99,
 };
 const imgStyle = {

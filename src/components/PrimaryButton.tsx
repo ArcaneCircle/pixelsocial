@@ -1,8 +1,10 @@
+import { MAIN_COLOR, MAIN_FG_COLOR } from "~/constants";
+
 import Button from "~/components/Button";
 
 const btnStyle = {
-  backgroundColor: "#d5b022",
-  color: "black",
+  backgroundColor: MAIN_COLOR,
+  color: MAIN_FG_COLOR,
 };
 
 interface Props {

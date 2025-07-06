@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 
+import { GRAY_COLOR } from "~/constants";
 import { _ } from "~/lib/i18n";
 import ReplyItem from "~/components/ReplyItem";
 
@@ -21,7 +22,7 @@ export default function RepliesList({ replies }: Props) {
           style={{
             textAlign: "center",
             fontSize: "1.5em",
-            color: "#737373",
+            color: GRAY_COLOR,
             paddingLeft: "0.5em",
             paddingRight: "0.5em",
           }}

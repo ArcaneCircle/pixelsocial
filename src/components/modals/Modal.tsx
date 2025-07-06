@@ -1,5 +1,7 @@
 import { useEffect, useRef, createContext, useContext } from "react";
 
+import { BORDER_COLOR, BG_COLOR } from "~/constants";
+
 import styles from "./Modal.module.css";
 
 export const ModalContext = createContext<{
@@ -9,6 +11,14 @@ export const ModalContext = createContext<{
   // @ts-ignore
   null,
 );
+
+const modalStyle = {
+  backgroundColor: BG_COLOR,
+  color: "inherit",
+  border: "1px solid " + BORDER_COLOR,
+  outline: 0,
+  padding: 0,
+};
 
 type Props = {
   children: React.ReactNode;
@@ -36,7 +46,7 @@ export function Modal({ children, ...props }: Props) {
   }, [isOpen]);
 
   return (
-    <dialog ref={dialogRef} className={styles.modal}>
+    <dialog ref={dialogRef} className={styles.modal} style={modalStyle}>
       <div ref={contentRef} {...props}>
         {children}
       </div>

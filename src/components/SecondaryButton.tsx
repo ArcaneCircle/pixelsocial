@@ -1,9 +1,11 @@
+import { ACCENT_COLOR } from "~/constants";
+
 import Button from "~/components/Button";
 
 const btnStyle = {
   background: "none",
-  border: "1px solid #ccae3a",
-  color: "#ccae3a",
+  border: "1px solid " + ACCENT_COLOR,
+  color: ACCENT_COLOR,
 };
 
 interface Props {

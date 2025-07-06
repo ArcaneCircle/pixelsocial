@@ -1,6 +1,7 @@
 import { useRef, useCallback, useContext } from "react";
 import PixelarticonsArrowRight from "~icons/pixelarticons/arrow-right";
 
+import { INPUT_BG_COLOR, INPUT_FG_COLOR } from "~/constants";
 import { _ } from "~/lib/i18n";
 import { ManagerContext } from "~/contexts";
 
@@ -13,15 +14,15 @@ const containerStyle = {
   flexWrap: "nowrap" as "nowrap",
   gap: "12px",
   padding: "12px",
-  backgroundColor: "#292938",
+  backgroundColor: INPUT_BG_COLOR,
   position: "fixed" as "fixed",
   bottom: 0,
   width: "calc(100% - 24px)",
 };
 
 const inputStyle = {
-  color: "#ddd9e8",
-  backgroundColor: "#292938",
+  color: INPUT_FG_COLOR,
+  backgroundColor: INPUT_BG_COLOR,
   border: 0,
   outline: 0,
   margin: 0,
