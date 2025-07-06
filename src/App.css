@@ -1,3 +1,10 @@
+@font-face {
+  font-family: "unixel";
+  src: url("/fonts/unixel-Regular.woff2") format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
 :root {
   touch-action: pan-x pan-y;
 }
@@ -6,7 +13,7 @@ html,
 body {
   margin: 0;
   padding: 0;
-  font-family: "Jersey 10", system-ui;
+  font-family: "Jersey 10", "unixel", system-ui;
   font-size: 1.2em;
   background-color: #181821;
   color: white;
