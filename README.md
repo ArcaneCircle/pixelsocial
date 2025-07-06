@@ -70,3 +70,4 @@ git push origin v1.0.1
 - UI Icons: [Pixelarticons](https://github.com/halfmage/pixelarticons)
 - Image pixelation filter: [Pixel It](https://github.com/giventofly/pixelit)
 - Color palette inspired by [Mastdon](https://github.com/mastodon/mastodon) web UI
+- Random monster generator: https://github.com/fabianobizarro/react-monsterid (MIT license)
