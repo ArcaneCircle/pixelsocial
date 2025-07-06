@@ -63,3 +63,10 @@ To automatically build and create a new GitHub release with the `.xdc` file:
 git tag -a v1.0.1
 git push origin v1.0.1
 ```
+
+### Credits
+
+- Pixelated fonts: [Jersey](https://fontsource.org/fonts/jersey-10) and [Unixel](https://github.com/MDarvishi5124/Unixel)
+- UI Icons: [Pixelarticons](https://github.com/halfmage/pixelarticons)
+- Image pixelation filter: [Pixel It](https://github.com/giventofly/pixelit)
+- Color palette inspired by [Mastdon](https://github.com/mastodon/mastodon) web UI
