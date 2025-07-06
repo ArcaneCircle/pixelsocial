@@ -3,6 +3,17 @@
 A small micro-blogging social network app with PixelArt aesthetics
 and integrated filter to pixelate shared images.
 
+Thanks to the [webxdc](https://webxdc.org) technology, it means
+there is no login or registration needed, nor dependency on any
+server, and you can have your very own independent instance of the
+social network in a group chat with friends and family, your data
+staying in your devices and e2e encrypted if you use it inside
+Delta Chat.
+
+It can also be wired with bots that allow importing RSS feeds
+inside the network (including RSS feeds of Mastodon accounts!)
+for example see: https://github.com/deltachat-bot/pixelsocial
+
 ## Contributing
 
 ### Installing Dependencies
