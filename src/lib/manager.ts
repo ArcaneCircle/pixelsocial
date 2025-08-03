@@ -10,6 +10,7 @@ export class Manager {
   public selfName: string;
   public selfId: string;
   public isAdmin: boolean;
+  public maxSize: number = 1024 * 1024;
 
   constructor() {
     this.onPostsChanged = () => {};

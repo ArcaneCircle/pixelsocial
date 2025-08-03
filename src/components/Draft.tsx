@@ -8,7 +8,7 @@ import {
   INPUT_FG_COLOR,
 } from "~/constants";
 import { _ } from "~/lib/i18n";
-import { loadImage } from "~/lib/util";
+import { loadImage, readAsDataURL } from "~/lib/util";
 // @ts-ignore
 import { Pixelit } from "~/lib/pixelit.js";
 import { ManagerContext, PageContext } from "~/contexts";
@@ -97,13 +97,24 @@ export default function Draft() {
 
   const onFileSelected = useCallback(
     async (file: File) => {
-      const blobUrl = URL.createObjectURL(file);
-      const url = await resizeImage(blobUrl);
-      console.log("resizeImage:" + url.length);
+      let url;
+      if (
+        file.type.startsWith("image/") &&
+        file.type !== "image/png" &&
+        file.type !== "image/jpeg" &&
+        file.size <= manager.maxSize
+      ) {
+        url = await readAsDataURL(file);
+        console.log("image size:" + url.length);
+      } else {
+        const blobUrl = URL.createObjectURL(file);
+        url = await resizeImage(blobUrl);
+        URL.revokeObjectURL(blobUrl);
+        console.log("resizeImage:" + url.length);
+      }
       setImgUrl(url);
       setPixelated(false);
       setStyleId(0);
-      URL.revokeObjectURL(blobUrl);
     },
     [setImgUrl],
   );

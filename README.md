@@ -57,6 +57,9 @@ The resulting optimized `.xdc` file is saved in `dist-xdc/` folder.
 
 ### Releasing
 
+**NOTE:** Always update version field in `public/manifest.toml`
+before tagging a new release.
+
 To automatically build and create a new GitHub release with the `.xdc` file:
 
 ```

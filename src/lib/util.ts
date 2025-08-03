@@ -68,6 +68,17 @@ export function getRandomUUID(): string {
   }
 }
 
+export async function readAsDataURL(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = async () => {
+      resolve(reader.result as string);
+    };
+    reader.onerror = () => reject(reader.error);
+    reader.readAsDataURL(file);
+  });
+}
+
 export async function loadImage(url: string): Promise<HTMLImageElement> {
   const img = new Image();
   img.src = url;
