@@ -196,7 +196,7 @@ async function pixelate(url: string): Promise<string> {
   const config = {
     to: canvas,
     from: img,
-    scale: 18, // int from 0-50
+    scale: 12, // int from 0-50
     maxHeight: 500,
     maxWidth: 500,
   };
