@@ -1,7 +1,79 @@
 .img {
   width: 100%;
   object-fit: contain;
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
   vertical-align: middle;
+  /* Blur effect handled by wrapper backgroundImage */
+}
+
+.fullSizeOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.zoomControls {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #313144;
+  border: 1px solid rgb(140, 141, 255);
+  padding: 8px 12px;
+  z-index: 1001;
+}
+
+.zoomControls > div {
+  padding: 4px 8px;
+  min-width: 32px;
+  min-height: 32px;
+  text-align: center;
+  background: #23232f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.zoomControls > div:hover:not([disabled]) {
+  background: rgb(140, 141, 255);
+}
+
+.zoomControls > div[disabled] {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.zoomLevel {
+  color: white;
+  font-size: 1em;
+  min-width: 60px;
+  text-align: center;
+  padding: 0 8px;
+}
+
+.imageContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+}
+
+.fullSizeImg {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transition: transform 0.2s ease-out;
+  transform-origin: center center;
 }
