@@ -113,9 +113,7 @@ export class Manager {
   }
 
   async getReplies(postId: string): Promise<Reply[]> {
-    return (await db.replies.where({ postId }).reverse().sortBy("date")).slice(
-      -500,
-    );
+    return (await db.replies.where({ postId }).sortBy("date")).slice(0, 500);
   }
 
   private async processUpdate(update: ReceivedStatusUpdate<Payload>) {
