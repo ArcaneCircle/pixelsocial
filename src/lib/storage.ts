@@ -10,3 +10,8 @@ db.version(1).stores({
   likes: "[postId+userId]",
   replies: "id, postId, authorId",
 });
+db.version(2).stores({
+  posts: "id, active, authorId",
+  likes: "[postId+userId]",
+  replies: "id, postId, authorId, date",
+});

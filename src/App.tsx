@@ -25,19 +25,16 @@ export default function App() {
 
   let page: any = null;
   if (pageData.key === "home") {
-    page = useMemo(() => <Home posts={posts} />, [posts]);
+    page = <Home posts={posts} />;
   } else if (pageData.key === "allComments") {
-    page = useMemo(() => <AllComments posts={posts} />, [posts]);
+    page = <AllComments posts={posts} />;
   } else if (pageData.key === "newpost") {
-    page = useMemo(() => <NewPost />, []);
+    page = <NewPost />;
   } else if (pageData.key === "comments") {
     const post = posts.find((p) => pageData.postId === p.id);
     if (post) {
       const focusReplyId = pageData.focusReplyId;
-      page = useMemo(
-        () => <PostComments post={post} focusReplyId={focusReplyId} />,
-        [post, focusReplyId],
-      );
+      page = <PostComments post={post} focusReplyId={focusReplyId} />;
     } else {
       // post deleted, go home
       setPage({ key: "home" });
