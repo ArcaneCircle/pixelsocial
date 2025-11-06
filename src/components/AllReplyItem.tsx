@@ -47,7 +47,7 @@ export default function AllReplyItem({ reply }: Props) {
   if (!showMore) {
     if (text.length > TEXT_TRUNCATE_SIZE) {
       truncated = true;
-      text = text.substr(0, TEXT_TRUNCATE_SIZE);
+      text = text.substring(0, TEXT_TRUNCATE_SIZE);
     }
     const lines = text.split("\n");
     if (lines.length > TEXT_TRUNCATE_LINES) {
