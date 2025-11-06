@@ -6,6 +6,7 @@ import { ManagerContext, PageContext } from "~/contexts";
 import Home from "~/pages/Home";
 import NewPost from "~/pages/NewPost";
 import PostComments from "~/pages/PostComments";
+import AllComments from "~/pages/AllComments";
 
 // @ts-ignore
 import "@fontsource/jersey-10";
@@ -25,12 +26,18 @@ export default function App() {
   let page: any = null;
   if (pageData.key === "home") {
     page = useMemo(() => <Home posts={posts} />, [posts]);
+  } else if (pageData.key === "allComments") {
+    page = useMemo(() => <AllComments posts={posts} />, [posts]);
   } else if (pageData.key === "newpost") {
     page = useMemo(() => <NewPost />, []);
   } else if (pageData.key === "comments") {
     const post = posts.find((p) => pageData.postId === p.id);
     if (post) {
-      page = useMemo(() => <PostComments post={post} />, [post]);
+      const focusReplyId = pageData.focusReplyId;
+      page = useMemo(
+        () => <PostComments post={post} focusReplyId={focusReplyId} />,
+        [post, focusReplyId],
+      );
     } else {
       // post deleted, go home
       setPage({ key: "home" });

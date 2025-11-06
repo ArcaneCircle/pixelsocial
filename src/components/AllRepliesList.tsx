@@ -2,21 +2,15 @@ import { useMemo } from "react";
 
 import { GRAY_COLOR } from "~/constants";
 import { _ } from "~/lib/i18n";
-import ReplyItem from "~/components/ReplyItem";
+import AllReplyItem from "~/components/AllReplyItem";
 
 interface Props {
   replies: Reply[];
-  focusReplyId?: string;
 }
 
-export default function RepliesList({ replies, focusReplyId }: Props) {
+export default function AllRepliesList({ replies }: Props) {
   const items = replies.map((r) =>
-    useMemo(
-      () => (
-        <ReplyItem key={r.id} reply={r} isFocused={focusReplyId === r.id} />
-      ),
-      [r.id, focusReplyId],
-    ),
+    useMemo(() => <AllReplyItem key={r.id} reply={r} />, [r.id]),
   );
 
   return (

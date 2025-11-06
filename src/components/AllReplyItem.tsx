@@ -1,15 +1,19 @@
 import { useState, useCallback, useContext } from "react";
 
+import PixelarticonsExternalLink from "~icons/pixelarticons/external-link";
+
 import {
   TEXT_TRUNCATE_SIZE,
   TEXT_TRUNCATE_LINES,
   ACCENT_COLOR,
   REPLY_BG_COLOR,
+  BORDER_COLOR,
 } from "~/constants";
-import { ManagerContext } from "~/contexts";
+import { ManagerContext, PageContext } from "~/contexts";
 import { _ } from "~/lib/i18n";
 
 import BasePostItem from "~/components/BasePostItem";
+import IconButton from "~/components/IconButton";
 
 const linkStyle = {
   color: ACCENT_COLOR,
@@ -18,19 +22,25 @@ const linkStyle = {
 
 interface Props {
   reply: Reply;
-  isFocused?: boolean;
 }
 
-export default function ReplyItem({ reply, isFocused }: Props) {
+export default function AllReplyItem({ reply }: Props) {
   const [showMore, setShowMore] = useState(false);
   const manager = useContext(ManagerContext);
+  const { setPage } = useContext(PageContext);
+
   const deleteReply = useCallback(
     () => manager.deleteReply(reply.postId, reply.id),
     [reply.id],
   );
+
   const onShowMore = useCallback(() => {
     setShowMore(true);
   }, [reply.id]);
+
+  const openInContext = useCallback(() => {
+    setPage({ key: "comments", postId: reply.postId, focusReplyId: reply.id });
+  }, [reply.postId, reply.id]);
 
   let truncated = false;
   let text = reply.text;
@@ -49,9 +59,18 @@ export default function ReplyItem({ reply, isFocused }: Props) {
     }
   }
 
-  const itemStyle = isFocused
-    ? { backgroundColor: REPLY_BG_COLOR, opacity: 0.7 }
-    : { backgroundColor: REPLY_BG_COLOR };
+  const extraMenuItems = (
+    <IconButton
+      onClick={openInContext}
+      style={{
+        padding: "0.5em 0",
+        borderBottom: "1px solid " + BORDER_COLOR,
+      }}
+    >
+      <PixelarticonsExternalLink />
+      {_("Open in context")}
+    </IconButton>
+  );
 
   return (
     <BasePostItem
@@ -60,8 +79,8 @@ export default function ReplyItem({ reply, isFocused }: Props) {
       isAdmin={!!reply.isAdmin}
       date={reply.date}
       deletePost={deleteReply}
-      style={itemStyle}
-      id={`reply-${reply.id}`}
+      style={{ backgroundColor: REPLY_BG_COLOR }}
+      extraMenuItems={extraMenuItems}
     >
       <div className="hpad08">
         {text}

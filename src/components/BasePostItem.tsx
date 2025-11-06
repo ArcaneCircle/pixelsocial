@@ -43,6 +43,7 @@ interface Props {
   isAdmin: boolean;
   date: number;
   deletePost: () => void;
+  extraMenuItems?: React.ReactNode;
   [key: string]: any;
 }
 
@@ -52,6 +53,7 @@ export default function BasePostItem({
   isAdmin,
   date,
   deletePost,
+  extraMenuItems,
   children,
   ...props
 }: Props) {
@@ -74,6 +76,7 @@ export default function BasePostItem({
         <ModalContext.Provider value={{ isOpen, setOpen }}>
           <Modal style={{ padding: "0.5em 1em" }}>
             <div style={{ display: "flex", flexDirection: "column" }}>
+              {extraMenuItems}
               <IconButton
                 onClick={deletePost}
                 style={{
@@ -92,7 +95,7 @@ export default function BasePostItem({
           </Modal>
         </ModalContext.Provider>
       );
-    }, [deletePost]);
+    }, [deletePost, extraMenuItems]);
   }
 
   return (

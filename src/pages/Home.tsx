@@ -5,6 +5,7 @@ import { _ } from "~/lib/i18n";
 import { PageContext } from "~/contexts";
 
 import TitleBar from "~/components/TitleBar";
+import TabNavigation from "~/components/TabNavigation";
 import Feed from "~/components/Feed";
 import SecondaryButton from "~/components/SecondaryButton";
 
@@ -24,11 +25,13 @@ export default function Home({ posts }: Props) {
       </TitleBar>
     );
   }, [setPage]);
+  const TabNavigationM = useMemo(() => <TabNavigation />, []);
   const FeedM = useMemo(() => <Feed posts={posts} />, [posts]);
 
   return (
     <div>
       {TitleBarM}
+      {TabNavigationM}
       {FeedM}
     </div>
   );
