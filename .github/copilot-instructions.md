@@ -136,7 +136,7 @@ Simple page-based navigation using PageContext:
 1. Update version in `public/manifest.toml`
 2. Create and push a git tag:
    ```bash
-   git tag -a v1.0.1
+   git tag -a v1.0.1 -m "Release v1.0.1"
    git push origin v1.0.1
    ```
 3. GitHub Actions will automatically build and create a release with the `.xdc` file
