@@ -112,6 +112,11 @@ export class Manager {
     window.webxdc.sendUpdate({ payload: { reply }, info }, "");
   }
 
+  setSelfName(name: string) {
+    this.selfName = name;
+    localStorage.selfName = name;
+  }
+
   async getReplies(postId: string): Promise<Reply[]> {
     return (await db.replies.where({ postId }).reverse().sortBy("date")).slice(
       -500,

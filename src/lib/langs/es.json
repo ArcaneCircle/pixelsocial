@@ -12,5 +12,8 @@
   "admin": "admin",
   "Posts": "Publicaciones",
   "Comments": "Comentarios",
-  "Open in context": "Abrir en contexto"
+  "Open in context": "Abrir en contexto",
+  "Edit Name": "Editar nombre",
+  "Enter your name": "Ingresa tu nombre",
+  "Save": "Guardar"
 }
