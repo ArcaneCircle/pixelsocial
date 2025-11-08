@@ -12,7 +12,8 @@ const containerStyle = {
 const tabStyle = {
   flex: 1,
   textAlign: "center" as "center",
-  padding: "0.8em",
+  paddingTop: "0.5em",
+  paddingBottom: "0.5em",
   cursor: "pointer",
   borderBottom: "2px solid transparent",
 };
@@ -31,12 +32,14 @@ export default function TabNavigation() {
   return (
     <div style={containerStyle}>
       <div
+        className="hpad08"
         style={!showComments ? activeTabStyle : tabStyle}
         onClick={() => setPage({ key: "home", showComments: false })}
       >
         {_("Posts")}
       </div>
       <div
+        className="hpad08"
         style={showComments ? activeTabStyle : tabStyle}
         onClick={() => setPage({ key: "home", showComments: true })}
       >

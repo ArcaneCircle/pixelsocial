@@ -12,10 +12,7 @@ interface Props {
 }
 
 export default function IconButton({ children, ...props }: Props) {
+  props.className = "btn noselect " + (props.className || "");
   props.style = { ...btnStyle, ...(props.style || {}) };
-  return (
-    <div className="btn noselect" {...props}>
-      {children}
-    </div>
-  );
+  return <div {...props}>{children}</div>;
 }
