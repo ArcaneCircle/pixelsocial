@@ -61,7 +61,9 @@ export default function Settings() {
       {TopBarM}
       <div className="hpad08" style={containerStyle}>
         <div>
-          <div className="noselect" style={labelStyle}>{_("Display Name")}</div>
+          <div className="noselect" style={labelStyle}>
+            {_("Display Name")}
+          </div>
           <input
             type="text"
             value={displayName}
