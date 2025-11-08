@@ -118,6 +118,10 @@ export class Manager {
     );
   }
 
+  async getAllReplies(): Promise<Reply[]> {
+    return await db.replies.orderBy("date").reverse().limit(500).toArray();
+  }
+
   private async processUpdate(update: ReceivedStatusUpdate<Payload>) {
     const payload = update.payload;
     if ("init" in payload) {

@@ -11,21 +11,24 @@ import SecondaryButton from "~/components/SecondaryButton";
 
 interface Props {
   post: Post;
+  focusReplyId?: string;
 }
 
-export default function PostComments({ post }: Props) {
+export default function PostComments({ post, focusReplyId }: Props) {
   const manager = useContext(ManagerContext);
   const { setPage } = useContext(PageContext);
   const [replies, setReplies] = useState<Reply[]>([]);
 
+  const fromAllComments = !!focusReplyId;
   const titleBarM = useMemo(() => {
-    const onClick = () => setPage({ key: "home" });
+    const onClick = () =>
+      setPage({ key: "home", showComments: fromAllComments });
     return (
       <TitleBar>
         <SecondaryButton onClick={onClick}>{_("Back")}</SecondaryButton>
       </TitleBar>
     );
-  }, [setPage]);
+  }, [setPage, fromAllComments]);
 
   useEffect(() => {
     (async () => {
@@ -33,7 +36,19 @@ export default function PostComments({ post }: Props) {
     })();
   }, [post.id, post.replies]);
 
-  const RepliesM = useMemo(() => <RepliesList replies={replies} />, [replies]);
+  useEffect(() => {
+    if (focusReplyId) {
+      const element = document.getElementById(`reply-${focusReplyId}`);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    }
+  }, [focusReplyId, replies]);
+
+  const RepliesM = useMemo(
+    () => <RepliesList replies={replies} focusReplyId={focusReplyId} />,
+    [replies, focusReplyId],
+  );
 
   const PostM = useMemo(() => <PostItem key={post.id} post={post} />, [post]);
 

@@ -29,8 +29,9 @@ declare type Payload =
     };
 
 declare type PageData =
-  | { key: "home" | "newpost" }
-  | { key: "comments"; postId: string };
+  | { key: "newpost" }
+  | { key: "home"; showComments: boolean }
+  | { key: "comments"; postId: string; focusReplyId?: string };
 
 declare interface Post {
   id: string;
