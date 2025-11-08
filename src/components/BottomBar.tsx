@@ -40,26 +40,22 @@ const activeTabStyle = {
 export default function BottomBar() {
   const { pageData, setPage } = useContext(PageContext);
 
-  const isHome = pageData.key === "home";
-  const isNewPost = pageData.key === "newpost";
-  const isSettings = pageData.key === "settings";
-
   return (
     <div style={barStyle}>
       <IconButton
-        style={isHome ? activeTabStyle : tabStyle}
+        style={pageData.key === "home" ? activeTabStyle : tabStyle}
         onClick={() => setPage({ key: "home", showComments: false })}
       >
         <PixelarticonsHome />
       </IconButton>
       <IconButton
-        style={isNewPost ? activeTabStyle : tabStyle}
+        style={pageData.key === "newpost" ? activeTabStyle : tabStyle}
         onClick={() => setPage({ key: "newpost" })}
       >
         <PixelarticonsPlus />
       </IconButton>
       <IconButton
-        style={isSettings ? activeTabStyle : tabStyle}
+        style={pageData.key === "settings" ? activeTabStyle : tabStyle}
         onClick={() => setPage({ key: "settings" })}
       >
         <PixelarticonsMenu />
