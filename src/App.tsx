@@ -6,6 +6,7 @@ import { ManagerContext, PageContext } from "~/contexts";
 import Home from "~/pages/Home";
 import NewPost from "~/pages/NewPost";
 import PostComments from "~/pages/PostComments";
+import UserProfile from "~/pages/UserProfile";
 
 // @ts-ignore
 import "@fontsource/jersey-10";
@@ -30,6 +31,8 @@ export default function App() {
       return <Home posts={posts} showComments={pageData.showComments} />;
     } else if (pageData.key === "newpost") {
       return <NewPost />;
+    } else if (pageData.key === "userprofile") {
+      return <UserProfile />;
     } else if (pageData.key === "comments") {
       const post = posts.find((p) => pageData.postId === p.id);
       if (post) {

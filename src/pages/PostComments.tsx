@@ -3,11 +3,10 @@ import { useMemo, useContext, useState, useEffect } from "react";
 import { _ } from "~/lib/i18n";
 import { ManagerContext, PageContext } from "~/contexts";
 
-import TitleBar from "~/components/TitleBar";
+import TopBar from "~/components/TopBar";
 import PostItem from "~/components/PostItem";
 import RepliesList from "~/components/RepliesList";
 import ReplyDraft from "~/components/ReplyDraft";
-import SecondaryButton from "~/components/SecondaryButton";
 
 interface Props {
   post: Post;
@@ -20,14 +19,10 @@ export default function PostComments({ post, focusReplyId }: Props) {
   const [replies, setReplies] = useState<Reply[]>([]);
 
   const fromAllComments = !!focusReplyId;
-  const titleBarM = useMemo(() => {
+  const TopBarM = useMemo(() => {
     const onClick = () =>
       setPage({ key: "home", showComments: fromAllComments });
-    return (
-      <TitleBar>
-        <SecondaryButton onClick={onClick}>{_("Back")}</SecondaryButton>
-      </TitleBar>
-    );
+    return <TopBar onClick={onClick} />;
   }, [setPage, fromAllComments]);
 
   useEffect(() => {
@@ -56,7 +51,7 @@ export default function PostComments({ post, focusReplyId }: Props) {
 
   return (
     <div>
-      {titleBarM}
+      {TopBarM}
       {PostM}
       {RepliesM}
       {ReplyDraftM}
