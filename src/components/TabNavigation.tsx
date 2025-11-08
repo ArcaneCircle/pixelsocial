@@ -32,14 +32,14 @@ export default function TabNavigation() {
   return (
     <div style={containerStyle}>
       <div
-        className="hpad08"
+        className="hpad08 noselect"
         style={!showComments ? activeTabStyle : tabStyle}
         onClick={() => setPage({ key: "home", showComments: false })}
       >
         {_("Posts")}
       </div>
       <div
-        className="hpad08"
+        className="hpad08 noselect"
         style={showComments ? activeTabStyle : tabStyle}
         onClick={() => setPage({ key: "home", showComments: true })}
       >
