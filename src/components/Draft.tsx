@@ -92,7 +92,7 @@ export default function Draft() {
     const text = (textareaRef.current?.value || "").trim();
     if (!text && !imgUrl) return;
     manager.sendPost(text, imgUrl, styleDisabled ? 0 : styleId);
-    setPage({ key: "home" });
+    setPage({ key: "home", showComments: false });
   }, [styleId, styleDisabled, imgUrl, textareaRef, manager, setPage]);
 
   const onFileSelected = useCallback(

@@ -6,11 +6,27 @@ import ReplyItem from "~/components/ReplyItem";
 
 interface Props {
   replies: Reply[];
+  focusReplyId?: string;
+  showOpen?: boolean;
 }
 
-export default function RepliesList({ replies }: Props) {
+export default function RepliesList({
+  replies,
+  focusReplyId,
+  showOpen,
+}: Props) {
   const items = replies.map((r) =>
-    useMemo(() => <ReplyItem key={r.id} reply={r} />, [r.id]),
+    useMemo(
+      () => (
+        <ReplyItem
+          key={r.id}
+          reply={r}
+          isFocused={focusReplyId === r.id}
+          showOpen={showOpen}
+        />
+      ),
+      [r.id, focusReplyId, showOpen],
+    ),
   );
 
   return (

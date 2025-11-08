@@ -18,24 +18,30 @@ export default function App() {
     manager.init(setPosts);
     return manager;
   }, []);
-  const [pageData, setPage] = useState<PageData>({ key: "home" });
+  const [pageData, setPage] = useState<PageData>({
+    key: "home",
+    showComments: false,
+  });
 
   if (!posts) return;
 
-  let page: any = null;
-  if (pageData.key === "home") {
-    page = useMemo(() => <Home posts={posts} />, [posts]);
-  } else if (pageData.key === "newpost") {
-    page = useMemo(() => <NewPost />, []);
-  } else if (pageData.key === "comments") {
-    const post = posts.find((p) => pageData.postId === p.id);
-    if (post) {
-      page = useMemo(() => <PostComments post={post} />, [post]);
-    } else {
-      // post deleted, go home
-      setPage({ key: "home" });
+  let page: any = useMemo(() => {
+    if (pageData.key === "home") {
+      return <Home posts={posts} showComments={pageData.showComments} />;
+    } else if (pageData.key === "newpost") {
+      return <NewPost />;
+    } else if (pageData.key === "comments") {
+      const post = posts.find((p) => pageData.postId === p.id);
+      if (post) {
+        const focusReplyId = pageData.focusReplyId;
+        return <PostComments post={post} focusReplyId={focusReplyId} />;
+      } else {
+        // post deleted, go home
+        setPage({ key: "home", showComments: false });
+        return null;
+      }
     }
-  }
+  }, [pageData, posts]);
 
   return (
     <ManagerContext.Provider value={manager}>

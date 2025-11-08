@@ -1,15 +1,19 @@
-import { useState, useCallback, useContext } from "react";
+import { useState, useMemo, useCallback, useContext } from "react";
+
+import PixelarticonsExternalLink from "~icons/pixelarticons/external-link";
 
 import {
   TEXT_TRUNCATE_SIZE,
   TEXT_TRUNCATE_LINES,
   ACCENT_COLOR,
   REPLY_BG_COLOR,
+  BORDER_COLOR,
 } from "~/constants";
-import { ManagerContext } from "~/contexts";
+import { ManagerContext, PageContext } from "~/contexts";
 import { _ } from "~/lib/i18n";
 
 import BasePostItem from "~/components/BasePostItem";
+import IconButton from "~/components/IconButton";
 
 const linkStyle = {
   color: ACCENT_COLOR,
@@ -18,11 +22,15 @@ const linkStyle = {
 
 interface Props {
   reply: Reply;
+  showOpen?: boolean;
+  isFocused?: boolean;
 }
 
-export default function ReplyItem({ reply }: Props) {
+export default function ReplyItem({ reply, showOpen, isFocused }: Props) {
   const [showMore, setShowMore] = useState(false);
   const manager = useContext(ManagerContext);
+  const { setPage } = useContext(PageContext);
+
   const deleteReply = useCallback(
     () => manager.deleteReply(reply.postId, reply.id),
     [reply.id],
@@ -48,6 +56,32 @@ export default function ReplyItem({ reply }: Props) {
     }
   }
 
+  const extraMenuItems = useMemo(() => {
+    const openInContext = () => {
+      setPage({
+        key: "comments",
+        postId: reply.postId,
+        focusReplyId: reply.id,
+      });
+    };
+    return showOpen ? (
+      <IconButton
+        onClick={openInContext}
+        style={{
+          padding: "0.5em 0",
+          borderBottom: "1px solid " + BORDER_COLOR,
+        }}
+      >
+        <PixelarticonsExternalLink />
+        {_("Open in context")}
+      </IconButton>
+    ) : null;
+  }, [reply.postId, reply.id, showOpen]);
+
+  const itemStyle = isFocused
+    ? { backgroundColor: REPLY_BG_COLOR, opacity: 0.7 }
+    : { backgroundColor: REPLY_BG_COLOR };
+
   return (
     <BasePostItem
       authorId={reply.authorId}
@@ -55,7 +89,9 @@ export default function ReplyItem({ reply }: Props) {
       isAdmin={!!reply.isAdmin}
       date={reply.date}
       deletePost={deleteReply}
-      style={{ backgroundColor: REPLY_BG_COLOR }}
+      extraMenuItems={extraMenuItems}
+      style={itemStyle}
+      id={`reply-${reply.id}`}
     >
       <div className="hpad08">
         {text}

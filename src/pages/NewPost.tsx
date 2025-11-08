@@ -21,7 +21,7 @@ export default function NewPost() {
   const manager = useContext(ManagerContext);
   const { setPage } = useContext(PageContext);
   const titleBarM = useMemo(() => {
-    const onClick = () => setPage({ key: "home" });
+    const onClick = () => setPage({ key: "home", showComments: false });
     return (
       <TitleBar>
         <SecondaryButton onClick={onClick} style={{ padding: "5px 10px" }}>
