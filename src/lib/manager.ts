@@ -60,6 +60,13 @@ export class Manager {
     );
   }
 
+  setSelfName(name: string) {
+    window.webxdc.sendUpdate(
+      { payload: { setName: { name, userId: this.selfId } } },
+      "",
+    );
+  }
+
   unlike(postId: string) {
     window.webxdc.sendUpdate(
       { payload: { unlike: { postId, userId: this.selfId } } },
@@ -207,6 +214,12 @@ export class Manager {
         await db.posts.put(post);
       });
       this.onPostsChanged();
+    } else if ("setName" in payload) {
+      const { userId, name } = payload.setName;
+      if (userId === this.selfId) {
+        localStorage.selfName = name;
+        this.selfName = name || window.webxdc.selfName;
+      }
     } else if ("botMode" in payload) {
       const { selfId, isAdmin, selfName } = payload.botMode;
       localStorage.selfId = this.selfId = selfId;

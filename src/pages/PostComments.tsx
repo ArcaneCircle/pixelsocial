@@ -1,13 +1,15 @@
 import { useMemo, useContext, useState, useEffect } from "react";
+import PixelarticonsArrowLeft from "~icons/pixelarticons/arrow-left";
 
+import { ACCENT_COLOR } from "~/constants";
 import { _ } from "~/lib/i18n";
 import { ManagerContext, PageContext } from "~/contexts";
 
-import TitleBar from "~/components/TitleBar";
+import TopBar from "~/components/TopBar";
 import PostItem from "~/components/PostItem";
 import RepliesList from "~/components/RepliesList";
 import ReplyDraft from "~/components/ReplyDraft";
-import SecondaryButton from "~/components/SecondaryButton";
+import IconButton from "~/components/IconButton";
 
 interface Props {
   post: Post;
@@ -20,14 +22,21 @@ export default function PostComments({ post, focusReplyId }: Props) {
   const [replies, setReplies] = useState<Reply[]>([]);
 
   const fromAllComments = !!focusReplyId;
-  const titleBarM = useMemo(() => {
-    const onClick = () =>
+  const TopBarM = useMemo(() => {
+    const onBack = () =>
       setPage({ key: "home", showComments: fromAllComments });
-    return (
-      <TitleBar>
-        <SecondaryButton onClick={onClick}>{_("Back")}</SecondaryButton>
-      </TitleBar>
+    const btnStyle = {
+      paddingTop: "0.5em",
+      paddingBottom: "0.5em",
+      color: ACCENT_COLOR,
+    };
+    const backBtn = (
+      <IconButton className="hpad08" style={btnStyle} onClick={onBack}>
+        <PixelarticonsArrowLeft style={{ fontSize: "1.2em" }} />
+        {_("Back")}
+      </IconButton>
     );
+    return <TopBar>{backBtn}</TopBar>;
   }, [setPage, fromAllComments]);
 
   useEffect(() => {
@@ -56,7 +65,7 @@ export default function PostComments({ post, focusReplyId }: Props) {
 
   return (
     <div>
-      {titleBarM}
+      {TopBarM}
       {PostM}
       {RepliesM}
       {ReplyDraftM}

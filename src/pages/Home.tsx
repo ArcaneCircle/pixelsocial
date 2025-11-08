@@ -1,14 +1,12 @@
 import { useState, useMemo, useEffect, useContext } from "react";
-import PixelarticonsPlus from "~icons/pixelarticons/plus";
 
 import { _ } from "~/lib/i18n";
-import { ManagerContext, PageContext } from "~/contexts";
+import { ManagerContext } from "~/contexts";
 
-import TitleBar from "~/components/TitleBar";
 import TabNavigation from "~/components/TabNavigation";
 import Feed from "~/components/Feed";
 import RepliesList from "~/components/RepliesList";
-import SecondaryButton from "~/components/SecondaryButton";
+import BottomBar from "~/components/BottomBar";
 
 interface Props {
   posts: Post[];
@@ -17,7 +15,6 @@ interface Props {
 
 export default function Home({ posts, showComments }: Props) {
   const manager = useContext(ManagerContext);
-  const { setPage } = useContext(PageContext);
   const [replies, setReplies] = useState<Reply[]>([]);
 
   useEffect(() => {
@@ -28,16 +25,6 @@ export default function Home({ posts, showComments }: Props) {
     })();
   }, [posts, showComments]); // posts is required so replies are refreshed
 
-  const TitleBarM = useMemo(() => {
-    const onClick = () => setPage({ key: "newpost" });
-    return (
-      <TitleBar>
-        <SecondaryButton onClick={onClick} style={{ padding: "5px 10px" }}>
-          <PixelarticonsPlus style={{ verticalAlign: "middle" }} />
-        </SecondaryButton>
-      </TitleBar>
-    );
-  }, [setPage]);
   const TabNavigationM = useMemo(() => <TabNavigation />, []);
   const FeedM = useMemo(() => {
     return showComments ? (
@@ -46,12 +33,13 @@ export default function Home({ posts, showComments }: Props) {
       <Feed posts={posts} />
     );
   }, [posts, replies, showComments]);
+  const BottomBarM = useMemo(() => <BottomBar />, []);
 
   return (
     <div>
-      {TitleBarM}
       {TabNavigationM}
-      {FeedM}
+      <div style={{ paddingBottom: "5em" }}>{FeedM}</div>
+      {BottomBarM}
     </div>
   );
 }

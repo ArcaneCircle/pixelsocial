@@ -12,4 +12,6 @@ export const MAIN_COLOR = "#6364ff",
   INPUT_BG_COLOR = "#292938",
   INPUT_FG_COLOR = "#ddd9e8",
   GRAY_COLOR = "#848484",
+  SUCCESS_COLOR = "#79bd9a",
+  SUCCESS_BG_COLOR = "#79bd9a40",
   LIKE_COLOR = "#e63e62";

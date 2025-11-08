@@ -23,13 +23,16 @@ declare type Payload =
   | {
       deleteR: { postId: string; replyId: string };
     }
+  | {
+      setName: { userId: string; name: string };
+    }
   // bot special commands:
   | {
       botMode: { selfId: string; selfName: string; isAdmin: boolean };
     };
 
 declare type PageData =
-  | { key: "newpost" }
+  | { key: "newpost" | "settings" }
   | { key: "home"; showComments: boolean }
   | { key: "comments"; postId: string; focusReplyId?: string };
 

@@ -30,7 +30,7 @@ export default function RepliesList({
   );
 
   return (
-    <div style={{ marginBottom: "3em" }}>
+    <div style={showOpen ? undefined : { marginBottom: "5em" }}>
       {replies.length ? (
         items
       ) : (
