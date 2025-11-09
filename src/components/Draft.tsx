@@ -26,6 +26,20 @@ const containerStyle = {
   padding: "12px",
   backgroundColor: INPUT_BG_COLOR,
 };
+
+const replyContainerStyle = {
+  display: "flex",
+  flexDirection: "column" as "column",
+  flexWrap: "nowrap" as "nowrap",
+  gap: "12px",
+  padding: "12px",
+  backgroundColor: INPUT_BG_COLOR,
+  position: "fixed" as "fixed",
+  bottom: 0,
+  width: "calc(100% - 24px)",
+  maxHeight: "80vh",
+  overflowY: "auto" as "auto",
+};
 const textareaStyle = {
   color: INPUT_FG_COLOR,
   backgroundColor: INPUT_BG_COLOR,
@@ -162,7 +176,7 @@ export default function Draft({ replyToPostId, onReplySubmitted }: Props = {}) {
   const styled = !styleDisabled && styleId > 0;
 
   return (
-    <div style={containerStyle}>
+    <div style={replyToPostId ? replyContainerStyle : containerStyle}>
       <textarea
         className={styled ? `grad grad${styleId}` : undefined}
         ref={textareaRef}
