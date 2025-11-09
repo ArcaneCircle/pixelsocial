@@ -1,5 +1,6 @@
 import { useRef, useCallback, useContext } from "react";
 import PixelarticonsComment from "~icons/pixelarticons/comment";
+import PixelarticonsScale from "~icons/pixelarticons/scale";
 
 import { INPUT_BG_COLOR, INPUT_FG_COLOR } from "~/constants";
 import { _ } from "~/lib/i18n";
@@ -30,11 +31,20 @@ const inputStyle = {
   flexGrow: 1,
 };
 
+const iconBtnStyle = {
+  background: "none",
+  color: "white",
+  padding: "5px 10px",
+  cursor: "pointer",
+  border: 0,
+};
+
 interface Props {
   postId: string;
+  onAttachImage: () => void;
 }
 
-export default function ReplyDraft({ postId }: Props) {
+export default function ReplyDraft({ postId, onAttachImage }: Props) {
   const manager = useContext(ManagerContext);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -59,6 +69,9 @@ export default function ReplyDraft({ postId }: Props) {
 
   return (
     <div style={containerStyle}>
+      <button style={iconBtnStyle} onClick={onAttachImage}>
+        <PixelarticonsScale style={{ height: "1.2em", width: "auto" }} />
+      </button>
       <input
         ref={inputRef}
         style={inputStyle}

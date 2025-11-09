@@ -63,7 +63,11 @@ const iconBtnStyle = {
   padding: "2px",
 };
 
-export default function Draft() {
+interface Props {
+  replyToPostId?: string;
+}
+
+export default function Draft({ replyToPostId }: Props = {}) {
   const manager = useContext(ManagerContext);
   const { setPage } = useContext(PageContext);
 
@@ -91,9 +95,22 @@ export default function Draft() {
   const onClick = useCallback(() => {
     const text = (textareaRef.current?.value || "").trim();
     if (!text && !imgUrl) return;
-    manager.sendPost(text, imgUrl, styleDisabled ? 0 : styleId);
-    setPage({ key: "home", showComments: false });
-  }, [styleId, styleDisabled, imgUrl, textareaRef, manager, setPage]);
+    if (replyToPostId) {
+      manager.reply(replyToPostId, text, imgUrl);
+      setPage({ key: "comments", postId: replyToPostId });
+    } else {
+      manager.sendPost(text, imgUrl, styleDisabled ? 0 : styleId);
+      setPage({ key: "home", showComments: false });
+    }
+  }, [
+    styleId,
+    styleDisabled,
+    imgUrl,
+    textareaRef,
+    manager,
+    setPage,
+    replyToPostId,
+  ]);
 
   const onFileSelected = useCallback(
     async (file: File) => {
@@ -134,7 +151,10 @@ export default function Draft() {
     [setStyleId, setImgUrl],
   );
 
-  const hint = _("What's on your mind?");
+  const hint = replyToPostId
+    ? _("Write a comment...")
+    : _("What's on your mind?");
+  const buttonText = replyToPostId ? _("Reply") : _("Post");
   const styled = !styleDisabled && styleId > 0;
 
   return (
@@ -166,7 +186,7 @@ export default function Draft() {
         </FilePicker>
       </StylesReel>
       <PrimaryButton style={btnStyle} onClick={onClick}>
-        {_("Post")}
+        {buttonText}
       </PrimaryButton>
     </div>
   );
