@@ -65,9 +65,10 @@ const iconBtnStyle = {
 
 interface Props {
   replyToPostId?: string;
+  onReplySubmitted?: () => void;
 }
 
-export default function Draft({ replyToPostId }: Props = {}) {
+export default function Draft({ replyToPostId, onReplySubmitted }: Props = {}) {
   const manager = useContext(ManagerContext);
   const { setPage } = useContext(PageContext);
 
@@ -96,8 +97,10 @@ export default function Draft({ replyToPostId }: Props = {}) {
     const text = (textareaRef.current?.value || "").trim();
     if (!text && !imgUrl) return;
     if (replyToPostId) {
-      manager.reply(replyToPostId, text, imgUrl);
-      setPage({ key: "comments", postId: replyToPostId });
+      manager.reply(replyToPostId, text, imgUrl, styleDisabled ? 0 : styleId);
+      if (onReplySubmitted) {
+        onReplySubmitted();
+      }
     } else {
       manager.sendPost(text, imgUrl, styleDisabled ? 0 : styleId);
       setPage({ key: "home", showComments: false });
@@ -110,6 +113,7 @@ export default function Draft({ replyToPostId }: Props = {}) {
     manager,
     setPage,
     replyToPostId,
+    onReplySubmitted,
   ]);
 
   const onFileSelected = useCallback(

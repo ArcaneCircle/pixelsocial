@@ -65,4 +65,5 @@ declare interface Reply {
   date: number;
   text: string;
   image: string;
+  style: number;
 }

@@ -1,4 +1,4 @@
-import { useMemo, useContext, useState, useEffect } from "react";
+import { useMemo, useContext, useState, useEffect, useCallback } from "react";
 import PixelarticonsArrowLeft from "~icons/pixelarticons/arrow-left";
 
 import { ACCENT_COLOR } from "~/constants";
@@ -22,6 +22,10 @@ export default function PostComments({ post, focusReplyId }: Props) {
   const { setPage } = useContext(PageContext);
   const [replies, setReplies] = useState<Reply[]>([]);
   const [showDraft, setShowDraft] = useState<boolean>(false);
+
+  const handleReplySubmitted = useCallback(() => {
+    setShowDraft(false);
+  }, []);
 
   const fromAllComments = !!focusReplyId;
   const TopBarM = useMemo(() => {
@@ -70,7 +74,12 @@ export default function PostComments({ post, focusReplyId }: Props) {
     [post.id],
   );
 
-  const DraftM = useMemo(() => <Draft replyToPostId={post.id} />, [post.id]);
+  const DraftM = useMemo(
+    () => (
+      <Draft replyToPostId={post.id} onReplySubmitted={handleReplySubmitted} />
+    ),
+    [post.id, handleReplySubmitted],
+  );
 
   return (
     <div>
