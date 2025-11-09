@@ -115,7 +115,7 @@ export class Manager {
       date: Date.now(),
       text,
     };
-    const info = `${this.selfName} replied a post`;
+    const info = `${this.selfName} replied to a post`;
     window.webxdc.sendUpdate({ payload: { reply }, info }, "");
   }
 
