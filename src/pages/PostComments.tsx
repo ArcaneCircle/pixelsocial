@@ -64,15 +64,16 @@ export default function PostComments({ post, focusReplyId }: Props) {
   const PostM = useMemo(() => <PostItem key={post.id} post={post} />, [post]);
 
   const ReplyDraftM = useMemo(
-    () => (
-      <ReplyDraft postId={post.id} onExpand={() => setShowDraft(true)} />
-    ),
+    () => <ReplyDraft postId={post.id} onExpand={() => setShowDraft(true)} />,
     [post.id],
   );
 
   const DraftM = useMemo(
     () => (
-      <Draft replyToPostId={post.id} onReplySubmitted={() => setShowDraft(false)} />
+      <Draft
+        replyToPostId={post.id}
+        onReplySubmitted={() => setShowDraft(false)}
+      />
     ),
     [post.id],
   );
