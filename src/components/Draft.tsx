@@ -23,7 +23,7 @@ const containerStyle = {
   flexDirection: "column" as "column",
   flexWrap: "nowrap" as "nowrap",
   gap: "12px",
-  padding: "12px",
+  padding: "12px", // warning: when changing update also below
   backgroundColor: INPUT_BG_COLOR,
 };
 const replyContainerStyle = {
@@ -33,6 +33,7 @@ const replyContainerStyle = {
   width: "calc(100% - 24px)",
   maxHeight: "80vh",
   overflowY: "auto" as "auto",
+  paddingTop: "14px", // 12px + 2px
 };
 
 const textareaStyle = {
