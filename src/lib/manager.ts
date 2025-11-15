@@ -105,7 +105,7 @@ export class Manager {
     window.webxdc.sendUpdate({ payload: { post }, info }, "");
   }
 
-  reply(postId: string, text: string) {
+  reply(postId: string, text: string, image = "", style = 0) {
     const reply = {
       postId,
       id: getRandomUUID(),
@@ -114,6 +114,8 @@ export class Manager {
       isAdmin: this.isAdmin,
       date: Date.now(),
       text,
+      image,
+      style,
     };
     const info = `${this.selfName} replied to a post`;
     window.webxdc.sendUpdate({ payload: { reply }, info }, "");
