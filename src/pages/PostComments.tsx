@@ -65,7 +65,7 @@ export default function PostComments({ post, focusReplyId }: Props) {
 
   const ReplyDraftM = useMemo(
     () => <ReplyDraft postId={post.id} onExpand={() => setShowDraft(true)} />,
-    [post.id],
+    [post.id, setShowDraft],
   );
 
   const DraftM = useMemo(
@@ -75,7 +75,7 @@ export default function PostComments({ post, focusReplyId }: Props) {
         onReplySubmitted={() => setShowDraft(false)}
       />
     ),
-    [post.id],
+    [post.id, setShowDraft],
   );
 
   return (
