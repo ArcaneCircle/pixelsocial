@@ -9,6 +9,7 @@ import TopBar from "~/components/TopBar";
 import PostItem from "~/components/PostItem";
 import RepliesList from "~/components/RepliesList";
 import ReplyDraft from "~/components/ReplyDraft";
+import Draft from "~/components/Draft";
 import IconButton from "~/components/IconButton";
 
 interface Props {
@@ -20,6 +21,7 @@ export default function PostComments({ post, focusReplyId }: Props) {
   const manager = useContext(ManagerContext);
   const { setPage } = useContext(PageContext);
   const [replies, setReplies] = useState<Reply[]>([]);
+  const [showDraft, setShowDraft] = useState<boolean>(false);
 
   const fromAllComments = !!focusReplyId;
   const TopBarM = useMemo(() => {
@@ -61,14 +63,27 @@ export default function PostComments({ post, focusReplyId }: Props) {
 
   const PostM = useMemo(() => <PostItem key={post.id} post={post} />, [post]);
 
-  const ReplyDraftM = useMemo(() => <ReplyDraft postId={post.id} />, [post.id]);
+  const ReplyDraftM = useMemo(
+    () => <ReplyDraft postId={post.id} onExpand={() => setShowDraft(true)} />,
+    [post.id, setShowDraft],
+  );
+
+  const DraftM = useMemo(
+    () => (
+      <Draft
+        replyToPostId={post.id}
+        onReplySubmitted={() => setShowDraft(false)}
+      />
+    ),
+    [post.id, setShowDraft],
+  );
 
   return (
     <div>
       {TopBarM}
       {PostM}
       {RepliesM}
-      {ReplyDraftM}
+      {showDraft ? DraftM : ReplyDraftM}
     </div>
   );
 }

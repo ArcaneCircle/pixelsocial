@@ -23,9 +23,19 @@ const containerStyle = {
   flexDirection: "column" as "column",
   flexWrap: "nowrap" as "nowrap",
   gap: "12px",
-  padding: "12px",
+  padding: "12px", // warning: when changing update also below
   backgroundColor: INPUT_BG_COLOR,
 };
+const replyContainerStyle = {
+  ...containerStyle,
+  position: "fixed" as "fixed",
+  bottom: 0,
+  width: "calc(100% - 24px)",
+  maxHeight: "80vh",
+  overflowY: "auto" as "auto",
+  paddingTop: "14px", // 12px + 2px
+};
+
 const textareaStyle = {
   color: INPUT_FG_COLOR,
   backgroundColor: INPUT_BG_COLOR,
@@ -63,7 +73,12 @@ const iconBtnStyle = {
   padding: "2px",
 };
 
-export default function Draft() {
+interface Props {
+  replyToPostId?: string;
+  onReplySubmitted?: () => void;
+}
+
+export default function Draft({ replyToPostId, onReplySubmitted }: Props = {}) {
   const manager = useContext(ManagerContext);
   const { setPage } = useContext(PageContext);
 
@@ -91,9 +106,25 @@ export default function Draft() {
   const onClick = useCallback(() => {
     const text = (textareaRef.current?.value || "").trim();
     if (!text && !imgUrl) return;
-    manager.sendPost(text, imgUrl, styleDisabled ? 0 : styleId);
-    setPage({ key: "home", showComments: false });
-  }, [styleId, styleDisabled, imgUrl, textareaRef, manager, setPage]);
+    if (replyToPostId) {
+      manager.reply(replyToPostId, text, imgUrl, styleDisabled ? 0 : styleId);
+      if (onReplySubmitted) {
+        onReplySubmitted();
+      }
+    } else {
+      manager.sendPost(text, imgUrl, styleDisabled ? 0 : styleId);
+      setPage({ key: "home", showComments: false });
+    }
+  }, [
+    styleId,
+    styleDisabled,
+    imgUrl,
+    textareaRef,
+    manager,
+    setPage,
+    replyToPostId,
+    onReplySubmitted,
+  ]);
 
   const onFileSelected = useCallback(
     async (file: File) => {
@@ -134,11 +165,14 @@ export default function Draft() {
     [setStyleId, setImgUrl],
   );
 
-  const hint = _("What's on your mind?");
+  const hint = replyToPostId
+    ? _("Write a comment...")
+    : _("What's on your mind?");
+  const buttonText = replyToPostId ? _("Reply") : _("Post");
   const styled = !styleDisabled && styleId > 0;
 
   return (
-    <div style={containerStyle}>
+    <div style={replyToPostId ? replyContainerStyle : containerStyle}>
       <textarea
         className={styled ? `grad grad${styleId}` : undefined}
         ref={textareaRef}
@@ -166,7 +200,7 @@ export default function Draft() {
         </FilePicker>
       </StylesReel>
       <PrimaryButton style={btnStyle} onClick={onClick}>
-        {_("Post")}
+        {buttonText}
       </PrimaryButton>
     </div>
   );

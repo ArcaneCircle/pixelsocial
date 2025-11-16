@@ -14,6 +14,7 @@ import { _ } from "~/lib/i18n";
 
 import BasePostItem from "~/components/BasePostItem";
 import IconButton from "~/components/IconButton";
+import PostImage from "~/components/PostImage";
 
 const linkStyle = {
   color: ACCENT_COLOR,
@@ -41,7 +42,7 @@ export default function ReplyItem({ reply, showOpen, isFocused }: Props) {
 
   let truncated = false;
   let text = reply.text;
-  if (!showMore) {
+  if (!reply.style && !showMore) {
     if (text.length > TEXT_TRUNCATE_SIZE) {
       truncated = true;
       text = text.substr(0, TEXT_TRUNCATE_SIZE);
@@ -93,7 +94,7 @@ export default function ReplyItem({ reply, showOpen, isFocused }: Props) {
       style={itemStyle}
       id={`reply-${reply.id}`}
     >
-      <div className="hpad08">
+      <div className={reply.style ? `card grad${reply.style}` : "hpad08"}>
         {text}
         {truncated && (
           <span style={linkStyle} onClick={onShowMore}>
@@ -101,6 +102,7 @@ export default function ReplyItem({ reply, showOpen, isFocused }: Props) {
           </span>
         )}
       </div>
+      {reply.image && <PostImage src={reply.image} />}
     </BasePostItem>
   );
 }

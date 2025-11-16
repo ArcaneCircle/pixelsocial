@@ -64,4 +64,6 @@ declare interface Reply {
   isAdmin: boolean;
   date: number;
   text: string;
+  image: string;
+  style: number;
 }
