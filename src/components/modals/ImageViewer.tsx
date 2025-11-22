@@ -6,6 +6,7 @@ import PixelarticonsZoomOut from "~icons/pixelarticons/zoom-out";
 import PixelarticonsReload from "~icons/pixelarticons/reload";
 
 import { BG_COLOR, BORDER_COLOR } from "~/constants";
+import { _ } from "~/lib/i18n";
 
 import styles from "./ImageViewer.module.css";
 
@@ -159,16 +160,32 @@ export default function ImageViewer({ src, isOpen, onClose }: Props) {
     <dialog ref={dialogRef} className={styles.modal} style={modalStyle}>
       <div ref={contentRef} className={styles.container}>
         <div className={styles.controls}>
-          <button className={styles.controlBtn} onClick={handleZoomOut} aria-label="Zoom out">
+          <button
+            className={styles.controlBtn}
+            onClick={handleZoomOut}
+            aria-label={_("Zoom out")}
+          >
             <PixelarticonsZoomOut />
           </button>
-          <button className={styles.controlBtn} onClick={handleReset} aria-label="Reset zoom">
+          <button
+            className={styles.controlBtn}
+            onClick={handleReset}
+            aria-label={_("Reset zoom")}
+          >
             <PixelarticonsReload />
           </button>
-          <button className={styles.controlBtn} onClick={handleZoomIn} aria-label="Zoom in">
+          <button
+            className={styles.controlBtn}
+            onClick={handleZoomIn}
+            aria-label={_("Zoom in")}
+          >
             <PixelarticonsZoomIn />
           </button>
-          <button className={styles.controlBtn} onClick={onClose} aria-label="Close image viewer">
+          <button
+            className={styles.controlBtn}
+            onClick={onClose}
+            aria-label={_("Close image viewer")}
+          >
             <PixelarticonsClose />
           </button>
         </div>
@@ -185,7 +202,7 @@ export default function ImageViewer({ src, isOpen, onClose }: Props) {
         >
           <img
             src={src}
-            alt="Enlarged view"
+            alt={_("Enlarged view")}
             className={styles.image}
             style={imageStyle}
             draggable={false}
