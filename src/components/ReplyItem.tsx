@@ -15,6 +15,7 @@ import { _ } from "~/lib/i18n";
 import BasePostItem from "~/components/BasePostItem";
 import IconButton from "~/components/IconButton";
 import PostImage from "~/components/PostImage";
+import PostVideo from "~/components/PostVideo";
 
 const linkStyle = {
   color: ACCENT_COLOR,
@@ -103,6 +104,7 @@ export default function ReplyItem({ reply, showOpen, isFocused }: Props) {
         )}
       </div>
       {reply.image && <PostImage src={reply.image} />}
+      {reply.video && <PostVideo src={reply.video} />}
     </BasePostItem>
   );
 }
