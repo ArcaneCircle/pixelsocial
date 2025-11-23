@@ -8,7 +8,7 @@ import {
 } from "~/constants";
 import { ManagerContext } from "~/contexts";
 import { _ } from "~/lib/i18n";
-import { getImageExtension, getVideoExtension } from "~/lib/util";
+import { getImageExtension } from "~/lib/util";
 
 import BasePostItem from "~/components/BasePostItem";
 import PostActionsBar from "~/components/PostActionsBar";
@@ -42,21 +42,22 @@ export default function PostItem({ post }: Props) {
       if (post.video) {
         const parts = post.video.split(",", 2);
         if (parts.length === 2) {
-          const [meta, base64] = parts;
-          const ext = getVideoExtension(meta) || "mp4";
-          file = { name: "video." + ext, type: "video", base64 };
+          const base64 = parts[1];
+          const name = post.filename || "video.mp4";
+          file = { name, type: "video", base64 };
         }
       } else if (post.image) {
         const parts = post.image.split(",", 2);
         if (parts.length === 2) {
           const [meta, base64] = parts;
           const ext = getImageExtension(meta) || "png";
-          file = { name: "image." + ext, type: "image", base64 };
+          const name = post.filename || "image." + ext;
+          file = { name, type: "image", base64 };
         }
       }
     }
     window.webxdc.sendToChat({ file, text });
-  }, [post.text, post.image, post.video, post.style, textRef]);
+  }, [post.text, post.image, post.video, post.filename, post.style, textRef]);
 
   const onShowMore = useCallback(() => {
     setShowMore(true);

@@ -90,6 +90,7 @@ export default function Draft({ replyToPostId, onReplySubmitted }: Props = {}) {
   const [imgUrl, setImgUrl] = useState<string>("");
   const [videoUrl, setVideoUrl] = useState<string>("");
   const [mediaType, setMediaType] = useState<"image" | "video" | "">("");
+  const [filename, setFilename] = useState<string>("");
   const [errorMsg, setErrorMsg] = useState<string>("");
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
@@ -118,12 +119,19 @@ export default function Draft({ replyToPostId, onReplySubmitted }: Props = {}) {
         imgUrl,
         styleDisabled ? 0 : styleId,
         videoUrl,
+        filename,
       );
       if (onReplySubmitted) {
         onReplySubmitted();
       }
     } else {
-      manager.sendPost(text, imgUrl, styleDisabled ? 0 : styleId, videoUrl);
+      manager.sendPost(
+        text,
+        imgUrl,
+        styleDisabled ? 0 : styleId,
+        videoUrl,
+        filename,
+      );
       setPage({ key: "home", showComments: false });
     }
   }, [
@@ -131,6 +139,7 @@ export default function Draft({ replyToPostId, onReplySubmitted }: Props = {}) {
     styleDisabled,
     imgUrl,
     videoUrl,
+    filename,
     mediaType,
     textareaRef,
     manager,
@@ -157,6 +166,7 @@ export default function Draft({ replyToPostId, onReplySubmitted }: Props = {}) {
         setVideoUrl(url);
         setImgUrl("");
         setMediaType("video");
+        setFilename(file.name);
         setPixelated(false);
         setStyleId(0);
         return;
@@ -184,6 +194,7 @@ export default function Draft({ replyToPostId, onReplySubmitted }: Props = {}) {
       setImgUrl(url);
       setVideoUrl("");
       setMediaType("image");
+      setFilename(file.name);
       setPixelated(false);
       setStyleId(0);
     },
@@ -202,9 +213,10 @@ export default function Draft({ replyToPostId, onReplySubmitted }: Props = {}) {
       setStyleId(styleId);
       setImgUrl("");
       setVideoUrl("");
+      setFilename("");
       setMediaType("");
     },
-    [setStyleId, setImgUrl, setVideoUrl, setMediaType],
+    [setStyleId, setImgUrl, setVideoUrl, setFilename, setMediaType],
   );
 
   const hint = replyToPostId

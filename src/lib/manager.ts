@@ -86,7 +86,13 @@ export class Manager {
     window.webxdc.sendUpdate({ payload: { deleteR: { postId, replyId } } }, "");
   }
 
-  sendPost(text: string, image: string, style: number, video = "") {
+  sendPost(
+    text: string,
+    image: string,
+    style: number,
+    video = "",
+    filename = "",
+  ) {
     const now = Date.now();
     const post = {
       id: getRandomUUID(),
@@ -98,6 +104,7 @@ export class Manager {
       text,
       image,
       video,
+      filename,
       style,
       likes: 0,
       replies: 0,
@@ -106,7 +113,14 @@ export class Manager {
     window.webxdc.sendUpdate({ payload: { post }, info }, "");
   }
 
-  reply(postId: string, text: string, image = "", style = 0, video = "") {
+  reply(
+    postId: string,
+    text: string,
+    image = "",
+    style = 0,
+    video = "",
+    filename = "",
+  ) {
     const reply = {
       postId,
       id: getRandomUUID(),
@@ -117,6 +131,7 @@ export class Manager {
       text,
       image,
       video,
+      filename,
       style,
     };
     const info = `${this.selfName} replied to a post`;

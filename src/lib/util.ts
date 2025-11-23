@@ -97,12 +97,3 @@ export function getImageExtension(dataUrl: string): string | null {
   }
   return null; // Return null if no valid image type is found
 }
-
-export function getVideoExtension(dataUrl: string): string | null {
-  const regex = /^data:video\/([a-zA-Z0-9-]+);base64/;
-  const match = dataUrl.match(regex);
-  if (match && match[1]) {
-    return match[1];
-  }
-  return null; // Return null if no valid video type is found
-}
