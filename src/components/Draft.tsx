@@ -108,7 +108,7 @@ export default function Draft({ replyToPostId, onReplySubmitted }: Props = {}) {
 
   const onClick = useCallback(() => {
     const text = (textareaRef.current?.value || "").trim();
-    if (!text && !imgUrl && !videoUrl) return;
+    if (!text && !mediaType) return;
     if (replyToPostId) {
       manager.reply(
         replyToPostId,
@@ -129,6 +129,7 @@ export default function Draft({ replyToPostId, onReplySubmitted }: Props = {}) {
     styleDisabled,
     imgUrl,
     videoUrl,
+    mediaType,
     textareaRef,
     manager,
     setPage,
@@ -141,8 +142,11 @@ export default function Draft({ replyToPostId, onReplySubmitted }: Props = {}) {
       // Handle video files
       if (file.type.startsWith("video/")) {
         if (file.size > manager.maxSize) {
-          console.warn("Video file too large:", file.size);
-          // For now, we'll still try to load it but log a warning
+          console.error("Video file too large:", file.size);
+          alert(
+            `Video file is too large. Maximum size is ${manager.maxSize / (1024 * 1024)}MB`,
+          );
+          return;
         }
         const url = await readAsDataURL(file);
         console.log("video size:" + url.length);

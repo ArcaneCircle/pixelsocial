@@ -40,13 +40,19 @@ export default function PostItem({ post }: Props) {
     } else {
       text = post.text;
       if (post.video) {
-        const [meta, base64] = post.video.split(",", 2);
-        const ext = getVideoExtension(meta) || "mp4";
-        file = { name: "video." + ext, type: "video", base64 };
+        const parts = post.video.split(",", 2);
+        if (parts.length === 2) {
+          const [meta, base64] = parts;
+          const ext = getVideoExtension(meta) || "mp4";
+          file = { name: "video." + ext, type: "video", base64 };
+        }
       } else if (post.image) {
-        const [meta, base64] = post.image.split(",", 2);
-        const ext = getImageExtension(meta) || "png";
-        file = { name: "image." + ext, type: "image", base64 };
+        const parts = post.image.split(",", 2);
+        if (parts.length === 2) {
+          const [meta, base64] = parts;
+          const ext = getImageExtension(meta) || "png";
+          file = { name: "image." + ext, type: "image", base64 };
+        }
       }
     }
     window.webxdc.sendToChat({ file, text });

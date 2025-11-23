@@ -99,7 +99,7 @@ export function getImageExtension(dataUrl: string): string | null {
 }
 
 export function getVideoExtension(dataUrl: string): string | null {
-  const regex = /^data:video\/([a-zA-Z0-9]+);base64/;
+  const regex = /^data:video\/([a-zA-Z0-9-]+);base64/;
   const match = dataUrl.match(regex);
   if (match && match[1]) {
     return match[1];
