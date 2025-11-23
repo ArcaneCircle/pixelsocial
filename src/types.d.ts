@@ -45,6 +45,7 @@ declare interface Post {
   active: number;
   text: string;
   image: string;
+  video?: string;
   style: number;
   likes: number;
   liked?: boolean;
@@ -65,5 +66,6 @@ declare interface Reply {
   date: number;
   text: string;
   image: string;
+  video?: string;
   style: number;
 }

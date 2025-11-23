@@ -8,11 +8,12 @@ import {
 } from "~/constants";
 import { ManagerContext } from "~/contexts";
 import { _ } from "~/lib/i18n";
-import { getImageExtension } from "~/lib/util";
+import { getImageExtension, getVideoExtension } from "~/lib/util";
 
 import BasePostItem from "~/components/BasePostItem";
 import PostActionsBar from "~/components/PostActionsBar";
 import PostImage from "~/components/PostImage";
+import PostVideo from "~/components/PostVideo";
 
 const linkStyle = {
   color: ACCENT_COLOR,
@@ -38,14 +39,18 @@ export default function PostItem({ post }: Props) {
       file = { name: "image.jpeg", type: "image", base64 };
     } else {
       text = post.text;
-      if (post.image) {
+      if (post.video) {
+        const [meta, base64] = post.video.split(",", 2);
+        const ext = getVideoExtension(meta) || "mp4";
+        file = { name: "video." + ext, type: "video", base64 };
+      } else if (post.image) {
         const [meta, base64] = post.image.split(",", 2);
         const ext = getImageExtension(meta) || "png";
         file = { name: "image." + ext, type: "image", base64 };
       }
     }
     window.webxdc.sendToChat({ file, text });
-  }, [post.text, post.image, post.style, textRef]);
+  }, [post.text, post.image, post.video, post.style, textRef]);
 
   const onShowMore = useCallback(() => {
     setShowMore(true);
@@ -90,6 +95,7 @@ export default function PostItem({ post }: Props) {
         )}
       </div>
       {post.image && <PostImage src={post.image} />}
+      {post.video && <PostVideo src={post.video} />}
       <PostActionsBar className="hpad08" post={post} onShare={onShare} />
     </BasePostItem>
   );

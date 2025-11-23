@@ -86,7 +86,7 @@ export class Manager {
     window.webxdc.sendUpdate({ payload: { deleteR: { postId, replyId } } }, "");
   }
 
-  sendPost(text: string, image: string, style: number) {
+  sendPost(text: string, image: string, style: number, video = "") {
     const now = Date.now();
     const post = {
       id: getRandomUUID(),
@@ -97,6 +97,7 @@ export class Manager {
       isAdmin: this.isAdmin,
       text,
       image,
+      video,
       style,
       likes: 0,
       replies: 0,
@@ -105,7 +106,7 @@ export class Manager {
     window.webxdc.sendUpdate({ payload: { post }, info }, "");
   }
 
-  reply(postId: string, text: string, image = "", style = 0) {
+  reply(postId: string, text: string, image = "", style = 0, video = "") {
     const reply = {
       postId,
       id: getRandomUUID(),
@@ -115,6 +116,7 @@ export class Manager {
       date: Date.now(),
       text,
       image,
+      video,
       style,
     };
     const info = `${this.selfName} replied to a post`;

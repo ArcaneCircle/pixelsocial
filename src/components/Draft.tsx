@@ -17,6 +17,7 @@ import PrimaryButton from "~/components/PrimaryButton";
 import FilePicker from "~/components/FilePicker";
 import StylesReel from "~/components/StylesReel";
 import PostImage from "~/components/PostImage";
+import PostVideo from "~/components/PostVideo";
 
 const containerStyle = {
   display: "flex",
@@ -86,6 +87,8 @@ export default function Draft({ replyToPostId, onReplySubmitted }: Props = {}) {
   const [styleDisabled, setStyleDisabled] = useState<boolean>(false);
   const [pixelated, setPixelated] = useState<boolean>(false);
   const [imgUrl, setImgUrl] = useState<string>("");
+  const [videoUrl, setVideoUrl] = useState<string>("");
+  const [mediaType, setMediaType] = useState<"image" | "video" | "">("");
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   useEffect(() => {
@@ -105,20 +108,27 @@ export default function Draft({ replyToPostId, onReplySubmitted }: Props = {}) {
 
   const onClick = useCallback(() => {
     const text = (textareaRef.current?.value || "").trim();
-    if (!text && !imgUrl) return;
+    if (!text && !imgUrl && !videoUrl) return;
     if (replyToPostId) {
-      manager.reply(replyToPostId, text, imgUrl, styleDisabled ? 0 : styleId);
+      manager.reply(
+        replyToPostId,
+        text,
+        imgUrl,
+        styleDisabled ? 0 : styleId,
+        videoUrl,
+      );
       if (onReplySubmitted) {
         onReplySubmitted();
       }
     } else {
-      manager.sendPost(text, imgUrl, styleDisabled ? 0 : styleId);
+      manager.sendPost(text, imgUrl, styleDisabled ? 0 : styleId, videoUrl);
       setPage({ key: "home", showComments: false });
     }
   }, [
     styleId,
     styleDisabled,
     imgUrl,
+    videoUrl,
     textareaRef,
     manager,
     setPage,
@@ -128,6 +138,23 @@ export default function Draft({ replyToPostId, onReplySubmitted }: Props = {}) {
 
   const onFileSelected = useCallback(
     async (file: File) => {
+      // Handle video files
+      if (file.type.startsWith("video/")) {
+        if (file.size > manager.maxSize) {
+          console.warn("Video file too large:", file.size);
+          // For now, we'll still try to load it but log a warning
+        }
+        const url = await readAsDataURL(file);
+        console.log("video size:" + url.length);
+        setVideoUrl(url);
+        setImgUrl("");
+        setMediaType("video");
+        setPixelated(false);
+        setStyleId(0);
+        return;
+      }
+
+      // Handle image files (existing logic)
       let url;
       if (
         file.type.startsWith("image/") &&
@@ -137,17 +164,22 @@ export default function Draft({ replyToPostId, onReplySubmitted }: Props = {}) {
       ) {
         url = await readAsDataURL(file);
         console.log("image size:" + url.length);
-      } else {
+      } else if (file.type.startsWith("image/")) {
         const blobUrl = URL.createObjectURL(file);
         url = await resizeImage(blobUrl);
         URL.revokeObjectURL(blobUrl);
         console.log("resizeImage:" + url.length);
+      } else {
+        console.warn("Unsupported file type:", file.type);
+        return;
       }
       setImgUrl(url);
+      setVideoUrl("");
+      setMediaType("image");
       setPixelated(false);
       setStyleId(0);
     },
-    [setImgUrl],
+    [setImgUrl, setVideoUrl, manager.maxSize],
   );
 
   const onPixelIt = useCallback(async () => {
@@ -161,8 +193,10 @@ export default function Draft({ replyToPostId, onReplySubmitted }: Props = {}) {
     (styleId: number) => {
       setStyleId(styleId);
       setImgUrl("");
+      setVideoUrl("");
+      setMediaType("");
     },
-    [setStyleId, setImgUrl],
+    [setStyleId, setImgUrl, setVideoUrl, setMediaType],
   );
 
   const hint = replyToPostId
@@ -179,8 +213,9 @@ export default function Draft({ replyToPostId, onReplySubmitted }: Props = {}) {
         style={styled ? cardStyle : textareaStyle}
         placeholder={hint}
       ></textarea>
-      {imgUrl && <PostImage src={imgUrl} />}
-      {imgUrl && !pixelated && (
+      {mediaType === "image" && imgUrl && <PostImage src={imgUrl} />}
+      {mediaType === "video" && videoUrl && <PostVideo src={videoUrl} />}
+      {mediaType === "image" && imgUrl && !pixelated && (
         <PrimaryButton
           style={{ marginTop: "-12px", flex: "1 1 auto" }}
           onClick={onPixelIt}
@@ -190,7 +225,7 @@ export default function Draft({ replyToPostId, onReplySubmitted }: Props = {}) {
       )}
       <StylesReel onStyleSelected={onStyleSelected} selected={styleId}>
         <FilePicker
-          accept="image/*"
+          accept="image/*,video/*"
           onFileSelected={onFileSelected}
           style={iconBtnStyle}
         >
