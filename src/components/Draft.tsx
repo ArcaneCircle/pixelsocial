@@ -18,6 +18,7 @@ import FilePicker from "~/components/FilePicker";
 import StylesReel from "~/components/StylesReel";
 import PostImage from "~/components/PostImage";
 import PostVideo from "~/components/PostVideo";
+import ErrorAlert from "~/components/ErrorAlert";
 
 const containerStyle = {
   display: "flex",
@@ -89,6 +90,7 @@ export default function Draft({ replyToPostId, onReplySubmitted }: Props = {}) {
   const [imgUrl, setImgUrl] = useState<string>("");
   const [videoUrl, setVideoUrl] = useState<string>("");
   const [mediaType, setMediaType] = useState<"image" | "video" | "">("");
+  const [errorMsg, setErrorMsg] = useState<string>("");
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   useEffect(() => {
@@ -139,12 +141,14 @@ export default function Draft({ replyToPostId, onReplySubmitted }: Props = {}) {
 
   const onFileSelected = useCallback(
     async (file: File) => {
+      setErrorMsg(""); // Clear any previous error
       // Handle video files
       if (file.type.startsWith("video/")) {
         if (file.size > manager.maxSize) {
           console.error("Video file too large:", file.size);
-          alert(
-            `Video file is too large. Maximum size is ${manager.maxSize / (1024 * 1024)}MB`,
+          const maxSizeMB = manager.maxSize / (1024 * 1024);
+          setErrorMsg(
+            `${_("Video file is too large. Maximum size is")} ${maxSizeMB}MB`,
           );
           return;
         }
@@ -227,6 +231,7 @@ export default function Draft({ replyToPostId, onReplySubmitted }: Props = {}) {
           {_("Pixel It!")}
         </PrimaryButton>
       )}
+      {errorMsg && <ErrorAlert>{errorMsg}</ErrorAlert>}
       <StylesReel onStyleSelected={onStyleSelected} selected={styleId}>
         <FilePicker
           accept="image/*,video/*"

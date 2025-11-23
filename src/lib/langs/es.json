@@ -22,5 +22,6 @@
   "Reset zoom": "Restablecer zoom",
   "Zoom in": "Aumentar zoom",
   "Close image viewer": "Cerrar visor de imagen",
-  "Enlarged view": "Vista ampliada"
+  "Enlarged view": "Vista ampliada",
+  "Video file is too large. Maximum size is": "El archivo de video es demasiado grande. Tamaño máximo:"
 }
