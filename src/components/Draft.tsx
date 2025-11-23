@@ -87,8 +87,7 @@ export default function Draft({ replyToPostId, onReplySubmitted }: Props = {}) {
   const [styleId, setStyleId] = useState<number>(0);
   const [styleDisabled, setStyleDisabled] = useState<boolean>(false);
   const [pixelated, setPixelated] = useState<boolean>(false);
-  const [imgUrl, setImgUrl] = useState<string>("");
-  const [videoUrl, setVideoUrl] = useState<string>("");
+  const [fileUrl, setFileUrl] = useState<string>("");
   const [mediaType, setMediaType] = useState<"image" | "video" | "">("");
   const [filename, setFilename] = useState<string>("");
   const [errorMsg, setErrorMsg] = useState<string>("");
@@ -112,6 +111,8 @@ export default function Draft({ replyToPostId, onReplySubmitted }: Props = {}) {
   const onClick = useCallback(() => {
     const text = (textareaRef.current?.value || "").trim();
     if (!text && !mediaType) return;
+    const imgUrl = mediaType === "image" ? fileUrl : "";
+    const videoUrl = mediaType === "video" ? fileUrl : "";
     if (replyToPostId) {
       manager.reply(
         replyToPostId,
@@ -137,8 +138,7 @@ export default function Draft({ replyToPostId, onReplySubmitted }: Props = {}) {
   }, [
     styleId,
     styleDisabled,
-    imgUrl,
-    videoUrl,
+    fileUrl,
     filename,
     mediaType,
     textareaRef,
@@ -163,8 +163,7 @@ export default function Draft({ replyToPostId, onReplySubmitted }: Props = {}) {
         }
         const url = await readAsDataURL(file);
         console.log("video size:" + url.length);
-        setVideoUrl(url);
-        setImgUrl("");
+        setFileUrl(url);
         setMediaType("video");
         setFilename(file.name);
         setPixelated(false);
@@ -191,32 +190,30 @@ export default function Draft({ replyToPostId, onReplySubmitted }: Props = {}) {
         console.warn("Unsupported file type:", file.type);
         return;
       }
-      setImgUrl(url);
-      setVideoUrl("");
+      setFileUrl(url);
       setMediaType("image");
       setFilename(file.name);
       setPixelated(false);
       setStyleId(0);
     },
-    [setImgUrl, setVideoUrl, manager.maxSize],
+    [manager.maxSize],
   );
 
   const onPixelIt = useCallback(async () => {
-    const url = await pixelate(imgUrl);
+    const url = await pixelate(fileUrl);
     console.log("pixelate:" + url.length);
-    setImgUrl(url);
+    setFileUrl(url);
     setPixelated(true);
-  }, [imgUrl]);
+  }, [fileUrl]);
 
   const onStyleSelected = useCallback(
     (styleId: number) => {
       setStyleId(styleId);
-      setImgUrl("");
-      setVideoUrl("");
+      setFileUrl("");
       setFilename("");
       setMediaType("");
     },
-    [setStyleId, setImgUrl, setVideoUrl, setFilename, setMediaType],
+    [setStyleId, setFileUrl, setFilename, setMediaType],
   );
 
   const hint = replyToPostId
@@ -233,9 +230,9 @@ export default function Draft({ replyToPostId, onReplySubmitted }: Props = {}) {
         style={styled ? cardStyle : textareaStyle}
         placeholder={hint}
       ></textarea>
-      {mediaType === "image" && imgUrl && <PostImage src={imgUrl} />}
-      {mediaType === "video" && videoUrl && <PostVideo src={videoUrl} />}
-      {mediaType === "image" && imgUrl && !pixelated && (
+      {mediaType === "image" && fileUrl && <PostImage src={fileUrl} />}
+      {mediaType === "video" && fileUrl && <PostVideo src={fileUrl} />}
+      {mediaType === "image" && fileUrl && !pixelated && (
         <PrimaryButton
           style={{ marginTop: "-12px", flex: "1 1 auto" }}
           onClick={onPixelIt}
