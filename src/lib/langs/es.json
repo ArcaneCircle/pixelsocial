@@ -17,5 +17,10 @@
   "Settings": "Ajustes",
   "Display Name": "Nombre",
   "Save": "Guardar",
-  "Changes saved!": "¡Cambios guardados!"
+  "Changes saved!": "¡Cambios guardados!",
+  "Zoom out": "Reducir zoom",
+  "Reset zoom": "Restablecer zoom",
+  "Zoom in": "Aumentar zoom",
+  "Close image viewer": "Cerrar visor de imagen",
+  "Enlarged view": "Vista ampliada"
 }
