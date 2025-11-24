@@ -1,4 +1,5 @@
-import { useMemo, useEffect } from "react";
+import { useMemo, useEffect, useRef } from "react";
+import { useVirtualizer } from "@tanstack/react-virtual";
 
 import { _ } from "~/lib/i18n";
 import { GRAY_COLOR } from "~/constants";
@@ -10,12 +11,14 @@ interface Props {
 }
 
 export default function Feed({ posts }: Props) {
-  const items = posts.map((p) =>
-    useMemo(
-      () => <PostItem key={p.id} post={p} />,
-      [p.id, p.likes, p.liked, p.replies],
-    ),
-  );
+  const parentRef = useRef<HTMLDivElement>(null);
+
+  const virtualizer = useVirtualizer({
+    count: posts.length,
+    getScrollElement: () => window.document.documentElement,
+    estimateSize: () => 200,
+    overscan: 5,
+  });
 
   useEffect(() => {
     const pos = sessionStorage.feedScrollPos;
@@ -25,11 +28,11 @@ export default function Feed({ posts }: Props) {
     }
   }, []);
 
-  return (
-    <div>
-      {posts.length ? (
-        items
-      ) : (
+  const items = virtualizer.getVirtualItems();
+
+  if (!posts.length) {
+    return (
+      <div>
         <p
           style={{
             textAlign: "center",
@@ -41,7 +44,44 @@ export default function Feed({ posts }: Props) {
         >
           {_("No posts yet")}
         </p>
-      )}
+      </div>
+    );
+  }
+
+  return (
+    <div ref={parentRef}>
+      <div
+        style={{
+          height: `${virtualizer.getTotalSize()}px`,
+          width: "100%",
+          position: "relative",
+        }}
+      >
+        {items.map((virtualItem) => {
+          const post = posts[virtualItem.index];
+          return (
+            <div
+              key={post.id}
+              data-index={virtualItem.index}
+              ref={virtualizer.measureElement}
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                transform: `translateY(${virtualItem.start}px)`,
+              }}
+            >
+              {useMemo(
+                () => (
+                  <PostItem post={post} />
+                ),
+                [post.id, post.likes, post.liked, post.replies],
+              )}
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
