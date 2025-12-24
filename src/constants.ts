@@ -14,4 +14,6 @@ export const MAIN_COLOR = "#6364ff",
   GRAY_COLOR = "#848484",
   SUCCESS_COLOR = "#79bd9a",
   SUCCESS_BG_COLOR = "#79bd9a40",
+  ERROR_COLOR = "#e63e62",
+  ERROR_BG_COLOR = "#e63e6240",
   LIKE_COLOR = "#e63e62";

@@ -44,7 +44,8 @@ declare interface Post {
   date: number;
   active: number;
   text: string;
-  image: string;
+  file: string;
+  filename: string;
   style: number;
   likes: number;
   liked?: boolean;
@@ -64,6 +65,7 @@ declare interface Reply {
   isAdmin: boolean;
   date: number;
   text: string;
-  image: string;
+  file: string;
+  filename: string;
   style: number;
 }

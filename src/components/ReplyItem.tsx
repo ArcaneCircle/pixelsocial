@@ -15,6 +15,7 @@ import { _ } from "~/lib/i18n";
 import BasePostItem from "~/components/BasePostItem";
 import IconButton from "~/components/IconButton";
 import PostImage from "~/components/PostImage";
+import PostVideo from "~/components/PostVideo";
 
 const linkStyle = {
   color: ACCENT_COLOR,
@@ -83,6 +84,9 @@ export default function ReplyItem({ reply, showOpen, isFocused }: Props) {
     ? { backgroundColor: REPLY_BG_COLOR, opacity: 0.7 }
     : { backgroundColor: REPLY_BG_COLOR };
 
+  const isImage = reply.file.startsWith("data:image/");
+  const isVideo = reply.file.startsWith("data:video/");
+
   return (
     <BasePostItem
       authorId={reply.authorId}
@@ -102,7 +106,8 @@ export default function ReplyItem({ reply, showOpen, isFocused }: Props) {
           </span>
         )}
       </div>
-      {reply.image && <PostImage src={reply.image} />}
+      {isImage && <PostImage src={reply.file} />}
+      {isVideo && <PostVideo src={reply.file} />}
     </BasePostItem>
   );
 }
