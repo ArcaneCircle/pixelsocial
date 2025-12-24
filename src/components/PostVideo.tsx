@@ -14,7 +14,13 @@ export default function PostVideo({ src, ...props }: Props) {
   props.style = { maxHeight, ...(props.style || {}) };
   return (
     <div {...props}>
-      <video style={videoStyle} src={src} controls aria-label="video" />
+      <video
+        style={videoStyle}
+        src={src}
+        controls
+        playsInline
+        aria-label="video"
+      />
     </div>
   );
 }
