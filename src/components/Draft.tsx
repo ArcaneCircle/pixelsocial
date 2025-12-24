@@ -17,6 +17,8 @@ import PrimaryButton from "~/components/PrimaryButton";
 import FilePicker from "~/components/FilePicker";
 import StylesReel from "~/components/StylesReel";
 import PostImage from "~/components/PostImage";
+import PostVideo from "~/components/PostVideo";
+import ErrorAlert from "~/components/ErrorAlert";
 
 const containerStyle = {
   display: "flex",
@@ -85,7 +87,9 @@ export default function Draft({ replyToPostId, onReplySubmitted }: Props = {}) {
   const [styleId, setStyleId] = useState<number>(0);
   const [styleDisabled, setStyleDisabled] = useState<boolean>(false);
   const [pixelated, setPixelated] = useState<boolean>(false);
-  const [imgUrl, setImgUrl] = useState<string>("");
+  const [fileUrl, setFileUrl] = useState<string>("");
+  const [filename, setFilename] = useState<string>("");
+  const [errorMsg, setErrorMsg] = useState<string>("");
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   useEffect(() => {
@@ -105,20 +109,22 @@ export default function Draft({ replyToPostId, onReplySubmitted }: Props = {}) {
 
   const onClick = useCallback(() => {
     const text = (textareaRef.current?.value || "").trim();
-    if (!text && !imgUrl) return;
+    if (!text && !fileUrl) return;
+    const style = styleDisabled ? 0 : styleId;
     if (replyToPostId) {
-      manager.reply(replyToPostId, text, imgUrl, styleDisabled ? 0 : styleId);
+      manager.reply(replyToPostId, text, style, fileUrl, filename);
       if (onReplySubmitted) {
         onReplySubmitted();
       }
     } else {
-      manager.sendPost(text, imgUrl, styleDisabled ? 0 : styleId);
+      manager.sendPost(text, style, fileUrl, filename);
       setPage({ key: "home", showComments: false });
     }
   }, [
     styleId,
     styleDisabled,
-    imgUrl,
+    fileUrl,
+    filename,
     textareaRef,
     manager,
     setPage,
@@ -128,41 +134,72 @@ export default function Draft({ replyToPostId, onReplySubmitted }: Props = {}) {
 
   const onFileSelected = useCallback(
     async (file: File) => {
-      let url;
-      if (
-        file.type.startsWith("image/") &&
-        file.type !== "image/png" &&
-        file.type !== "image/jpeg" &&
-        file.size <= manager.maxSize
-      ) {
-        url = await readAsDataURL(file);
-        console.log("image size:" + url.length);
-      } else {
-        const blobUrl = URL.createObjectURL(file);
-        url = await resizeImage(blobUrl);
-        URL.revokeObjectURL(blobUrl);
-        console.log("resizeImage:" + url.length);
+      setErrorMsg(""); // Clear any previous error
+
+      if (!file.type.startsWith("image/") && !file.type.startsWith("video/")) {
+        console.warn("Unsupported file type:", file.type);
+        setErrorMsg(_("Unsupported file type"));
+        return;
       }
-      setImgUrl(url);
+
+      let name = file.name;
+      let url;
+      if (file.type.startsWith("image/")) {
+        if (
+          file.type !== "image/png" &&
+          file.type !== "image/jpeg" &&
+          file.size <= manager.maxSize
+        ) {
+          // file small enough, keep original format
+          url = await readAsDataURL(file);
+          console.log("image size:" + url.length);
+        } else {
+          const blobUrl = URL.createObjectURL(file);
+          url = await resizeImage(blobUrl);
+          name = "image.jpeg"; // resizeImage() converts to JPEG
+          URL.revokeObjectURL(blobUrl);
+          console.log("resizeImage:" + url.length);
+        }
+      } else {
+        // video
+        if (file.size > manager.maxSize) {
+          console.error("File too large:", file.size);
+          const maxSizeMB = manager.maxSize / (1024 * 1024);
+          setErrorMsg(
+            _("File is too large. Maximum size is {{n}}MB").replace(
+              "{{n}}",
+              `${maxSizeMB}`,
+            ),
+          );
+          return;
+        }
+        url = await readAsDataURL(file);
+        console.log("video size:" + url.length);
+      }
+      setFileUrl(url);
+      setFilename(name);
       setPixelated(false);
       setStyleId(0);
     },
-    [setImgUrl],
+    [manager.maxSize],
   );
 
   const onPixelIt = useCallback(async () => {
-    const url = await pixelate(imgUrl);
+    const url = await pixelate(fileUrl);
     console.log("pixelate:" + url.length);
-    setImgUrl(url);
+    setFileUrl(url);
+    setFilename("image.png"); // pixelate() converts image to PNG
     setPixelated(true);
-  }, [imgUrl]);
+  }, [fileUrl]);
 
   const onStyleSelected = useCallback(
     (styleId: number) => {
       setStyleId(styleId);
-      setImgUrl("");
+      setFileUrl("");
+      setFilename("");
+      setErrorMsg("");
     },
-    [setStyleId, setImgUrl],
+    [setStyleId, setFileUrl, setFilename],
   );
 
   const hint = replyToPostId
@@ -170,6 +207,9 @@ export default function Draft({ replyToPostId, onReplySubmitted }: Props = {}) {
     : _("What's on your mind?");
   const buttonText = replyToPostId ? _("Reply") : _("Post");
   const styled = !styleDisabled && styleId > 0;
+
+  const isImage = fileUrl.startsWith("data:image/");
+  const isVideo = fileUrl.startsWith("data:video/");
 
   return (
     <div style={replyToPostId ? replyContainerStyle : containerStyle}>
@@ -179,8 +219,9 @@ export default function Draft({ replyToPostId, onReplySubmitted }: Props = {}) {
         style={styled ? cardStyle : textareaStyle}
         placeholder={hint}
       ></textarea>
-      {imgUrl && <PostImage src={imgUrl} />}
-      {imgUrl && !pixelated && (
+      {isImage && <PostImage src={fileUrl} />}
+      {isVideo && <PostVideo src={fileUrl} />}
+      {isImage && !pixelated && (
         <PrimaryButton
           style={{ marginTop: "-12px", flex: "1 1 auto" }}
           onClick={onPixelIt}
@@ -188,9 +229,10 @@ export default function Draft({ replyToPostId, onReplySubmitted }: Props = {}) {
           {_("Pixel It!")}
         </PrimaryButton>
       )}
+      {errorMsg && <ErrorAlert>{errorMsg}</ErrorAlert>}
       <StylesReel onStyleSelected={onStyleSelected} selected={styleId}>
         <FilePicker
-          accept="image/*"
+          accept="image/*,video/*"
           onFileSelected={onFileSelected}
           style={iconBtnStyle}
         >
