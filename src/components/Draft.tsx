@@ -184,6 +184,28 @@ export default function Draft({ replyToPostId, onReplySubmitted }: Props = {}) {
     [manager.maxSize],
   );
 
+  const handlePaste = useCallback(
+    async (event: React.ClipboardEvent<HTMLTextAreaElement>) => {
+      const clipboardData = event.clipboardData;
+      if (!clipboardData) return;
+
+      // Check if clipboard contains image data
+      const items = clipboardData.items;
+      for (let i = 0; i < items.length; i++) {
+        const item = items[i];
+        if (item.type.startsWith("image/")) {
+          event.preventDefault(); // Prevent default paste behavior for images
+          const file = item.getAsFile();
+          if (file) {
+            await onFileSelected(file);
+          }
+          break;
+        }
+      }
+    },
+    [onFileSelected],
+  );
+
   const onPixelIt = useCallback(async () => {
     const url = await pixelate(fileUrl);
     console.log("pixelate:" + url.length);
@@ -218,6 +240,7 @@ export default function Draft({ replyToPostId, onReplySubmitted }: Props = {}) {
         ref={textareaRef}
         style={styled ? cardStyle : textareaStyle}
         placeholder={hint}
+        onPaste={handlePaste}
       ></textarea>
       {isImage && <PostImage src={fileUrl} />}
       {isVideo && <PostVideo src={fileUrl} />}
