@@ -197,7 +197,11 @@ export default function Draft({ replyToPostId, onReplySubmitted }: Props = {}) {
           event.preventDefault(); // Prevent default paste behavior for images
           const file = item.getAsFile();
           if (file) {
-            await onFileSelected(file);
+            try {
+              await onFileSelected(file);
+            } catch (error) {
+              console.error("Error processing pasted image:", error);
+            }
           }
           break;
         }
