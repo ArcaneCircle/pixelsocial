@@ -4,8 +4,8 @@ import Icons from "unplugin-icons/vite";
 import { defineConfig } from "vite";
 import path from "path";
 import { execSync } from "child_process";
-import { readFileSync, writeFileSync } from 'node:fs';
-import { resolve } from 'node:path';
+import { readFileSync, writeFileSync } from "node:fs";
+import { resolve } from "node:path";
 
 function getVersion(): string {
   try {
@@ -21,16 +21,16 @@ function getVersion(): string {
 }
 
 function replaceVersionInToml() {
-  const placeholder = '{{APP_VERSION}}';
-  const outFile = resolve(__dirname, 'dist', 'manifest.toml');
+  const placeholder = "{{APP_VERSION}}";
+  const outFile = resolve(__dirname, "dist", "manifest.toml");
 
   return {
-    name: 'vite:replace-version-toml',
+    name: "vite:replace-version-toml",
     // Runs after Vite has copied the `public` folder into `dist`
     closeBundle() {
-      const content = readFileSync(outFile, 'utf8');
+      const content = readFileSync(outFile, "utf8");
       const newContent = content.replace(placeholder, getVersion());
-      writeFileSync(outFile, newContent, 'utf8');
+      writeFileSync(outFile, newContent, "utf8");
     },
   };
 }
