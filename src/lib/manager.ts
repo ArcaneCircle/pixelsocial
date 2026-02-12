@@ -42,7 +42,7 @@ export class Manager {
     await db.posts.where("active").below(oldDate).delete();
 
     const onPostsChanged = throttle(async () => {
-      setPosts(await db.posts.orderBy("active").reverse().limit(500).toArray());
+      setPosts(await db.posts.orderBy("active").reverse().toArray());
     }, 500);
     this.queue.push({
       payload: {
@@ -124,13 +124,11 @@ export class Manager {
   }
 
   async getReplies(postId: string): Promise<Reply[]> {
-    return (await db.replies.where({ postId }).reverse().sortBy("date")).slice(
-      -500,
-    );
+    return await db.replies.where({ postId }).reverse().sortBy("date");
   }
 
   async getAllReplies(): Promise<Reply[]> {
-    return await db.replies.orderBy("date").reverse().limit(500).toArray();
+    return await db.replies.orderBy("date").reverse().toArray();
   }
 
   private async processUpdate(update: ReceivedStatusUpdate<Payload>) {
