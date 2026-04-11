@@ -14,5 +14,5 @@ interface Props {
 export default function IconButton({ children, ...props }: Props) {
   props.className = "btn noselect " + (props.className || "");
   props.style = { ...btnStyle, ...(props.style || {}) };
-  return <div {...props}>{children}</div>;
+  return <button {...props}>{children}</button>;
 }

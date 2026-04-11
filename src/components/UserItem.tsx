@@ -56,6 +56,8 @@ export default function UserItem({
     <div style={containerStyle} {...props}>
       <MonsterAvatar
         value={userId}
+        alt=""
+        role="presentation"
         width={40}
         height={40}
         style={{ background: "black" }}

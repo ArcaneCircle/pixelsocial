@@ -8,6 +8,7 @@ import IconHeartFilled from "~icons/custom/heart-filled";
 import { LIKE_COLOR } from "~/constants";
 import { ManagerContext, PageContext } from "~/contexts";
 import IconButton from "~/components/IconButton";
+import { _ } from "~/lib/i18n";
 
 const containerStyle = {
   display: "flex",
@@ -45,18 +46,34 @@ export default function PostActionsBar({ post, onShare, ...props }: Props) {
   };
 
   return (
-    <div style={containerStyle} {...props}>
-      <IconButton style={likeIconStyle} onClick={onLike}>
+    <div
+      style={containerStyle}
+      {...props}
+      role="group"
+      aria-label={_("Post Actions")}
+    >
+      <IconButton
+        style={likeIconStyle}
+        aria-label={_("{{n}} Likes").replace("{{n}}", post.likes.toString())}
+        onClick={onLike}
+      >
         {post.liked ? <IconHeartFilled /> : <PixelarticonsHeart />}
         {post.likes}
       </IconButton>
-      <IconButton onClick={onComment}>
+      <IconButton
+        aria-label={_("{{n}} Replies").replace(
+          "{{n}}",
+          post.replies.toString(),
+        )}
+        onClick={onComment}
+      >
         <PixelarticonsComment />
         {post.replies}
       </IconButton>
       <IconButton>
         <PixelarticonsForward
           style={{ width: "1.2em", height: "auto" }}
+          aria-label={_("Share")}
           onClick={onShare}
         />
       </IconButton>

@@ -1,6 +1,7 @@
 import { useRef, useCallback } from "react";
 
 import IconButton from "~/components/IconButton";
+import { _ } from "~/lib/i18n";
 
 interface Props {
   accept: string;
@@ -30,7 +31,7 @@ export default function FilePicker({
   }, [inputFile]);
 
   return (
-    <IconButton onClick={onClick} {...props}>
+    <IconButton aria-label={_("Browse...")} onClick={onClick} {...props}>
       {children}
       <input
         type="file"

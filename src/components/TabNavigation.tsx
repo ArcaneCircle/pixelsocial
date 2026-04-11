@@ -30,21 +30,23 @@ export default function TabNavigation() {
   const showComments = pageData.key === "home" && pageData.showComments;
 
   return (
-    <div style={containerStyle}>
-      <div
+    <div role="group" style={containerStyle}>
+      <button
         className="hpad08 noselect"
+        aria-pressed={!showComments}
         style={!showComments ? activeTabStyle : tabStyle}
         onClick={() => setPage({ key: "home", showComments: false })}
       >
         {_("Posts")}
-      </div>
-      <div
+      </button>
+      <button
         className="hpad08 noselect"
+        aria-pressed={showComments}
         style={showComments ? activeTabStyle : tabStyle}
         onClick={() => setPage({ key: "home", showComments: true })}
       >
         {_("Comments")}
-      </div>
+      </button>
     </div>
   );
 }
