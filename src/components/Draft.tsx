@@ -68,6 +68,14 @@ const btnStyle = {
   marginTop: "0.5em",
 };
 
+const hintTextStyle = {
+  color: INPUT_FG_COLOR,
+  opacity: 0.75,
+  fontSize: "0.85em",
+  textAlign: "right" as "right",
+  marginTop: "4px",
+};
+
 const iconBtnStyle = {
   background: "none",
   color: "white",
@@ -131,6 +139,16 @@ export default function Draft({ replyToPostId, onReplySubmitted }: Props = {}) {
     replyToPostId,
     onReplySubmitted,
   ]);
+
+  const onKeyDown = useCallback(
+    (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+      if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        onClick();
+      }
+    },
+    [onClick],
+  );
 
   const onFileSelected = useCallback(
     async (file: File) => {
@@ -245,7 +263,9 @@ export default function Draft({ replyToPostId, onReplySubmitted }: Props = {}) {
         style={styled ? cardStyle : textareaStyle}
         placeholder={hint}
         onPaste={handlePaste}
+        onKeyDown={onKeyDown}
       ></textarea>
+      <div style={hintTextStyle}>{_("Press Enter to send")}</div>
       {isImage && <PostImage src={fileUrl} />}
       {isVideo && <PostVideo src={fileUrl} />}
       {isImage && !pixelated && (

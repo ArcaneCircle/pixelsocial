@@ -32,6 +32,19 @@ const inputStyle = {
   flexGrow: 1,
 };
 
+const replyInputWrapperStyle = {
+  display: "flex",
+  flexDirection: "column" as "column",
+  flexGrow: 1,
+};
+
+const hintTextStyle = {
+  color: INPUT_FG_COLOR,
+  opacity: 0.75,
+  fontSize: "0.75em",
+  marginTop: "4px",
+};
+
 interface Props {
   postId: string;
   onExpand: () => void;
@@ -49,6 +62,16 @@ export default function ReplyDraft({ postId, onExpand }: Props) {
     inputRef.current.value = "";
   }, [postId, inputRef, manager]);
 
+  const onKeyDown = useCallback(
+    (event: React.KeyboardEvent<HTMLInputElement>) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        onClick();
+      }
+    },
+    [onClick],
+  );
+
   const handleBlur = useCallback(
     (event: React.FocusEvent<HTMLInputElement>) => {
       // Prevent the input from losing focus
@@ -65,13 +88,17 @@ export default function ReplyDraft({ postId, onExpand }: Props) {
       <IconButton onClick={onExpand}>
         <PixelarticonsScale style={{ height: "1.2em", width: "auto" }} />
       </IconButton>
-      <input
-        ref={inputRef}
-        style={inputStyle}
-        placeholder={hint}
-        type="text"
-        onBlur={handleBlur}
-      />
+      <div style={replyInputWrapperStyle}>
+        <input
+          ref={inputRef}
+          style={inputStyle}
+          placeholder={hint}
+          type="text"
+          onBlur={handleBlur}
+          onKeyDown={onKeyDown}
+        />
+        <div style={hintTextStyle}>{_("Press Enter to send")}</div>
+      </div>
       <PrimaryButton onClick={onClick} style={{ padding: "5px 10px" }}>
         <PixelarticonsComment style={{ height: "100%" }} />
       </PrimaryButton>
