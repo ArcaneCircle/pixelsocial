@@ -8,7 +8,7 @@ import {
   INPUT_FG_COLOR,
 } from "~/constants";
 import { _ } from "~/lib/i18n";
-import { loadImage, readAsDataURL } from "~/lib/util";
+import { loadImage, readAsDataURL, resizeImage } from "~/lib/util";
 // @ts-ignore
 import { Pixelit } from "~/lib/pixelit.js";
 import { ManagerContext, PageContext } from "~/contexts";
@@ -154,10 +154,14 @@ export default function Draft({ replyToPostId, onReplySubmitted }: Props = {}) {
           url = await readAsDataURL(file);
           console.log("image size:" + url.length);
         } else {
-          const blobUrl = URL.createObjectURL(file);
-          url = await resizeImage(blobUrl);
+          url = await resizeImage(file, {
+            width: 500,
+            height: 500,
+            keepAspectRatio: true,
+            mimeType: "image/jpeg",
+            output: "dataUrl",
+          });
           name = "image.jpeg"; // resizeImage() converts to JPEG
-          URL.revokeObjectURL(blobUrl);
           console.log("resizeImage:" + url.length);
         }
       } else {
@@ -273,23 +277,6 @@ export default function Draft({ replyToPostId, onReplySubmitted }: Props = {}) {
       </PrimaryButton>
     </div>
   );
-}
-
-async function resizeImage(url: string): Promise<string> {
-  const img = await loadImage(url);
-  const canvas = document.createElement("canvas");
-
-  const config = {
-    to: canvas,
-    from: img,
-    maxHeight: 500,
-    maxWidth: 500,
-  };
-  new Pixelit(config).draw(); // just resize
-
-  url = canvas.toDataURL("image/jpeg");
-  canvas.remove();
-  return url;
 }
 
 async function pixelate(url: string): Promise<string> {
