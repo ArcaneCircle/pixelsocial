@@ -338,9 +338,10 @@ export class Pixelit {
     if (this.maxWidth && this.drawto.width > this.maxWidth) {
       ratio = this.maxWidth / this.drawto.width;
     }
-    //max height overrides max width
+    //use the smaller ratio so neither dimension exceeds its max
     if (this.maxHeight && this.drawto.height > this.maxHeight) {
-      ratio = this.maxHeight / this.drawto.height;
+      const heightRatio = this.maxHeight / this.drawto.height;
+      ratio = Math.min(ratio, heightRatio);
     }
 
     canvasCopy.width = this.drawto.width;
@@ -370,8 +371,8 @@ export class Pixelit {
    */
   draw() {
     //draw image to canvas
-    this.drawto.width = this.drawfrom.width;
-    this.drawto.height = this.drawfrom.height;
+    this.drawto.width = this.drawfrom.naturalWidth || this.drawfrom.width;
+    this.drawto.height = this.drawfrom.naturalHeight || this.drawfrom.height;
     //draw
     this.ctx.drawImage(this.drawfrom, 0, 0);
     //resize is always done
