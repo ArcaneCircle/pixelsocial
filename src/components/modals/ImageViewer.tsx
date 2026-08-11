@@ -28,9 +28,11 @@ interface Props {
   src: string;
   isOpen: boolean;
   onClose: () => void;
+  width: number;
+  height: number;
 }
 
-export default function ImageViewer({ src, isOpen, onClose }: Props) {
+export default function ImageViewer({ src, isOpen, onClose, width, height }: Props) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const [zoom, setZoom] = useState(1);
@@ -154,6 +156,8 @@ export default function ImageViewer({ src, isOpen, onClose }: Props) {
   const imageStyle = {
     transform: `translate(${position.x}px, ${position.y}px) scale(${zoom})`,
     cursor: zoom > 1 ? (isPanning ? "grabbing" : "grab") : "default",
+    width: `${width}px`,
+    height: `${height}px`,
   };
 
   return (
