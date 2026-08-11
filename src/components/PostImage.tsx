@@ -25,8 +25,11 @@ export default function PostImage({ src, ...props }: Props) {
     img.onload = () => {
       setWidth(img.width);
       setHeight(img.height);
-      setResizeWidth(img.width);
-      setResizeHeight(img.height);
+      const aspectRatio = img.width / img.height;
+      const newWidth = Math.min(img.width, 800);
+      const newHeight = newWidth / aspectRatio;
+      setResizeWidth(newWidth);
+      setResizeHeight(newHeight);
     };
     img.src = src;
   }, [src]);
