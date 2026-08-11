@@ -15,6 +15,8 @@ export default function PostImage({ src, ...props }: Props) {
   const [isViewerOpen, setViewerOpen] = useState(false);
   const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
+  const [resizeWidth, setResizeWidth] = useState(0);
+  const [resizeHeight, setResizeHeight] = useState(0);
 
   const openViewer = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
@@ -23,6 +25,8 @@ export default function PostImage({ src, ...props }: Props) {
     img.onload = () => {
       setWidth(img.width);
       setHeight(img.height);
+      setResizeWidth(img.width);
+      setResizeHeight(img.height);
     };
     img.src = src;
   }, [src]);
@@ -42,7 +46,7 @@ export default function PostImage({ src, ...props }: Props) {
       <div {...props} onClick={openViewer}>
         <img className={styles.img} style={imgStyle} src={src} />
       </div>
-      <ImageViewer src={src} isOpen={isViewerOpen} onClose={closeViewer} width={width} height={height} />
+      <ImageViewer src={src} isOpen={isViewerOpen} onClose={closeViewer} width={resizeWidth} height={resizeHeight} />
     </>
   );
 }
