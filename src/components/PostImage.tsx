@@ -13,11 +13,19 @@ interface Props {
 
 export default function PostImage({ src, ...props }: Props) {
   const [isViewerOpen, setViewerOpen] = useState(false);
+  const [width, setWidth] = useState(0);
+  const [height, setHeight] = useState(0);
 
   const openViewer = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
     setViewerOpen(true);
-  }, []);
+    const img = new Image();
+    img.onload = () => {
+      setWidth(img.width);
+      setHeight(img.height);
+    };
+    img.src = src;
+  }, [src]);
 
   const closeViewer = useCallback(() => {
     setViewerOpen(false);
@@ -34,7 +42,7 @@ export default function PostImage({ src, ...props }: Props) {
       <div {...props} onClick={openViewer}>
         <img className={styles.img} style={imgStyle} src={src} />
       </div>
-      <ImageViewer src={src} isOpen={isViewerOpen} onClose={closeViewer} />
+      <ImageViewer src={src} isOpen={isViewerOpen} onClose={closeViewer} width={width} height={height} />
     </>
   );
 }
