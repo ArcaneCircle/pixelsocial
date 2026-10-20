@@ -132,6 +132,16 @@ export default function Draft({ replyToPostId, onReplySubmitted }: Props = {}) {
     onReplySubmitted,
   ]);
 
+  const onKeyDown = useCallback(
+    (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+      if (event.key === "Enter" && event.ctrlKey) {
+        event.preventDefault();
+        onClick();
+      }
+    },
+    [onClick],
+  );
+
   const onFileSelected = useCallback(
     async (file: File) => {
       setErrorMsg(""); // Clear any previous error
@@ -245,6 +255,7 @@ export default function Draft({ replyToPostId, onReplySubmitted }: Props = {}) {
         style={styled ? cardStyle : textareaStyle}
         placeholder={hint}
         onPaste={handlePaste}
+        onKeyDown={onKeyDown}
       ></textarea>
       {isImage && <PostImage src={fileUrl} />}
       {isVideo && <PostVideo src={fileUrl} />}
