@@ -24,5 +24,14 @@
   "Close image viewer": "Cerrar visor de imagen",
   "Enlarged view": "Vista ampliada",
   "File is too large. Maximum size is {{n}}MB": "El archivo es demasiado grande. Tamaño máximo: {{n}}MB",
-  "Unsupported file type": "Tipo de archivo no soportado"
+  "Unsupported file type": "Tipo de archivo no soportado",
+  "{{n}} Likes": "{{n}} «Me gusta»",
+  "{{n}} Replies": "{{n}} Respuestas",
+  "Share": "Compartir",
+  "Post Actions": "Acciones de la publicación",
+  "Post Options": "Opciones de la publicación",
+  "Home": "Inicio",
+  "New Post": "Nueva publicación",
+  "Browse...": "Explorar...",
+  "Full composer": "Editor completo"
 }

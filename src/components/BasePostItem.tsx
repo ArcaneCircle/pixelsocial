@@ -108,7 +108,7 @@ export default function BasePostItem({
           name={authorName}
           subtitle={formatDateShort(date)}
         />
-        <IconButton onClick={onMenu}>
+        <IconButton aria-label={_("Post Options")} onClick={onMenu}>
           <PixelarticonsMoreHorizontal style={menuIconStyle} />
         </IconButton>
       </div>

@@ -62,7 +62,7 @@ export default function ReplyDraft({ postId, onExpand }: Props) {
 
   return (
     <div style={containerStyle}>
-      <IconButton onClick={onExpand}>
+      <IconButton aria-label={_("Full composer")} onClick={onExpand}>
         <PixelarticonsScale style={{ height: "1.2em", width: "auto" }} />
       </IconButton>
       <input

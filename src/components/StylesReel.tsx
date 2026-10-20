@@ -36,7 +36,7 @@ export default function StylesReel({
       const gradClass =
         `thumbnail grad${i}` + (selected === i ? " selected" : "");
       items.push(
-        <div className={gradClass} onClick={onClick}>
+        <div className={gradClass} aria-hidden="true" onClick={onClick}>
           {selected === i && <PixelarticonsCheckbox className="check" />}
         </div>,
       );
@@ -45,7 +45,7 @@ export default function StylesReel({
   }, [selected, onStyleSelected]);
 
   return (
-    <div style={reelStyle}>
+    <div tabIndex={-1} role="presentation" style={reelStyle}>
       {children}
       {items}
     </div>

@@ -32,7 +32,7 @@ export default function PostImage({ src, ...props }: Props) {
   return (
     <>
       <div {...props} onClick={openViewer}>
-        <img className={styles.img} style={imgStyle} src={src} />
+        <img className={styles.img} style={imgStyle} src={src} alt="" />
       </div>
       <ImageViewer src={src} isOpen={isViewerOpen} onClose={closeViewer} />
     </>
