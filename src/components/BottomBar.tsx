@@ -5,6 +5,7 @@ import PixelarticonsMenu from "~icons/pixelarticons/menu";
 
 import { PageContext } from "~/contexts";
 import { BORDER_COLOR, BG_COLOR, ACCENT_COLOR } from "~/constants";
+import { _ } from "~/lib/i18n";
 
 import IconButton from "~/components/IconButton";
 
@@ -41,21 +42,27 @@ export default function BottomBar() {
   const { pageData, setPage } = useContext(PageContext);
 
   return (
-    <div style={barStyle}>
+    <div style={barStyle} role="navigation">
       <IconButton
         style={pageData.key === "home" ? activeTabStyle : tabStyle}
+        aria-pressed={pageData.key === "home"}
+        aria-label={_("Home")}
         onClick={() => setPage({ key: "home", showComments: false })}
       >
         <PixelarticonsHome />
       </IconButton>
       <IconButton
         style={pageData.key === "newpost" ? activeTabStyle : tabStyle}
+        aria-pressed={pageData.key === "newpost"}
+        aria-label={_("New Post")}
         onClick={() => setPage({ key: "newpost" })}
       >
         <PixelarticonsPlus />
       </IconButton>
       <IconButton
         style={pageData.key === "settings" ? activeTabStyle : tabStyle}
+        aria-pressed={pageData.key === "settings"}
+        aria-label={_("Settings")}
         onClick={() => setPage({ key: "settings" })}
       >
         <PixelarticonsMenu />

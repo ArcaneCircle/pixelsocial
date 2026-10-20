@@ -61,11 +61,16 @@ export default function Settings() {
       {TopBarM}
       <div className="hpad08" style={containerStyle}>
         <div>
-          <div className="noselect" style={labelStyle}>
+          <label
+            htmlFor="displayNameInput"
+            className="noselect"
+            style={labelStyle}
+          >
             {_("Display Name")}
-          </div>
+          </label>
           <input
             type="text"
+            id="displayNameInput"
             value={displayName}
             onChange={(e) => setDisplayName(e.target.value)}
             style={inputStyle}
