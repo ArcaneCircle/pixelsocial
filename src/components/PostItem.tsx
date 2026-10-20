@@ -99,9 +99,9 @@ export default function PostItem({ post }: Props) {
       >
         {text}
         {truncated && (
-          <button style={linkStyle} onClick={onShowMore}>
+          <span style={linkStyle} onClick={onShowMore}>
             {_("Show More...")}
-          </button>
+          </span>
         )}
       </div>
       {isImage && <PostImage src={post.file} />}

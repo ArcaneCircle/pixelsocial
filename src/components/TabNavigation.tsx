@@ -31,22 +31,22 @@ export default function TabNavigation() {
 
   return (
     <div role="group" style={containerStyle}>
-      <button
+      <div
         className="hpad08 noselect"
         aria-pressed={!showComments}
         style={!showComments ? activeTabStyle : tabStyle}
         onClick={() => setPage({ key: "home", showComments: false })}
       >
         {_("Posts")}
-      </button>
-      <button
+      </div>
+      <div
         className="hpad08 noselect"
         aria-pressed={showComments}
         style={showComments ? activeTabStyle : tabStyle}
         onClick={() => setPage({ key: "home", showComments: true })}
       >
         {_("Comments")}
-      </button>
+      </div>
     </div>
   );
 }
