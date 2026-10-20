@@ -49,6 +49,16 @@ export default function ReplyDraft({ postId, onExpand }: Props) {
     inputRef.current.value = "";
   }, [postId, inputRef, manager]);
 
+  const onKeyDown = useCallback(
+    (event: React.KeyboardEvent<HTMLInputElement>) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        onClick();
+      }
+    },
+    [onClick],
+  );
+
   const handleBlur = useCallback(
     (event: React.FocusEvent<HTMLInputElement>) => {
       // Prevent the input from losing focus
@@ -71,6 +81,7 @@ export default function ReplyDraft({ postId, onExpand }: Props) {
         placeholder={hint}
         type="text"
         onBlur={handleBlur}
+        onKeyDown={onKeyDown}
       />
       <PrimaryButton onClick={onClick} style={{ padding: "5px 10px" }}>
         <PixelarticonsComment style={{ height: "100%" }} />
